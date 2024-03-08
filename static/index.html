@@ -1,36 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Homepage</title>
     <link rel="stylesheet" href="style/style.css">
+    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav>
-            <div>
-                <h1>PURRFECT MATCH</h1>
-                <button>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-
-
-        <div>
-            <h6>MENU</h6>
-            <ul class="overzicht">
-                <li><a href="overzichtzoeken.html">Adoptie</a></li>
-                <li><a href="overzichttoevoegen.html">Toevoegen</a></li>
-                <li><a href="liking.html">Favorieten</a></li>
-                <li><a href="mailbox.html">Mail</a></li>
-                <li><a href="profielpagina.html">Profiel</a></li>
-            </ul>
+        <div class="container">     
+            <nav>
+                <p class="logo">Menu</p>
+                <ul id="dropdown">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="overzichtzoeken.html">Adoptie</a></li>
+                    <li><a href="overzichttoevoegen.html">Toevoegen</a></li>
+                    <li><a href="liking.html">Favorieten</a></li>
+                    <li><a href="mailbox.html">Mail</a></li>
+                    <li><a href="profielpagina.html">Profiel</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()"></i>
+            </nav>
         </div>
-        </nav>
+        
     </header>
     <script src="script/script.js"></script>
 </body>
