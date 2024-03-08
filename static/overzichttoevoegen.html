@@ -6,32 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style/style.css">
+    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav>
-            <div>
-                <h1>PURRFECT MATCH</h1>
-                <button>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-
-
-        <div>
-            <h6>MENU</h6>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="overzichtzoeken.html">Adoptie</a></li>
-                <li><a href="overzichttoevoegen.html">Toevoegen</a></li>
-                <li><a href="liking.html">Favorieten</a></li>
-                <li><a href="mailbox.html">Mail</a></li>
-                <li><a href="profielpagina.html">Profiel</a></li>
-            </ul>
-        </div>
-        </nav>
+        <div class="container">     
+            <nav>
+                <p class="logo">PURRFECT MATCH</p>
+                <ul id="dropdown">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="overzichtzoeken.html">Adoptie</a></li>
+                    <li><a href="overzichttoevoegen.html">Toevoegen</a></li>
+                    <li><a href="liking.html">Favorieten</a></li>
+                    <li><a href="mailbox.html">Mail</a></li>
+                    <li><a href="profielpagina.html">Profiel</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()"></i>
+            </nav>
     </header>
     <main>
         <section>
@@ -45,6 +37,7 @@
                             <h4>Man</h4>
                             <h5>3 jaar</h5>
                         </div>
+                        <i class="fa-solid fa-pen"></i>
                     </a>
                     </li>
                     <li>
@@ -56,6 +49,7 @@
                                 <h4>Vrouw</h4>
                                 <h5>3 jaar</h5>
                             </div>
+                            <i class="fa-solid fa-pen"></i>
                         </a>
                         </li>
             </ul>
