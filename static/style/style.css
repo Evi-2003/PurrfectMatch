@@ -7,16 +7,16 @@
 
 :root {
     --color-background: #1f8a2a;
-    --color-secundaire: #b5c055;
+    --color-secundaire: #66A21D;
     --color-darkgreen: #005B09;
     --color-geel: #FFD910;
     --color-oranje: #ffa800;
     --color-text: #fff;
+    --color-text2: black;
 }
 
 body {
     min-height: 100vh;
-    background: var(--color-background);
     overflow-x: hidden;
     color: var(--color-text);
 
@@ -27,22 +27,24 @@ header {
     top: 0;
     left: 0;
     z-index: 2;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
 }
+
+header nav i{
+    margin-left: 2.4em;
+}
+
 
 header .logo{
     color: var(--color-oranje);
     font-weight: 700;
     text-decoration: none;
-    font-size: 1.5rem;
+    font-size: 1em;
     text-transform: uppercase;
     letter-spacing: 2px;
     text-align: center;
-}
-
-.container{
-    padding: 2rem 10%;
-    display: grid;
-    grid-gap: 2rem;
 }
 
 li {
@@ -146,3 +148,37 @@ nav > i {
     width: 100%;
 }
 
+.homefoto {
+    background-color: var(--color-background);
+}
+
+.kiessection {
+    background-color: var(--color-secundaire);
+    height: fit-content;
+    padding: 1em;
+}
+
+.kiessection div div {
+    background-color: var(--color-text);
+    color: var(--color-darkgreen);
+    margin: 1em;
+    display: flex;
+    color: black;
+}
+
+.dieren {
+    color: var(--color-text2);
+    padding: 1em;
+}
+
+.doneren {
+    background-image: url("../img/backgroundimg2.png");
+}
+
+.afstand {
+    background-color: var(--color-background);
+}
+
+.contact {
+    background-color: var(--color-darkgreen);
+}
