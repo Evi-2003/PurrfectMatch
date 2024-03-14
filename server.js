@@ -31,8 +31,34 @@ client
   .catch((err) => {
     console.log(`Er is wat mis gegaan - ${err}`);
   });
+
+// Routes
 app.get("/", (req, res) => {
-  res.send("<h1>PurrfectMatch</h1>");
+  res.render("pages/index");
+});
+
+app.get("/adoptie", (req, res) => {
+  res.render("pages/adoptie");
+});
+
+app.get("/toevoegen", (req, res) => {
+  res.render("pages/toevoegen");
+});
+
+app.get("/favorieten", (req, res) => {
+  res.render("pages/favorieten");
+});
+app.get("/mail", (req, res) => {
+  res.render("pages/mail");
+});
+app.get("/profiel", (req, res) => {
+  res.render("pages/profiel");
+});
+app.get("/inloggen", (req, res) => {
+  res.render("pages/inloggen");
+});
+app.get("/registreren", (req, res) => {
+  res.render("pages/registreren");
 });
 
 app.listen(port, () => {
