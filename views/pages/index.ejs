@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home - PurrfectMatch</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <h1>Registreren</h1>
+    <form action="/" method="post">
+      <input type="text" name="name" id="name" placeholder="Gebruikersnaam" />
+      <input
+        type="text"
+        name="password"
+        id="password"
+        placeholder="Wachtwoord"
+      />
+      <input type="submit" value="Registreren" />
+    </form>
+  </body>
+</html>
