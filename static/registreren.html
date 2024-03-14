@@ -10,20 +10,63 @@
 </head>
 <body>
     <header>
-        <p class="logo">PURRFECT MATCH</p>
+
+        <div class="container">     
+            <nav>
+                <img src="img/logoPM.png" alt="">
+                <p class="logo">PURRFECT MATCH</p>
+                <a href="profielpagina.html"><i class="fa-solid fa-user" style="color: #000000;"></i></a>
+                <ul id="dropdown">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="overzichtzoeken.html">Adoptie</a></li>
+                    <li><a href="overzichttoevoegen.html">Toevoegen</a></li>
+                    <li><a href="liking.html">Favorieten</a></li>
+                    <li><a href="mailbox.html">Mail</a></li>
+                    <li><a href="profielpagina.html">Profiel</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()" style="color: #000000;"></i>
+            </nav>
+        </div>
     </header>
-    <main>
-        <section class="login">
-            <p>Login</p>
+    <main class="login">
+        <a href="inlog.html"><i class="fa-solid fa-arrow-left"></i>Terug naar login</a>
+        <section>
+            <h2>registreren</h2>
             <div>
-                <p>Email</p>
+                <p>Voornaam - verplicht</p>
                 <input type="text">
-                <p>Wachtwoord</p>
+                <p>Tussenvoegsel</p>
                 <input type="text">
-                <p>Bevestig wachtwoord</p>
+                <p>Achternaam - verplicht</p>
+                <input type="text">
+                <div>
+                    <p>Geslacht - verplicht</p>
+                    <input type="radio" id="man" name="fav_language" value="man">
+                    <label for="html">Man</label><br>
+                    <input type="radio" id="vrouw" name="fav_language" value="vrouw">
+                    <label for="html">Vrouw</label><br>
+                    <input type="radio" id="niet relevant" name="fav_language" value="nietrelevant">
+                    <label for="html">Niet relevant</label><br>
+                </div>
+                <p>Postcode - verplicht</p>
+                <input type="text">
+                <p>Huisnummer - verplicht</p>
+                <input type="text">
+                <p>Straat - verplicht</p>
+                <input type="text">
+                <p>Woonplaats - verplicht</p>
+                <input type="text">
+                <p>Emai - verplichtl</p>
+                <input type="text">
+                <p>Telefoonummer - verplicht</p>
+                <input type="text">
+                <p>Wachtwoord - verplicht</p>
+                <input type="text">
+                <p>Bevestig wachtwoord - verplicht</p>
                 <input type="text">
             </div>
-            <a href="index.html">signup</a>
+            <a href="index.html">registreren</a>
             <p>Nog geen account? <a href="inlog.html">Login</a></p>
             <p>of</p>
             <div>

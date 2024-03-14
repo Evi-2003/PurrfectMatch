@@ -182,3 +182,31 @@ nav > i {
 .contact {
     background-color: var(--color-darkgreen);
 }
+
+.login {
+    background-image: url(../img/backgroundimg1.png);
+    height: 100vh;
+}
+
+.login section {
+    background-color: var(--color-text);
+    color: var(--color-text2);
+    margin: 1em;
+    padding-bottom: 1em;
+    height: fit-content;
+    padding: 1em;
+    border-radius: 12px;
+}
+
+.login section h2 {
+    text-align: center;
+}
+
+.login section > a{
+    background-color: var(--color-oranje);
+    text-decoration: none;
+    color: var(--color-text);
+    background-color: var(--color-oranje);
+    border-radius: 30px;
+    padding: 5px 10px 5px 10px;
+}
