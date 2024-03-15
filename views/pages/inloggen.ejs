@@ -16,14 +16,23 @@
     <main>
       <section class="login">
         <p>Login</p>
-        <div>
+        <form action="/inloggen" method="post">
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" required>
+
+          <label for="wachtwoord">Wachtwoord</label>
+          <input type="password" id="wachtwoord" name="wachtwoord" required>
+
+          <input type="submit" value="Submit">
+        </form>
+        <!-- <div>
           <p>Email</p>
           <input type="text" />
           <p>Wachtwoord</p>
           <input type="text" />
-        </div>
-        <a href="index.html">Inloggen</a>
-        <p>Nog geen account? <a href="registreren.html">registreren</a></p>
+        </div> 
+        <a href="index.html">Inloggen</a> -->
+        <p>Nog geen account? <a href="registreren">registreren</a></p>
         <p>of</p>
         <div>
           <i class="fa-brands fa-facebook"></i>

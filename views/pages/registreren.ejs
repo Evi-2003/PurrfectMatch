@@ -15,8 +15,17 @@
     <%- include('../partials/nav') %>
     <main>
       <section class="login">
-        <p>Login</p>
-        <div>
+        <p>Registreren</p>
+        <form action="/pages/registreren" method="post">
+          <label for="email">Email</label>
+          <input type="text" id="email" name="email" required>
+
+          <label for="wachtwoord">Wachtwoord</label>
+          <input type="password" id="wachtwoord" name="wachtwoord" required>
+
+          <input type="submit" value="Submit">
+        </form>
+        <!-- <div>
           <p>Email</p>
           <input type="text" />
           <p>Wachtwoord</p>
@@ -24,8 +33,8 @@
           <p>Bevestig wachtwoord</p>
           <input type="text" />
         </div>
-        <a href="kiezen.html">signup</a>
-        <p>Nog geen account? <a href="inlog.html">Login</a></p>
+        <a href="kiezen.html">signup</a> -->
+        <p>Nog geen account? <a href="inloggen">Login</a></p>
         <p>of</p>
         <div>
           <i class="fa-brands fa-facebook"></i>
