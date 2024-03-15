@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+
+        <div class="container">     
+            <nav>
+                <img src="img/logoPM.png" alt="">
+                <p class="logo">PURRFECT MATCH</p>
+                <a href="profielpagina.html"><i class="fa-solid fa-user" style="color: #000000;"></i></a>
+                <ul id="dropdown">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="overzichtzoeken.html">Adoptie</a></li>
+                    <li><a href="overzichttoevoegen.html">Toevoegen</a></li>
+                    <li><a href="liking.html">Favorieten</a></li>
+                    <li><a href="mailbox.html">Mail</a></li>
+                    <li><a href="profielpagina.html">Profiel</a></li>
+                    <i class="fas fa-times" onclick="closemenu()"></i>
+                </ul>
+                <i class="fas fa-bars" onclick="openmenu()" style="color: #000000;"></i>
+            </nav>
+        </div>
+    </header>
+   <main class="login">
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i>Terug naar homepagina</a>
+       <section>
+           <h2>Login</h2>
+           <div>
+               <p>Email</p>
+               <input type="text">
+               <p>Wachtwoord</p>
+               <input type="text">
+           </div>
+           <a href="index.html">Inloggen</a>
+           <p>Nog geen account? <a href="registreren.html">registreren</a></p>
+           <p>of</p>
+           <div>
+            <i class="fa-brands fa-facebook"></i>
+            <i class="fa-brands fa-twitter"></i>
+            <i class="fa-brands fa-google"></i>
+           </div>
+
+       </section>
+   </main>
+    <script src="script/script.js"></script>
+</body>
+</html>
