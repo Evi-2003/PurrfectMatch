@@ -34,14 +34,17 @@ client
   });
 
 /* login */ 
-app.get('/', async (req, res) => {
-  let email = req.body.email
-  let wachtwoord = req.body.wachtwoord
-  const users = await db.collection('users').find({email: email, wachtwoord: wachtwoord})
-  if (users) {
-    res.render('pages/index')
+app.post('/inloggen', async (req, res) => {
+  const user = await db.collection('users').findOne({ email: req.body.email })
+  if (user) {
+    let checkWachtwoord = req.body.wachtwoord === user.wachtwoord
+    if (checkWachtwoord) {
+      res.render('pages/profiel', { user })
+    } else {
+      res.send('password not correct')
+    }
   } else {
-    res.render('pages/registreren')
+    res.redirect('/registreren')
   }
 })
 
