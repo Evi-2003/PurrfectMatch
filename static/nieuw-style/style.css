@@ -1,0 +1,212 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-background: #1f8a2a;
+    --color-secundaire: #66A21D;
+    --color-darkgreen: #005B09;
+    --color-geel: #FFD910;
+    --color-oranje: #ffa800;
+    --color-text: #fff;
+    --color-text2: black;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: var(--color-text);
+
+}
+
+header {
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+header nav i{
+    margin-left: 2.4em;
+}
+
+
+header .logo{
+    color: var(--color-oranje);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+li {
+    list-style: none;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+} 
+
+nav ul{
+    background: var(--color-darkgreen);
+    position: fixed;
+    top: 0;
+    right: -15rem;
+    width: 50vw;
+    height: 100vh;
+    padding-top: 3em;
+    z-index: 2;
+    transition: right .5s;
+}
+
+nav ul li{
+    display: block;
+    list-style: none;
+    margin: 1.5rem 2rem;
+    text-align: center;
+}
+
+nav ul li a{
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: var(--fontsize-nav);
+    position: relative;
+}
+
+nav ul li a::after{
+    content: '';
+    width: 0;
+    height: 3px;
+    background: var(--color-secundaire);
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: .5s;
+}
+
+nav ul li a:hover::after{
+    width: 100%;
+}
+
+nav ul .fas{
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    cursor: pointer;
+    /* font-size: var(--fontsize-nav-icon);  */
+}
+
+nav > i {
+    /* font-size: var(--fontsize-nav-icon); */
+    cursor: pointer;
+}
+
+.overzicht {
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+    margin: 1em;
+}
+
+.overzicht li {
+    list-style-type: none;
+    display: flex;
+    border: 1px #b5c055 solid;
+    background-image: linear-gradient(to right, #A5AF4D , #98AA58);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 100%;
+    border-radius: 25px;
+    margin-bottom: 1em;
+}
+
+.overzicht li img {
+    width: 6em;
+    height: 6em;
+    padding: .5em;
+    border-radius: 25px;
+}
+
+.overzicht li div {
+    padding: .5em;
+}
+
+.overzicht li a {
+    display: flex;
+    color: white;
+    text-decoration: none;
+    width: 100%;
+}
+
+.homefoto {
+    background-color: var(--color-background);
+}
+
+.kiessection {
+    background-color: var(--color-secundaire);
+    height: fit-content;
+    padding: 1em;
+}
+
+.kiessection div div {
+    background-color: var(--color-text);
+    color: var(--color-darkgreen);
+    margin: 1em;
+    display: flex;
+    color: black;
+}
+
+.dieren {
+    color: var(--color-text2);
+    padding: 1em;
+}
+
+.doneren {
+    background-image: url("../img/backgroundimg2.png");
+}
+
+.afstand {
+    background-color: var(--color-background);
+}
+
+.contact {
+    background-color: var(--color-darkgreen);
+}
+
+.login {
+    background-image: url(../img/backgroundimg1.png);
+    height: 100vh;
+}
+
+.login section {
+    background-color: var(--color-text);
+    color: var(--color-text2);
+    margin: 1em;
+    padding-bottom: 1em;
+    height: fit-content;
+    padding: 1em;
+    border-radius: 12px;
+}
+
+.login section h2 {
+    text-align: center;
+}
+
+.login section > a{
+    background-color: var(--color-oranje);
+    text-decoration: none;
+    color: var(--color-text);
+    background-color: var(--color-oranje);
+    border-radius: 30px;
+    padding: 5px 10px 5px 10px;
+}
