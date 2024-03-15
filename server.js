@@ -7,6 +7,7 @@ const port = 3000;
 require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
+app.use(express.urlencoded({extended: true})) 
 
 // Verbinden met database
 let db;
@@ -31,6 +32,28 @@ client
   .catch((err) => {
     console.log(`Er is wat mis gegaan - ${err}`);
   });
+
+/* login */ 
+app.get('/', async (req, res) => {
+  let email = req.body.email
+  let wachtwoord = req.body.wachtwoord
+  const users = await db.collection('users').find({email: email, wachtwoord: wachtwoord})
+  if (users) {
+    res.render('pages/index')
+  } else {
+    res.render('pages/registreren')
+  }
+})
+
+/* registratie */
+app.post('/pages/registreren', async (req, res) => {
+  let userData = {
+    email: req.body.email, 
+    wachtwoord: req.body.wachtwoord
+  }
+  await db.collection('users').insertOne(userData);
+  res.redirect('/pages/index');
+})
 
 // Routes
 app.get("/", (req, res) => {
