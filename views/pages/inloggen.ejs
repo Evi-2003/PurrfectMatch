@@ -14,32 +14,33 @@
   <body>
     <%- include('../partials/nav') %>
     <main>
-      <section class="login">
-        <p>Login</p>
-        <form action="/inloggen" method="post">
-          <label for="email">Email</label>
-          <input type="text" id="email" name="email" required>
-
-          <label for="wachtwoord">Wachtwoord</label>
-          <input type="password" id="wachtwoord" name="wachtwoord" required>
-
-          <input type="submit" value="Submit">
-        </form>
-        <!-- <div>
-          <p>Email</p>
-          <input type="text" />
-          <p>Wachtwoord</p>
-          <input type="text" />
-        </div> 
-        <a href="index.html">Inloggen</a> -->
-        <p>Nog geen account? <a href="registreren">registreren</a></p>
-        <p>of</p>
-        <div>
-          <i class="fa-brands fa-facebook"></i>
-          <i class="fa-brands fa-twitter"></i>
-          <i class="fa-brands fa-google"></i>
+      <section class="form">
+        <div class="breadcrumb">
+          <i class="fa-solid fa-arrow-left-long"></i>
+          <a href="">Terug naar homepagina</a>
         </div>
+          <div class="formcontainer">
+            <div class="formcontainer-container logingap">
+              <h1 class="loginh1">Login</h1>
+              <form action="/inloggen" method="post">
+                <div>
+                  <input class="texinput" type="email" id="email" name="email" required>
+                  <label class="textlabel" for="email"><i class="fa-solid fa-user"></i> Email - <span>verplicht</span></label>
+                </div>  
+                <div>
+                  <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
+                  <input class="texinput" type="password" id="wachtwoord" name="wachtwoord" required>
+                  <label class="textlabel" for="wachtwoord"><i class="fa-solid fa-lock"></i> Wachtwoord - <span>verplicht</span></label>
+                  <a class="wachtwoordvergeten" href="#">wachtwoord vergeten?</a>
+                </div>
+                <button class="btn" type="submit">Login</button>
+              </form>
+            <p class="loginp">Nog geen account? <a href="registreren">Registreren</a></p>
+            </div>
+          </div>
+
       </section>
+
     </main>
     <script src="script/script.js"></script>
   </body>
