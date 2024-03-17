@@ -17,12 +17,12 @@
       <section class="form">
         <div class="breadcrumb">
           <i class="fa-solid fa-arrow-left-long"></i>
-          <a href="">Terug naar homepagina</a>
+          <a href="/">Terug naar homepagina</a>
         </div>
           <div class="formcontainer">
             <div class="formcontainer-container logingap">
               <h1 class="loginh1">Login</h1>
-              <form action="/inloggen" method="post">
+              <form class="loginform" action="/inloggen" method="post">
                 <div>
                   <input class="texinput" type="email" id="email" name="email" required>
                   <label class="textlabel" for="email"><i class="fa-solid fa-user"></i> Email - <span>verplicht</span></label>
@@ -31,16 +31,14 @@
                   <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
                   <input class="texinput" type="password" id="wachtwoord" name="wachtwoord" required>
                   <label class="textlabel" for="wachtwoord"><i class="fa-solid fa-lock"></i> Wachtwoord - <span>verplicht</span></label>
-                  <a class="wachtwoordvergeten" href="#">wachtwoord vergeten?</a>
+                  <a class="wachtwoordvergeten" href="#">Wachtwoord vergeten?</a>
                 </div>
                 <button class="btn" type="submit">Login</button>
               </form>
             <p class="loginp">Nog geen account? <a href="registreren">Registreren</a></p>
             </div>
           </div>
-
       </section>
-
     </main>
     <script src="script/script.js"></script>
   </body>
