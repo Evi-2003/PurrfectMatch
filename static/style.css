@@ -21,6 +21,8 @@
   --form-background-color: #fff;
   --form-inputtext-color: #2c2c2c;
   --form-labeltext-color: gray;
+  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  --formregistreer-input-border-color: #afafaf;
 
 }
 
@@ -223,9 +225,9 @@ nav > i {
 .form{
   color: var(--color-text2);
   background: var(--color-background);
-  background-image: url(img/backgroundforms.png);
+  /* background-image: url(img/backgroundforms.png);
   background-size: cover;
-  background-repeat: repeat;
+  background-repeat: repeat; */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -243,9 +245,8 @@ nav > i {
   background: var(--form-background-color);
   display: flex;
   flex-direction: column;
-  text-align: center;
   border-radius: 1rem;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  box-shadow: var(--form-box-shadow);
 }
 
 .centerform{
@@ -259,7 +260,6 @@ form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
 }
 
 form > div {
@@ -304,8 +304,13 @@ form > div {
 
 /* ---------LOGIN---------- */
 
+.loginform{
+  gap: 3rem;
+}
+
 .logingap{
   gap: 3rem;
+  text-align: center;
 }
 
 .loginh1{
@@ -342,6 +347,24 @@ form div > i{
 
 /* ---------REGISTREER---------- */
 
+.registreer{
+  height: 200vh;
+}
+
+.registreerp{
+  font-size: .9rem;
+  margin: 1rem 0;
+}
+
+.registreerp a{
+  text-decoration: none;
+  color: var(--color-oranje);
+}
+
+.registreerform{
+  gap: 1.5rem;
+}
+
 .registreergap{
   gap: 1rem;
 }
@@ -349,7 +372,84 @@ form div > i{
 .registreerh1{
   font-size: 2rem;
   font-weight: var(--font-bold);
+  color: var(--color-text2);
+  text-align: center;
+}
+
+.registreerinput{
+  gap: 0.5rem;
+  position: relative;
+}
+
+.registreerinput input{
+  padding: 8px;
+  border: 1px solid var(--formregistreer-input-border-color);
+  border-radius: 5px;
+  width: 100%;
+}
+
+.registreerinput label span{
   color: var(--color-oranje);
 }
 
+.naam{
+  display: flex;
+  gap: .5rem;
+}
+
+#tussenvoegsel{
+  width: 50%;
+}
+
+#geslacht{
+  padding: 8px;
+  border: 1px solid var(--formregistreer-input-border-color);
+  border-radius: 5px;
+  width: 100%;
+  background: transparent;
+}
+
+.huisadres{
+  display: flex;
+  gap: .5rem;
+}
+
+#huisnummer{
+  width: 40%;
+}
+
+
+/* ----Remove-Arrows-input-number---- */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.registreerinput > i{
+  position: absolute;
+  top: 61%;
+  right: 10px;
+  cursor: pointer;
+  color: var(--form-inputtext-color);
+}
+
+.registreerinput:nth-of-type(7) > i{
+  top: 61%;
+}
+
+.registreerinput:nth-of-type(8)  > i{
+  top: 71%;
+}
+
+#pass{
+  color: red;
+  font-size: .9rem;
+}
 /* -----------------EINDE-FORMS---------------- */
