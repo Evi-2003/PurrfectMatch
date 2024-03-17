@@ -10,54 +10,71 @@
   --color-secundaire: #66a21d;
   --color-darkgreen: #005b09;
   --color-geel: #ffd910;
-  --color-oranje: #ffa800;
+  --color-oranje: #ff8a00;
   --color-text: #fff;
   --color-text2: black;
+
+
+  --font-bold: 600;
+  --font-bold-btn: 500;
+  /* ----------form-------------- */
+  --form-background-color: #fff;
+  --form-inputtext-color: #2c2c2c;
+  --form-labeltext-color: gray;
+
 }
 
+
+/* -----------------ALGEMENE-CSS---------------- */
 body {
   min-height: 100vh;
   overflow-x: hidden;
   color: var(--color-text);
 }
 
-header {
+.container{
+  padding: 1rem 10%;
+}
+
+.btn{
   width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
+  padding: .5rem;
+  background: var(--color-oranje);
+  color: var(--color-text);
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  font-weight: var(--font-bold-btn);
 }
 
-header nav i {
-  margin-left: 2.4em;
-}
+/* -----------------BEGIN-NAVIGATIE---------------- */
 
-header .logo {
+header .logo{
   color: var(--color-oranje);
   font-weight: 700;
   text-decoration: none;
-  font-size: 1em;
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-align: center;
 }
 
-li {
-  list-style: none;
+nav img{
+  width: 2rem;
 }
 
 nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-}
+  color: var(--color-text2);
+} 
 
-nav ul {
-  background: var(--color-darkgreen);
+nav ul{
+  background: var(--color-oranje);
+  color: var(--color-text);
   position: fixed;
   top: 0;
   right: -15rem;
@@ -65,50 +82,56 @@ nav ul {
   height: 100vh;
   padding-top: 3em;
   z-index: 2;
-  transition: right 0.5s;
+  transition: right .5s;
+}
+.sidemenu{
+  right:0;
 }
 
-nav ul li {
+
+nav ul li{
   display: block;
   list-style: none;
   margin: 1.5rem 2rem;
   text-align: center;
 }
 
-nav ul li a {
+nav ul li a{
   color: var(--color-text);
   text-decoration: none;
   font-size: var(--fontsize-nav);
   position: relative;
 }
 
-nav ul li a::after {
-  content: "";
+nav ul li a::after{
+  content: '';
   width: 0;
   height: 3px;
   background: var(--color-secundaire);
   position: absolute;
   left: 0;
   bottom: -6px;
-  transition: 0.5s;
+  transition: .5s;
 }
 
-nav ul li a:hover::after {
+nav ul li a:hover::after{
   width: 100%;
 }
 
-nav ul .fas {
+nav ul .fas{
   position: absolute;
   top: 2rem;
   right: 3rem;
   cursor: pointer;
-  /* font-size: var(--fontsize-nav-icon);  */
+  font-size: 1.5rem; 
 }
 
 nav > i {
-  /* font-size: var(--fontsize-nav-icon); */
+  font-size: 1.5rem;
   cursor: pointer;
 }
+
+/* -----------------EINDE-NAVIGATIE---------------- */
 
 .overzicht {
   display: flex;
@@ -181,30 +204,152 @@ nav > i {
   background-color: var(--color-darkgreen);
 }
 
-.login {
-  background-image: url(../img/backgroundimg1.png);
-  height: 100vh;
-}
 
-.login section {
-  background-color: var(--color-text);
+
+/* -----------------BEGIN-FORMS---------------- */
+
+.breadcrumb{
+  padding:1rem 10%;
   color: var(--color-text2);
-  margin: 1em;
-  padding-bottom: 1em;
-  height: fit-content;
-  padding: 1em;
-  border-radius: 12px;
+  font-size: .9rem;
+  align-self: flex-start;
 }
 
-.login section h2 {
-  text-align: center;
-}
-
-.login section > a {
-  background-color: var(--color-oranje);
+.breadcrumb a{
+  color: var(--color-text2);
   text-decoration: none;
-  color: var(--color-text);
-  background-color: var(--color-oranje);
-  border-radius: 30px;
-  padding: 5px 10px 5px 10px;
 }
+
+.form{
+  color: var(--color-text2);
+  background: var(--color-background);
+  background-image: url(img/backgroundforms.png);
+  background-size: cover;
+  background-repeat: repeat;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 100vh;
+  align-items: center;
+}
+
+.formcontainer{
+  padding: 0 2rem;
+  max-width: 30rem;
+}
+
+.formcontainer-container{
+  padding: 2.5rem;
+  background: var(--form-background-color);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border-radius: 1rem;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+}
+
+.centerform{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 75vh;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+form > div {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.textlabel {
+  color: var(--form-inputtext-color);
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+
+.textlabel span{
+  color: var(--color-oranje);
+}
+
+.texinput {
+  border: none;
+  border-bottom: 1px solid var(--form-inputtext-color);
+  height: 2.25rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.texinput:focus {
+  border-color: var(--form-labeltext-color);
+}
+
+.texinput:focus + label,
+.texinput:valid + label{
+  transform: translateY(-1.25rem);
+  font-size: 0.8125rem;
+  color: var(--form-labeltext-color);
+}
+
+/* ---------LOGIN---------- */
+
+.logingap{
+  gap: 3rem;
+}
+
+.loginh1{
+  font-size: 2rem;
+  font-weight: var(--font-bold);
+  color: var(--color-oranje);
+}
+
+.loginp a{
+  text-decoration: none;
+  color: var(--color-oranje);
+}
+
+.loginp{
+  font-size: .9rem;
+  margin-bottom: 2rem;
+}
+
+form div > i{
+  position: absolute;
+  top: 0.25rem;
+  right: 0;
+  cursor: pointer;
+  color: var(--form-inputtext-color);
+}
+
+.wachtwoordvergeten {
+  font-size: .9rem;
+  align-self: flex-end;
+  color: var(--color-text2);
+  text-decoration: none;
+  margin-top: 0.45rem;
+}
+
+/* ---------REGISTREER---------- */
+
+.registreergap{
+  gap: 1rem;
+}
+
+.registreerh1{
+  font-size: 2rem;
+  font-weight: var(--font-bold);
+  color: var(--color-oranje);
+}
+
+/* -----------------EINDE-FORMS---------------- */
