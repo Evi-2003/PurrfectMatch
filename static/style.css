@@ -453,3 +453,28 @@ input[type=number] {
   font-size: .9rem;
 }
 /* -----------------EINDE-FORMS---------------- */
+
+
+/* ---------------MEDIA-QUERIES----------------- */
+@media (width > 500px){
+  nav ul{
+    display: flex;
+    height: auto;
+    background: transparent;
+    color: black;
+    position: inherit;
+    width: auto;
+    padding: 0;
+  }
+
+  nav ul li a{
+    color: var(--color-text2);
+  }
+  nav > i:last-of-type{
+    display: none;
+  }
+
+  nav ul .fas{
+    display: none;
+  }
+}
