@@ -414,10 +414,9 @@ form div > i{
   gap: .5rem;
 }
 
-#huisnummer{
+#huisnummer, #toevoeging {
   width: 40%;
-}
-
+} 
 
 /* ----Remove-Arrows-input-number---- */
 /* Chrome, Safari, Edge, Opera */
