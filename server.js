@@ -39,7 +39,7 @@ app.post("/inloggen", async (req, res) => {
   if (user) {
     let checkWachtwoord = req.body.wachtwoord === user.wachtwoord;
     if (checkWachtwoord) {
-      res.render("pages/profiel", { user });
+      res.redirect("/profiel")
     } else {
       res.send("password not correct");
     }
@@ -49,13 +49,25 @@ app.post("/inloggen", async (req, res) => {
 });
 
 /* registratie */
-app.post("/pages/registreren", async (req, res) => {
+app.post("/", async (req, res) => {
+  console.log('test')
   let userData = {
+    voornaam: req.body.voornaam, 
+    tussenvoegsel: req.body.tussenvoegsel, 
+    achternaam: req.body.achternaam,
+    geslacht: req.body.geslacht, 
+    postcode: req.body.postcode,
+    straatnaam: req.body.straatnaam, 
+    huisnummer: parseInt(req.body.huisnummer),
+    toevoeging: req.body.toevoeging, 
+    woonplaats: req.body.woonplaats, 
+    geboortedatum: req.body.geboortedatum,
+    telefoonnummer: req.body.telefoonnummer,
     email: req.body.email,
-    wachtwoord: req.body.wachtwoord,
+    wachtwoord: req.body.repassword,
   };
   await db.collection("users").insertOne(userData);
-  res.redirect("/pages/index");
+  res.redirect("/profiel");
 });
 
 // Routes
