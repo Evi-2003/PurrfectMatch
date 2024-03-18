@@ -63,8 +63,28 @@ app.get("/", (req, res) => {
   res.render("pages/index");
 });
 
-app.get("/adoptie", (req, res) => {
-  res.render("pages/adoptie");
+app.get("/adoptie", async (req, res) => {
+  // Getting the animals
+  const dieren = await db.collection("dieren").find().toArray();
+  // Making an array of objects of dieren
+  const formattedDieren = dieren.map((item) => {
+    return {
+      _id: item._id,
+      katachtigen: item.katachtigen.map((animal) => ({
+        name: animal.soort,
+        dieren: animal.dieren.map((dier) => ({
+          naam: dier.naam,
+          leeftijd: dier.leeftijd,
+          omschrijving: dier.omschrijving,
+          geslacht: dier.geslacht,
+          gewicht: dier.gewicht,
+          img: dier.img,
+        })),
+      })),
+    };
+  });
+  console.log(formattedDieren[0].katachtigen);
+  res.render("pages/adoptie", { dieren: formattedDieren });
 });
 
 app.get("/toevoegen", (req, res) => {
