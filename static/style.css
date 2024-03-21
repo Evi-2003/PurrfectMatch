@@ -175,6 +175,29 @@ nav > i {
 
 .homefoto {
   background-color: var(--color-background);
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text2);
+  padding-right: 1em;
+}
+
+.homefoto img {
+  width: 13em;
+  height: 13em;
+}
+
+.homefoto div h2 {
+  font-size: 17px;
+  padding-left: 1em;
+}
+
+.homefoto div h2:nth-of-type(1) {
+  background-color: var(--color-text);
+  margin-top: 7em;
+}
+
+.homefoto div h2:nth-of-type(2) {
+  background-color: var(--color-geel);
 }
 
 .kiessection {
@@ -196,12 +219,57 @@ nav > i {
   padding: 1em;
 }
 
+.dieren p {
+  margin-bottom: 1.5em;
+}
+
 .doneren {
   background-image: url("../img/backgroundimg2.png");
+  height: 8em;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+}
+
+.doneren h4 {
+  font-size: 19px;
+  text-align: center;
+}
+
+.doneren a {
+  background-color: var(--color-background);
+  color: white;
+  text-decoration: none;
+  border-radius: 25px;
+  padding: 5px 10px 5px 10px;
+  margin-top: 1em;
+  /* position: absolute; */
+
 }
 
 .afstand {
   background-color: var(--color-background);
+  height: 27em;
+  padding: 3em;
+  outline: 3px dashed yellow;
+  outline-offset: -25px;
+}
+
+.afstand h4 {
+  color: var(--color-geel);
+  margin-bottom: 1em;
+}
+
+.afstand :nth-of-type(2) {
+  background-color: var(--color-geel);
+  padding: 1em;
+  height: 6em;
+  width: 100%;
+  color: black;
+  margin-top: 1em;
+  
 }
 
 .contact {
