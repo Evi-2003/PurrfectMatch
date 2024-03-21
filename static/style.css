@@ -257,9 +257,7 @@ nav > i {
 .form{
   color: var(--color-text2);
   background: var(--color-background);
-  /* background-image: url(img/backgroundforms.png);
-  background-size: cover;
-  background-repeat: repeat; */
+  background-image: url(img/backgroundforms.png);
   display: flex;
   flex-direction: column;
   overflow: hidden;
