@@ -39,7 +39,7 @@ app.post("/inloggen", async (req, res) => {
   if (user) {
     let checkWachtwoord = req.body.wachtwoord === user.wachtwoord;
     if (checkWachtwoord) {
-      res.redirect("/profiel")
+      res.redirect("/profiel");
     } else {
       res.send("password not correct");
     }
@@ -50,17 +50,17 @@ app.post("/inloggen", async (req, res) => {
 
 /* registratie */
 app.post("/", async (req, res) => {
-  console.log('test')
+  console.log("test");
   let userData = {
-    voornaam: req.body.voornaam, 
-    tussenvoegsel: req.body.tussenvoegsel, 
+    voornaam: req.body.voornaam,
+    tussenvoegsel: req.body.tussenvoegsel,
     achternaam: req.body.achternaam,
-    geslacht: req.body.geslacht, 
+    geslacht: req.body.geslacht,
     postcode: req.body.postcode,
-    straatnaam: req.body.straatnaam, 
+    straatnaam: req.body.straatnaam,
     huisnummer: parseInt(req.body.huisnummer),
-    toevoeging: req.body.toevoeging, 
-    woonplaats: req.body.woonplaats, 
+    toevoeging: req.body.toevoeging,
+    woonplaats: req.body.woonplaats,
     geboortedatum: req.body.geboortedatum,
     telefoonnummer: req.body.telefoonnummer,
     email: req.body.email,
@@ -78,25 +78,22 @@ app.get("/", (req, res) => {
 app.get("/adoptie", async (req, res) => {
   // Getting the animals
   const dieren = await db.collection("dieren").find().toArray();
-  // Making an array of objects of dieren
-  const formattedDieren = dieren.map((item) => {
-    return {
-      _id: item._id,
-      katachtigen: item.katachtigen.map((animal) => ({
-        name: animal.soort,
-        dieren: animal.dieren.map((dier) => ({
-          naam: dier.naam,
-          leeftijd: dier.leeftijd,
-          omschrijving: dier.omschrijving,
-          geslacht: dier.geslacht,
-          gewicht: dier.gewicht,
-          img: dier.img,
-        })),
-      })),
-    };
-  });
-  console.log(formattedDieren[0].katachtigen);
-  res.render("pages/adoptie", { dieren: formattedDieren });
+  // Making an array of objects of animals
+
+  console.log(dieren);
+  res.render("pages/adoptie", { dieren: dieren });
+});
+
+// Dynamic route for the animals
+app.get("/adoptie/:name", async function (req, res) {
+  const id = req.query.id;
+  let dier;
+  try {
+    // Zoek de bijhorende dier erbij
+    dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
+  } finally {
+    return res.render("pages/dier", { dier: dier });
+  }
 });
 
 app.get("/toevoegen", (req, res) => {
@@ -112,6 +109,7 @@ app.get("/mail", (req, res) => {
 app.get("/profiel", (req, res) => {
   res.render("pages/profiel");
 });
+
 app.get("/inloggen", (req, res) => {
   res.render("pages/inloggen");
 });
