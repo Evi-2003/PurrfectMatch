@@ -136,6 +136,10 @@ app.get("/registreren", (req, res) => {
   res.render("pages/registreren");
 });
 
+app.get("/vragenlijst", (req, res) => {
+  res.render("pages/vragenlijst");
+});
+
 app.listen(port, () => {
   console.log(`Ik luister naar poort: ${port}`);
 });
