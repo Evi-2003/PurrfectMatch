@@ -3,6 +3,7 @@ const app = express();
 const dotenv = require("dotenv");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = 3000;
+const bcrypt = require("bcrypt");
 
 require("dotenv").config();
 app.set("view engine", "ejs");
@@ -33,41 +34,59 @@ client
     console.log(`Er is wat mis gegaan - ${err}`);
   });
 
-/* login */
-app.post("/inloggen", async (req, res) => {
-  const user = await db.collection("users").findOne({ email: req.body.email });
+/* check wachtwoord */ 
+async function checkUser(email, wachtwoord) {
+  const user = await db.collection("users").findOne({ email: email });
   if (user) {
-    let checkWachtwoord = req.body.wachtwoord === user.wachtwoord;
+    let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord);
+
     if (checkWachtwoord) {
-      res.redirect("/profiel");
+      return true;
     } else {
-      res.send("password not correct");
+      return false; 
     }
   } else {
-    res.redirect("/registreren");
+    return false;
+  }
+}
+
+/* login */
+app.post("/inloggen", async (req, res) => {
+  let email = req.body.email
+  let wachtwoord = req.body.wachtwoord
+
+  logginResultaat = await checkUser(email, wachtwoord);
+
+  if (logginResultaat) {
+    res.redirect("/profiel");
+  } else {
+    res.send('email of wachtwoord is onjuist');
   }
 });
 
 /* registratie */
 app.post("/", async (req, res) => {
-  console.log("test");
-  let userData = {
-    voornaam: req.body.voornaam,
-    tussenvoegsel: req.body.tussenvoegsel,
-    achternaam: req.body.achternaam,
-    geslacht: req.body.geslacht,
-    postcode: req.body.postcode,
-    straatnaam: req.body.straatnaam,
-    huisnummer: parseInt(req.body.huisnummer),
-    toevoeging: req.body.toevoeging,
-    woonplaats: req.body.woonplaats,
-    geboortedatum: req.body.geboortedatum,
-    telefoonnummer: req.body.telefoonnummer,
-    email: req.body.email,
-    wachtwoord: req.body.repassword,
-  };
-  await db.collection("users").insertOne(userData);
-  res.redirect("/profiel");
+  bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
+
+    let userData = {
+      voornaam: req.body.voornaam,
+      tussenvoegsel: req.body.tussenvoegsel,
+      achternaam: req.body.achternaam,
+      geslacht: req.body.geslacht,
+      postcode: req.body.postcode,
+      straatnaam: req.body.straatnaam,
+      huisnummer: parseInt(req.body.huisnummer),
+      toevoeging: req.body.toevoeging,
+      woonplaats: req.body.woonplaats,
+      geboortedatum: req.body.geboortedatum,
+      telefoonnummer: req.body.telefoonnummer,
+      email: req.body.email,
+      wachtwoord: hashedWachtwoord,
+    };
+
+    await db.collection("users").insertOne(userData);
+    res.redirect("/profiel");
+  });
 });
 
 // Routes
