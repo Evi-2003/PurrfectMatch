@@ -80,6 +80,14 @@ nav {
   color: var(--color-text2);
 } 
 
+nav > a{
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  align-items: center;
+  gap: 1em;
+}
+
 nav ul{
   background: var(--color-oranje);
   color: var(--color-text);
@@ -92,10 +100,10 @@ nav ul{
   z-index: 2;
   transition: right .5s;
 }
+
 .sidemenu{
   right:0;
 }
-
 
 nav ul li{
   display: block;
