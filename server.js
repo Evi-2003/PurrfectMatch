@@ -123,8 +123,6 @@ app.get("/adoptie", async (req, res) => {
   // Getting the animals
   const dieren = await db.collection("dieren").find().toArray();
   // Making an array of objects of animals
-
-  console.log(dieren);
   res.render("pages/adoptie", { dieren: dieren });
 });
 
