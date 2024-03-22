@@ -39,7 +39,7 @@ app.post("/inloggen", async (req, res) => {
   if (user) {
     let checkWachtwoord = req.body.wachtwoord === user.wachtwoord;
     if (checkWachtwoord) {
-      res.render("pages/profiel", { user });
+      res.redirect("/profiel");
     } else {
       res.send("password not correct");
     }
@@ -49,13 +49,25 @@ app.post("/inloggen", async (req, res) => {
 });
 
 /* registratie */
-app.post("/pages/registreren", async (req, res) => {
+app.post("/", async (req, res) => {
+  console.log("test");
   let userData = {
+    voornaam: req.body.voornaam,
+    tussenvoegsel: req.body.tussenvoegsel,
+    achternaam: req.body.achternaam,
+    geslacht: req.body.geslacht,
+    postcode: req.body.postcode,
+    straatnaam: req.body.straatnaam,
+    huisnummer: parseInt(req.body.huisnummer),
+    toevoeging: req.body.toevoeging,
+    woonplaats: req.body.woonplaats,
+    geboortedatum: req.body.geboortedatum,
+    telefoonnummer: req.body.telefoonnummer,
     email: req.body.email,
-    wachtwoord: req.body.wachtwoord,
+    wachtwoord: req.body.repassword,
   };
   await db.collection("users").insertOne(userData);
-  res.redirect("/pages/index");
+  res.redirect("/profiel");
 });
 
 // Routes
@@ -63,8 +75,25 @@ app.get("/", (req, res) => {
   res.render("pages/index");
 });
 
-app.get("/adoptie", (req, res) => {
-  res.render("pages/adoptie");
+app.get("/adoptie", async (req, res) => {
+  // Getting the animals
+  const dieren = await db.collection("dieren").find().toArray();
+  // Making an array of objects of animals
+
+  console.log(dieren);
+  res.render("pages/adoptie", { dieren: dieren });
+});
+
+// Dynamic route for the animals
+app.get("/adoptie/:name", async function (req, res) {
+  const id = req.query.id;
+  let dier;
+  try {
+    // Zoek de bijhorende dier erbij
+    dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
+  } finally {
+    return res.render("pages/dier", { dier: dier });
+  }
 });
 
 app.get("/toevoegen", (req, res) => {
@@ -80,6 +109,7 @@ app.get("/mail", (req, res) => {
 app.get("/profiel", (req, res) => {
   res.render("pages/profiel");
 });
+
 app.get("/inloggen", (req, res) => {
   res.render("pages/inloggen");
 });

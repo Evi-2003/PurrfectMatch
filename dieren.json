@@ -1,11 +1,8 @@
-{
-    "katachtigen": [
-      {
-        "soort": "leeuw",
-        "dieren": [
+
           {
             "naam": "Leo",
             "leeftijd": 6,
+            "soort": "leeuw",
             "gewicht": 180,
             "geslacht": "mannelijk",
             "omschrijving": "Leo is een imposante leeuw met een majestueuze manenbos. Hij is de koning van zijn territorium en staat bekend om zijn kracht en moed. In zijn vrije tijd geniet hij van lange dutjes in de zon en jagen op de Afrikaanse savanne."
@@ -13,18 +10,17 @@
           {
             "naam": "Rex",
             "leeftijd": 6,
+            "soort": "leeuw",
             "gewicht": 120,
             "geslacht": "mannelijk",
             "omschrijving": "Rex is een imposante leeuw met een brede kop en krachtige poten. Hij is de leider van zijn troep en beschermt zijn territorium met trots. Rex is een liefdevolle vader voor zijn welpen en geniet van rustige momenten met zijn familie onder de Afrikaanse zon."
-          }
-        ]
-      },
-      {
-        "soort": "tijger",
-        "dieren": [
+          },
+
+   
           {
             "naam": "Tessa",
             "leeftijd": 4,
+            "soort": "tijger",
             "gewicht": 120,
             "geslacht": "vrouwelijk",
             "omschrijving": "Tessa is een elegante tijgerin met prachtige strepen en heldere ogen. Ze is snel en behendig, bekend om haar gracieusheid tijdens de jacht. In haar rustige momenten houdt ze ervan om te luieren in de schaduw van de bomen."
@@ -32,6 +28,7 @@
           {
             "naam": "Tom",
             "leeftijd": 5,
+            "soort": "tijger",
             "gewicht": 150,
             "geslacht": "mannelijk",
             "omschrijving": "Tom is een krachtige tijger met een indrukwekkende gestalte en een doordringende blik. Hij jaagt behendig op prooi in de dichte bossen van Azië en geniet van rustige momenten in de koelte van de schaduwrijke vegetatie."
@@ -39,24 +36,24 @@
           {
             "naam": "Luna",
             "leeftijd": 3,
+            "soort": "tijger",
             "gewicht": 110,
             "geslacht": "vrouwelijk",
             "omschrijving": "Luna is een speelse tijgerin met een levendige persoonlijkheid en een zachtaardige aard. Ze jaagt behendig op prooi in de dichte jungle van India en geniet van rustige momenten aan de oevers van kronkelende rivieren."
-          }
-        ]
-      },
-      {
-        "soort": "cheetah",
-        "dieren": [
+          },
+ 
+  
           {
             "naam": "Max",
             "leeftijd": 2,
             "gewicht": 50,
+            "soort": "cheetah",
             "geslacht": "mannelijk",
             "omschrijving": "Max is een energieke cheeta die bekend staat om zijn ongeëvenaarde snelheid. Hij houdt ervan om te rennen over de uitgestrekte vlaktes van de savanne, zijn gestroomlijnde lichaam snijdt door de lucht. Max is een ware snelheidsduivel, maar heeft ook een speelse kant, vooral tijdens het rollen en stoeien met zijn broers en zussen."
           },
           {
             "naam": "Zara",
+            "soort": "cheetah",
             "leeftijd": 3,
             "gewicht": 45,
             "geslacht": "vrouwelijk",
@@ -64,20 +61,18 @@
           },
           {
             "naam": "Simba",
+            "soort": "cheetah",
             "leeftijd": 4,
             "gewicht": 55,
             "geslacht": "mannelijk",
             "omschrijving": "Simba is een krachtige cheeta met een gespierd lichaam en scherpe klauwen. Hij jaagt behendig op prooi in de open vlaktes van de savanne en staat bekend om zijn indrukwekkende snelheid en behendigheid. Simba is een trotse jager, maar heeft ook een zachtaardige kant en geniet van rustige momenten in de schaduw van de acaciabomen."
-          }
-        ]
-      },
-      {
-        "soort": "jaguar",
-        "dieren": [
+          },
+    
           {
             "naam": "Jade",
             "leeftijd": 5,
             "gewicht": 140,
+            "soort": "jaguar",
             "geslacht": "vrouwelijk",
             "omschrijving": "Jade is een gracieuze jaguar met een elegante loop en glanzende vacht. Ze jaagt vaak op vis langs de oevers van rivieren en geniet van rustige momenten onder de schaduw van het regenwoud."
           },
@@ -85,31 +80,33 @@
             "naam": "Jack",
             "leeftijd": 6,
             "gewicht": 150,
+            "soort": "jaguar",
             "geslacht": "mannelijk",
             "omschrijving": "Jack is een krachtige jaguar met een imposante gestalte en scherpe klauwen. Hij jaagt behendig op prooi in de dichte vegetatie van het regenwoud en staat bekend om zijn roofzuchtige aard. In zijn vrije tijd geniet hij van rustige momenten hoog in de bomen, zijn territorium overziend."
           },
           {
             "naam": "Juno",
             "leeftijd": 4,
+            "soort": "jaguar",
             "gewicht": 130,
             "geslacht": "vrouwelijk",
             "omschrijving": "Juno is een nieuwsgierige jaguar met een speelse persoonlijkheid en een avontuurlijke geest. Ze jaagt behendig op prooi in de dichte jungle en verkent graag haar omgeving. Juno is een solitaire jager maar geniet ook van gezelschap tijdens rustige momenten in de schaduw van het regenwoud."
           }
-        ]
-      },
-      {
-        "soort": "lynx",
-        "dieren": [
+    
+      
+       
           {
             "naam": "Lenny",
             "leeftijd": 3,
             "gewicht": 80,
+            "soort": "lynx",
             "geslacht": "mannelijk",
             "omschrijving": "Lenny is een nieuwsgierige lynx met pluizige oren en een weelderige vacht. Hij houdt van sluipen door de bossen en het besluipen van zijn prooi met stille tred. Lenny is speels van aard en brengt graag zijn tijd door met het jagen op vlinders."
           },
           {
             "naam": "Sophie",
             "leeftijd": 2,
+            "soort": "lynx",
             "gewicht": 75,
             "geslacht": "vrouwelijk",
             "omschrijving": "Luna is een elegante lynx met een sierlijke tred en alerte ogen. Ze jaagt behendig op prooi in de dichte bossen en staat bekend om haar behendigheid en snelheid. Luna is een solitaire jager maar geniet ook van rustige momenten onder de sterrenhemel."
@@ -117,18 +114,16 @@
           {
             "naam": "Diesel",
             "leeftijd": 4,
+            "soort": "lynx",
             "gewicht": 85,
             "geslacht": "mannelijk",
             "omschrijving": "Leo is een krachtige lynx met een imposante gestalte en scherpe klauwen. Hij jaagt behendig op prooi in de besneeuwde wouden en staat bekend om zijn roofzuchtige aard. In zijn vrije tijd geniet hij van rustige momenten hoog in de bomen, zijn territorium overziend."
           }
-        ]
-      },
-      {
-        "soort": "poema",
-        "dieren": [
+ 
           {
             "naam": "Diego",
             "leeftijd": 9,
+            "soort": "poema",
             "gewicht": 200,
             "geslacht": "mannelijk",
             "omschrijving": "Diego is een stoere poema met een robuuste lichaamsbouw en scherpe klauwen. Hij is een solitaire jager die de bergen doorkruist op zoek naar prooi. Ondanks zijn ruige uiterlijk heeft Diego een zachte kant en kan hij genieten van ontspannen momenten in de warme zonnestralen."
@@ -136,19 +131,18 @@
           {
             "naam": "Nala",
             "leeftijd": 7,
+            "soort": "poema",
             "gewicht": 180,
             "geslacht": "vrouwelijk",
             "omschrijving": "Luna is een elegante poema met een slanke gestalte en sierlijke bewegingen. Ze jaagt behendig op prooi in de dichte bossen en staat bekend om haar snelheid en behendigheid. Luna geniet van rustige momenten in de natuur en kan vaak worden gezien luierend op een rots, haar territorium overziend."
           }
-        ]
-      },
-      {
-        "soort": "serval",
-        "dieren": [
+     
+
           {
             "naam": "Sam",
             "leeftijd": 4,
             "gewicht": 90,
+            "soort": "serval",
             "geslacht": "mannelijk",
             "omschrijving": "Sam is een ondeugende serval met lange poten en grote oren. Hij jaagt vaak op insecten en kleine knaagdieren in de savanne en staat bekend om zijn behendigheid tijdens de jacht. Sam is speels van aard en brengt zijn tijd graag door met het springen en rennen door het hoge gras."
           },
@@ -156,19 +150,19 @@
             "naam": "Sophie",
             "leeftijd": 3,
             "gewicht": 85,
+            "soort": "serval",
             "geslacht": "vrouwelijk",
             "omschrijving": "Sophie is een speelse serval met een elegante houding en sierlijke bewegingen. Ze jaagt behendig op prooi in de dichte begroeiing van de savanne en staat bekend om haar behendigheid en snelheid. Sophie is nieuwsgierig van aard en verkent graag haar omgeving."
           },
           {
             "naam": "Ollie",
             "leeftijd": 5,
+            "soort": "serval",
             "gewicht": 95,
             "geslacht": "mannelijk",
             "omschrijving": "Simba is een krachtige serval met een gespierd lichaam en scherpe klauwen. Hij jaagt behendig op prooi in de open vlaktes van de savanne en staat bekend om zijn indrukwekkende snelheid en behendigheid. Simba is een trotse jager, maar heeft ook een zachtaardige kant en geniet van rustige momenten in de schaduw van de acaciabomen."
           }
-        ]
-      }
-    ]
-  }
+        
+   
   
   

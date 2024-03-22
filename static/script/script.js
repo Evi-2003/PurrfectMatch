@@ -126,3 +126,23 @@ prev.onclick = function(){
     toggleButtonsVisibility(); // Controleer de zichtbaarheid van de knoppen na het veranderen van de actieve vraag
 }
 
+// ---------------SLIDER INDEX-----------------
+const swiper = new Swiper('.swiper', {
+  // Optional parameters
+
+  // If we need pagination
+  pagination: {
+    el: '.swiper-pagination',
+  },
+
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
+  // And if we need scrollbar
+  scrollbar: {
+    el: '.swiper-scrollbar',
+  },
+});

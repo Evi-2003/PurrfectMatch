@@ -16,36 +16,27 @@
     <main>
       <section>
         <ul class="overzicht">
+          <% dieren.forEach(function(dier) { %>
           <li>
-            <a href="detail.html">
+            <a
+              href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>"
+              aria-label="Ga naar dit dier"
+            >
               <img
                 src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg"
                 alt=""
               />
               <div>
-                <h2>Simba</h2>
-                <h3>Leeuw</h3>
-                <h4>Man</h4>
-                <h5>3 jaar</h5>
+                <h2><%= dier.naam %></h2>
+                <h4><%= dier.geslacht %></h4>
+                <h5><%= dier.leeftijd %></h5>
+                <h6><%= dier.gewicht %></h6>
+                <p><%= dier.omschrijving %></p>
               </div>
               <i class="fa-solid fa-pen"></i>
             </a>
           </li>
-          <li>
-            <a href="detail.html">
-              <img
-                src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg"
-                alt=""
-              />
-              <div>
-                <h2>Samba</h2>
-                <h3>Leeuw</h3>
-                <h4>Vrouw</h4>
-                <h5>3 jaar</h5>
-              </div>
-              <i class="fa-solid fa-pen"></i>
-            </a>
-          </li>
+          <% }); %>
         </ul>
       </section>
     </main>

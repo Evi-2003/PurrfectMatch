@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl-NL">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profiel - PurrfectMatch</title>
-    <link rel="stylesheet" href="style.css" />
+    <title><%= dier.naam %> - PurrfectMatch</title>
+    <link rel="stylesheet" href="/style.css" />
     <script
       src="https://kit.fontawesome.com/fee5056558.js"
       crossorigin="anonymous"
@@ -13,7 +13,12 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    
-    <script src="script.js"></script>
+    <main>
+      <section>
+        <h1><%= dier.naam %></h1>
+        <h2><%= dier.gewicht %>kg</h2>
+      </section>
+    </main>
+    <script src="script/script.js"></script>
   </body>
 </html>
