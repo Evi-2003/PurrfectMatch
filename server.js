@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = 3000;
 const bcrypt = require("bcrypt");
+const session = require("express-session");
 
 require("dotenv").config();
 app.set("view engine", "ejs");
@@ -34,16 +35,24 @@ client
     console.log(`Er is wat mis gegaan - ${err}`);
   });
 
-/* check wachtwoord */ 
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+/* check wachtwoord */
 async function checkUser(email, wachtwoord) {
   const user = await db.collection("users").findOne({ email: email });
   if (user) {
     let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord);
 
     if (checkWachtwoord) {
-      return true;
+      return { id: user._id, email: email };
     } else {
-      return false; 
+      return false;
     }
   } else {
     return false;
@@ -52,22 +61,38 @@ async function checkUser(email, wachtwoord) {
 
 /* login */
 app.post("/inloggen", async (req, res) => {
-  let email = req.body.email
-  let wachtwoord = req.body.wachtwoord
+  let email = req.body.email;
+  let wachtwoord = req.body.wachtwoord;
 
   logginResultaat = await checkUser(email, wachtwoord);
 
   if (logginResultaat) {
+    req.session.user = logginResultaat;
     res.redirect("/profiel");
   } else {
-    res.send('email of wachtwoord is onjuist');
+    res.send("email of wachtwoord is onjuist");
   }
+});
+
+function checkSession(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    req.session.error = "Geen toegang";
+    res.redirect("/inloggen");
+  }
+}
+
+/* uitloggen */
+app.get("/uitloggen", function (req, res) {
+  req.session.destroy(function () {
+    res.redirect("/");
+  });
 });
 
 /* registratie */
 app.post("/", async (req, res) => {
   bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
-
     let userData = {
       voornaam: req.body.voornaam,
       tussenvoegsel: req.body.tussenvoegsel,
@@ -98,8 +123,6 @@ app.get("/adoptie", async (req, res) => {
   // Getting the animals
   const dieren = await db.collection("dieren").find().toArray();
   // Making an array of objects of animals
-
-  console.log(dieren);
   res.render("pages/adoptie", { dieren: dieren });
 });
 
@@ -115,6 +138,10 @@ app.get("/adoptie/:name", async function (req, res) {
   }
 });
 
+app.get("/profiel", checkSession, (req, res) => {
+  res.render("pages/profiel");
+});
+
 app.get("/toevoegen", (req, res) => {
   res.render("pages/toevoegen");
 });
@@ -124,9 +151,6 @@ app.get("/favorieten", (req, res) => {
 });
 app.get("/mail", (req, res) => {
   res.render("pages/mail");
-});
-app.get("/profiel", (req, res) => {
-  res.render("pages/profiel");
 });
 
 app.get("/inloggen", (req, res) => {
@@ -140,6 +164,28 @@ app.get("/vragenlijst", (req, res) => {
   res.render("pages/vragenlijst");
 });
 
+// Liken van een dier
+app.post("/like", async (req, res) => {
+  const id = { _id: new ObjectId(req.body.dier) };
+  let likeCount; // Voor het bijhouden van de likes
+  let dier;
+  let dieren;
+  try {
+    // Zoek de bijhorende dier erbij
+    dier = await db.collection("dieren").findOne(id);
+  } finally {
+    // If there is no likes, make it 1.
+    if (dier) {
+      likeCount = dier.likes ? (dier.likes += 1) : 1;
+    }
+    // Updating the likes
+    await db.collection("dieren").updateOne(id, { $set: { likes: likeCount } });
+    // Getting the updated dieren array
+    dieren = await db.collection("dieren").find().toArray();
+    // Re-rendering the page with the new dieren
+    res.render("pages/adoptie", { dieren: dieren });
+  }
+});
 app.listen(port, () => {
   console.log(`Ik luister naar poort: ${port}`);
 });

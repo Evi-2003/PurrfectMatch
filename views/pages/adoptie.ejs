@@ -34,6 +34,11 @@
                 <p><%= dier.omschrijving %></p>
               </div>
               <i class="fa-solid fa-pen"></i>
+              <span>Likes: <%= dier.likes %></span>
+              <form action="like" method="post" id="likeForm">
+                <input type="hidden" name="dier" value="<%= dier._id %>" />
+                <button type="submit">❤️</button>
+              </form>
             </a>
           </li>
           <% }); %>
