@@ -4,6 +4,27 @@ function sidemenu() {
   menu.classList.toggle("sidemenu");
 } 
 
+// --------------PROFIEL-----------
+document.addEventListener('DOMContentLoaded', function() {
+  let listItems = document.querySelectorAll('.profieldropdown ul li');
+  let textvakken = document.querySelectorAll('main > div[class^="textvak"]');
+
+  listItems.forEach(function(item, index) {
+    item.addEventListener('click', function() {
+      // Verplaats de 'profielactive'-klasse van het huidige actieve lijstitem naar het geselecteerde lijstitem
+      document.querySelector('.profielactive').classList.remove('profielactive');
+      this.classList.add('profielactive');
+
+      // Verberg alle tekstvakken
+      textvakken.forEach(function(textvak) {
+        textvak.style.display = 'none';
+      });
+      // Toon alleen het tekstvak met dezelfde index als het geselecteerde lijstitem
+      textvakken[index].style.display = 'block';
+    });
+  });
+});
+
 
 // ---------------FORMS PASSWORD-----------------
 function showpassword(x) {
@@ -146,3 +167,5 @@ const swiper = new Swiper('.swiper', {
     el: '.swiper-scrollbar',
   },
 });
+
+

@@ -661,7 +661,7 @@ input[type=number] {
   font-weight: bold;
 }
 
-/* ---------KAART-SLIDER------------ */
+/* ---------KAART-SLIDER - VRAGENLIJST------------ */
 .selected{
   background: #005b09;
 }
@@ -720,7 +720,95 @@ input[type=number] {
   opacity: 1;
 }
 
+/* ---------------PROFIEL----------------- */
+.profielheadbg{
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
 
+.profielheadcontainer{
+  padding: 2rem;
+  background: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 5px;
+}
+
+.profielmain{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: white;
+  position: relative;
+}
+
+.profielmain::before{
+  content: '';
+  position: absolute;
+  border-bottom: 10px black;
+}
+
+.profieldropdown{
+  width: 100%;
+  padding: 0rem 10%;
+}
+
+.profieldropdown ul{
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.profieldropdown ul li{
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.profieldropdown ul li i{
+  font-size: 1.5rem;
+}
+
+.profielactive{
+  background: var(--color-oranje);
+}
+
+.textvak2,
+.textvak3 {
+    display: none;
+}
+
+/* ----------------PROFIEL-TEXTVAK1---------------- */
+.katprofielbg{
+  padding: 2rem;
+}
+
+.katprofielcontainer{
+  display: flex;
+  height: 8rem;
+  justify-content: space-around;
+  background: white;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.katprofielcontainer i{
+  align-self: flex-start;
+  margin-top: 1rem;
+}
+
+.katprofielcontainer img{
+  width: 40%;
+}
+
+.katprofieltext{
+  display: flex;
+  flex-direction: column;
+  height: inherit;
+  padding: 1rem;
+}
 
 /* ---------------MEDIA-QUERIES----------------- */
 @media (width > 500px){
