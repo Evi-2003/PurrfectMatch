@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = 3000;
 const bcrypt = require("bcrypt");
+const session = require('express-session');
 
 require("dotenv").config();
 app.set("view engine", "ejs");
@@ -34,6 +35,12 @@ client
     console.log(`Er is wat mis gegaan - ${err}`);
   });
 
+app.use(session({
+  secret: 'secret', 
+  resave: false, 
+  saveUninitialized: false
+}))
+
 /* check wachtwoord */ 
 async function checkUser(email, wachtwoord) {
   const user = await db.collection("users").findOne({ email: email });
@@ -41,7 +48,7 @@ async function checkUser(email, wachtwoord) {
     let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord);
 
     if (checkWachtwoord) {
-      return true;
+      return { id: user._id, email: email };
     } else {
       return false; 
     }
@@ -58,11 +65,28 @@ app.post("/inloggen", async (req, res) => {
   logginResultaat = await checkUser(email, wachtwoord);
 
   if (logginResultaat) {
+    req.session.user = logginResultaat;
     res.redirect("/profiel");
   } else {
     res.send('email of wachtwoord is onjuist');
   }
 });
+
+function checkSession(req, res, next) {
+  if(req.session.user) {
+    next();
+  } else {
+    req.session.error = 'Geen toegang';
+    res.redirect('/inloggen');
+  }
+}
+
+/* uitloggen */
+app.get('/uitloggen', function(req, res) {
+  req.session.destroy(function() {
+    res.redirect('/');
+  })
+})
 
 /* registratie */
 app.post("/", async (req, res) => {
@@ -115,6 +139,10 @@ app.get("/adoptie/:name", async function (req, res) {
   }
 });
 
+app.get('/profiel', checkSession, (req, res) => {
+  res.render("pages/profiel");
+});
+
 app.get("/toevoegen", (req, res) => {
   res.render("pages/toevoegen");
 });
@@ -124,9 +152,6 @@ app.get("/favorieten", (req, res) => {
 });
 app.get("/mail", (req, res) => {
   res.render("pages/mail");
-});
-app.get("/profiel", (req, res) => {
-  res.render("pages/profiel");
 });
 
 app.get("/inloggen", (req, res) => {
