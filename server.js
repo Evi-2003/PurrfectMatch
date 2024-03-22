@@ -34,7 +34,7 @@ client
     console.log(`Er is wat mis gegaan - ${err}`);
   });
 
-/* check wachtwoord */ 
+/* check wachtwoord */
 async function checkUser(email, wachtwoord) {
   const user = await db.collection("users").findOne({ email: email });
   if (user) {
@@ -43,7 +43,7 @@ async function checkUser(email, wachtwoord) {
     if (checkWachtwoord) {
       return true;
     } else {
-      return false; 
+      return false;
     }
   } else {
     return false;
@@ -52,22 +52,21 @@ async function checkUser(email, wachtwoord) {
 
 /* login */
 app.post("/inloggen", async (req, res) => {
-  let email = req.body.email
-  let wachtwoord = req.body.wachtwoord
+  let email = req.body.email;
+  let wachtwoord = req.body.wachtwoord;
 
   logginResultaat = await checkUser(email, wachtwoord);
 
   if (logginResultaat) {
     res.redirect("/profiel");
   } else {
-    res.send('email of wachtwoord is onjuist');
+    res.send("email of wachtwoord is onjuist");
   }
 });
 
 /* registratie */
 app.post("/", async (req, res) => {
   bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
-
     let userData = {
       voornaam: req.body.voornaam,
       tussenvoegsel: req.body.tussenvoegsel,
@@ -98,8 +97,6 @@ app.get("/adoptie", async (req, res) => {
   // Getting the animals
   const dieren = await db.collection("dieren").find().toArray();
   // Making an array of objects of animals
-
-  console.log(dieren);
   res.render("pages/adoptie", { dieren: dieren });
 });
 
@@ -138,6 +135,31 @@ app.get("/registreren", (req, res) => {
 
 app.get("/vragenlijst", (req, res) => {
   res.render("pages/vragenlijst");
+});
+
+// Liken van een dier
+app.post("/like", async (req, res) => {
+  const id = { _id: new ObjectId(req.body.dier) };
+  let likeCount; // Voor het bijhouden van de likes
+  let dier;
+  let dieren;
+  try {
+    // Zoek de bijhorende dier erbij
+    dier = await db.collection("dieren").findOne(id);
+  } finally {
+    console.log(dier);
+    // If there is no likes, make it 1.
+    if (dier) {
+      console.log(dier);
+      likeCount = dier.likes ? (dier.likes += 1) : 1;
+    }
+    // Updating the likes
+    await db.collection("dieren").updateOne(id, { $set: { likes: likeCount } });
+    // Getting the updated dieren array
+    dieren = await db.collection("dieren").find().toArray();
+    // Re-rendering the page with the new dieren
+    res.render("pages/adoptie", { dieren: dieren });
+  }
 });
 
 app.listen(port, () => {
