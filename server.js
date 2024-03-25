@@ -122,10 +122,11 @@ app.get("/", (req, res) => {
 app.get("/adoptie", async (req, res) => {
   // Getting the animals
   const dieren = await db.collection("dieren").find().toArray();
-  // Making an array of objects of animals
-
-  console.log(dieren);
-  res.render("pages/adoptie", { dieren: dieren });
+  if (req.session.user) {
+    res.render("pages/adoptie", { dieren: dieren, user: req.session.user });
+  } else {
+    res.render("pages/adoptie", { dieren: dieren, user: null });
+  }
 });
 
 // Dynamic route for the animals
@@ -185,7 +186,11 @@ app.post("/like", async (req, res) => {
     // Getting the updated dieren array
     dieren = await db.collection("dieren").find().toArray();
     // Re-rendering the page with the new dieren
-    res.render("pages/adoptie", { dieren: dieren });
+    if (req.session.user) {
+      res.render("pages/adoptie", { dieren: dieren, user: req.session.user });
+    } else {
+      res.render("pages/adoptie", { dieren: dieren, user: null });
+    }
   }
 });
 app.listen(port, () => {
