@@ -163,9 +163,29 @@ app.get('/adoptie/:name', async function (req, res) {
   }
 })
 
-app.get('/profiel', checkSession, (req, res) => {
-  res.render('pages/profiel')
+app.get('/profiel', checkSession, async (req, res) => {
+  const userId = { _id: new ObjectId(req.session.user.id) }
+  const userFromDb = await db.collection('users').findOne(userId)
+  let likedAnimalsId = userFromDb.liked.map((element) => element.id._id)
+
+  try {
+    const likedAnimals = await Promise.all(
+      likedAnimalsId.map(async (element) => {
+        const dier = await getAnimal(element)
+        return dier
+      })
+    )
+
+    res.render('pages/profiel', { account: userFromDb, dieren: likedAnimals })
+  } catch (error) {
+    res.status(500).send('Iets mis gegaan')
+  }
 })
+
+async function getAnimal(element) {
+  const dier = await db.collection('dieren').findOne({ _id: element })
+  return dier
+}
 
 app.get('/toevoegen', (req, res) => {
   res.render('pages/toevoegen')
