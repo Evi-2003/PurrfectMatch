@@ -120,10 +120,37 @@ app.get("/", (req, res) => {
 });
 
 app.get("/adoptie", async (req, res) => {
+  let likedIds;
+  let dieren;
+  let userFromDb;
+
   // Getting the animals
-  const dieren = await db.collection("dieren").find().toArray();
-  // Making an array of objects of animals
-  res.render("pages/adoptie", { dieren: dieren });
+  dieren = await db.collection("dieren").find().toArray();
+  if (req.session.user) {
+    try {
+      // Getting the user, for the liked animals
+      const userId = { _id: new ObjectId(req.session.user.id) };
+      userFromDb = await db.collection("users").findOne(userId);
+    } finally {
+      if (req.session.user) {
+        likedIds = userFromDb.liked
+          ? userFromDb.liked.map((item) => item.id._id.toString())
+          : [];
+
+        res.render("pages/adoptie", {
+          dieren: dieren,
+          user: req.session.user,
+          likedIds: likedIds,
+        });
+      }
+    }
+  } else {
+    res.render("pages/adoptie", {
+      dieren: dieren,
+      user: null,
+      likedIds: null,
+    });
+  }
 });
 
 // Dynamic route for the animals
@@ -167,23 +194,58 @@ app.get("/vragenlijst", (req, res) => {
 // Liken van een dier
 app.post("/like", async (req, res) => {
   const id = { _id: new ObjectId(req.body.dier) };
+  const user = { _id: new ObjectId(req.body.user) };
+  let userFromDb;
   let likeCount; // Voor het bijhouden van de likes
   let dier;
+  let likedIds;
   let dieren;
   try {
     // Zoek de bijhorende dier erbij
     dier = await db.collection("dieren").findOne(id);
+    // Zoek user erbij
+    userFromDb = await db.collection("users").findOne(user);
   } finally {
-    // If there is no likes, make it 1.
-    if (dier) {
-      likeCount = dier.likes ? (dier.likes += 1) : 1;
+    // Updating the likes on the dier, after checking if the user already liked it
+    likedIds = userFromDb.liked
+      ? userFromDb.liked.map((item) => item.id._id.toString())
+      : [];
+    if (!likedIds.includes(req.body.dier.toString())) {
+      // If there is no likes, make it 1.
+      if (dier) {
+        likeCount = dier.likes ? (dier.likes += 1) : 1;
+      }
+      await db
+        .collection("dieren")
+        .updateOne(id, { $set: { likes: likeCount } });
+      await db
+        .collection("users")
+        .updateOne(user, { $push: { liked: { id } } });
+    } else {
+      likeCount = dier.likes ? (dier.likes -= 1) : 1;
+      await db
+        .collection("dieren")
+        .updateOne(id, { $set: { likes: likeCount } });
+      await db
+        .collection("users")
+        .updateOne(user, { $pull: { liked: { id } } });
     }
-    // Updating the likes
-    await db.collection("dieren").updateOne(id, { $set: { likes: likeCount } });
     // Getting the updated dieren array
     dieren = await db.collection("dieren").find().toArray();
+    userFromDb = await db.collection("users").findOne(user);
+    likedIds = userFromDb.liked
+      ? userFromDb.liked.map((item) => item.id._id.toString())
+      : [];
     // Re-rendering the page with the new dieren
-    res.render("pages/adoptie", { dieren: dieren });
+    if (req.session.user) {
+      res.render("pages/adoptie", {
+        dieren: dieren,
+        user: req.session.user,
+        likedIds: likedIds,
+      });
+    } else {
+      res.render("pages/adoptie", { dieren: dieren, user: null, likedIds: [] });
+    }
   }
 });
 app.listen(port, () => {

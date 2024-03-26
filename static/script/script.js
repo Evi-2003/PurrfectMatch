@@ -4,6 +4,19 @@ function sidemenu() {
   menu.classList.toggle("sidemenu");
 } 
 
+// ---------------FILTER-----------------
+document.getElementById("filterBtn").addEventListener("click", function() {
+  var filterSection = document.querySelector(".filter");
+  // Controleer of de filtersectie verborgen is
+  if (filterSection.style.display === "none") {
+      // Als het verborgen is, maak het zichtbaar
+      filterSection.style.display = "block";
+  } else {
+      // Als het zichtbaar is, verberg het
+      filterSection.style.display = "none";
+  }
+});
+
 // --------------PROFIEL-----------
 document.addEventListener('DOMContentLoaded', function() {
   let listItems = document.querySelectorAll('.profieldropdown ul li');

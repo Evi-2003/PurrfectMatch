@@ -14,6 +14,58 @@
   <body>
     <%- include('../partials/nav') %>
     <main>
+      <section class="filterensorteren">
+        <div>
+          <p>19 dieren</p>
+          <form id="sorteerFormulier">
+            <select id="sorteerModus" name="sorteerModus">
+              <option value="relevant">Relevant</option>
+                <option value="jongOud">Jong naar Oud</option>
+                <option value="oudJong">Oud naar Jong</option>
+                <option value="lichtZwaar">Licht naar Zwaar</option>
+                <option value="zwaarLicht">Zwaar naar Licht</option>
+            </select>
+        </form>
+        </div>
+        <button id="filterBtn">
+          <i class="fa-solid fa-filter"></i>Filters
+        </button>
+        <section class="filter">
+          <form>
+            <h3>Diersoort</h3>
+            <input type="checkbox" id="checkleeuw" name="diersoort" value="leeuw">
+            <label for="checkleeuw">Leeuw</label>
+            <br>
+            <input type="checkbox" id="checktijger" name="diersoort" value="tijger">
+            <label for="checktijger">Tijger</label>
+            <br>
+            <input type="checkbox" id="checkcheetah" name="diersoort" value="cheetah">
+            <label for="checkcheetah">Cheetah</label>
+            <br>
+            <input type="checkbox" id="checkjaguar" name="diersoort" value="jaguar">
+            <label for="checkjaguar">Jaguar</label>
+            <br>
+            <input type="checkbox" id="checklynx" name="diersoort" value="lynx">
+            <label for="checklynx">Lynx</label>
+            <br>
+            <input type="checkbox" id="checkpoema" name="diersoort" value="poema">
+            <label for="checkpoema">Poema</label>
+            <br>
+            <input type="checkbox" id="checkserval" name="diersoort" value="serval">
+            <label for="checkserval">Serval</label>
+            <br>
+            <h3>Geslacht</h3>
+            <input type="checkbox" id="checkman" name="geslacht" value="man">
+            <label for="checkman">Man</label>
+            <br>
+            <input type="checkbox" id="checkvrouw" name="geslacht" value="vrouw">
+            <label for="checkvrouw">Vrouw</label>
+            <br>
+            <input class="submitfilter" type="submit" value="Aanpassen">
+        </form>
+        
+        </section>
+      </section>
       <section>
         <ul class="overzicht">
           <% dieren.forEach(function(dier) { %>
@@ -33,12 +85,18 @@
                 <h6><%= dier.gewicht %></h6>
                 <p><%= dier.omschrijving %></p>
               </div>
-              <i class="fa-solid fa-pen"></i>
-              <span>Likes: <%= dier.likes %></span>
               <form action="like" method="post" id="likeForm">
                 <input type="hidden" name="dier" value="<%= dier._id %>" />
-                <button type="submit">❤️</button>
+                <input type="hidden" name="user" value="<%= user.id %>" />
+                <button
+                  id="likeButton"
+                  type="submit"
+                  class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>"
+                >
+                  <%= dier.likes %> ❤️
+                </button>
               </form>
+              <% } %>
             </a>
           </li>
           <% }); %>
