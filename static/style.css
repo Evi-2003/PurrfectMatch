@@ -17,7 +17,7 @@
   --color-header-background: #fff;
 
   --font-bold: 600;
-  --font-bold-btn: 500;
+  --font-bold-btn: 550;
   /* ----------form-------------- */
   --form-background-color: #fff;
   --form-inputtext-color: #2c2c2c;
@@ -134,6 +134,12 @@ nav ul .fas {
 nav > i {
   font-size: 1.5rem;
   cursor: pointer;
+}
+
+nav > a{
+  text-decoration: none;
+  color: black;
+  font-size: 1.5rem;
 }
 
 /* -----------------EINDE-NAVIGATIE---------------- */
@@ -399,13 +405,13 @@ nav > i {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: 100vh;
   align-items: center;
 }
 
 .formcontainer {
   padding: 0 2rem;
-  max-width: 30rem;
+  max-width: 45rem;
+  width: 100%;
 }
 
 .formcontainer-container {
@@ -415,6 +421,7 @@ nav > i {
   flex-direction: column;
   border-radius: 1rem;
   box-shadow: var(--form-box-shadow);
+  margin-bottom: 5rem;
 }
 
 .centerform {
@@ -467,6 +474,8 @@ form > div {
 
 .loginform {
   gap: 3rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .logingap {
@@ -492,8 +501,8 @@ form > div {
 
 form div > i {
   position: absolute;
-  top: 0.25rem;
-  right: 0;
+  top: 10px;
+  right: -20px;
   cursor: pointer;
   color: var(--form-inputtext-color);
 }
@@ -508,10 +517,6 @@ form div > i {
 
 /* ---------REGISTREER---------- */
 
-.registreer {
-  height: 200vh;
-}
-
 .registreerp {
   font-size: 0.9rem;
   margin: 1rem 0;
@@ -524,6 +529,8 @@ form div > i {
 
 .registreerform {
   gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .registreergap {
@@ -593,20 +600,11 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.registreerinput > i {
-  position: absolute;
-  top: 61%;
+.registreerinput > i{
   right: 10px;
   cursor: pointer;
   color: var(--form-inputtext-color);
-}
-
-.registreerinput:nth-of-type(7) > i {
-  top: 61%;
-}
-
-.registreerinput:nth-of-type(8) > i {
-  top: 71%;
+  top: 56%;
 }
 
 #pass {
@@ -925,4 +923,86 @@ input[type="number"] {
   flex-direction: column;
   height: inherit;
   padding: 1rem;
+}
+
+/* -----------------DIERENTOEVOEGEN--------------- */
+.registreerinput select{
+  padding: .4rem;
+}
+.toevoegenform{
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.toevoegentext{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem 10%;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.toevoegentext h1{
+  color: var(--color-oranje);
+}
+
+textarea
+{
+  width:100%;
+}
+.textareawrapper
+{
+  border:1px solid #999999;
+  margin:5px 0;
+  padding:3px;
+}
+
+/* ---------------MEDIA-QUERIES----------------- */
+@media (width > 500px){
+  nav ul{
+    display: flex;
+    height: auto;
+    background: transparent;
+    color: black;
+    position: inherit;
+    width: auto;
+    padding: 0;
+  }
+
+  nav ul li a{
+    color: var(--color-text2);
+  }
+  nav > i:last-of-type{
+    display: none;
+  }
+
+  nav ul .fas{
+    display: none;
+  }
+
+  nav ul li:last-of-type{
+    display: none;
+  }
+
+}
+
+@media (width > 850px){
+
+  #next{
+    right: calc(40% - 22rem);
+
+  }
+  #prev{
+    left: calc(40% - 22rem);
+  }
+
+  .vragenlijstgapcontainer{
+    gap: 3rem;
+  }
+
+  .container{
+    padding: .5rem 10%;
+  }
 }
