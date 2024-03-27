@@ -19,9 +19,9 @@
           <i class="fa-solid fa-cat"></i>
           <div class="profielheadtxt">
             <h1>Mijn account</h1>
-            <p>ingelogd als (naam)</p>
+            <p>ingelogd als <%= data.voornaam %></p>
           </div>
-          <a href="/inloggen">Uitloggen account</a>
+          <a href="/uitloggen">Uitloggen account</a>
         </div>
       </div>
       <section class="profielmain">
@@ -51,7 +51,9 @@
           </div>
         </div>
         <div class="textvak2">
-          <p>textvak2</p>
+          <div class="katprofielcontainer">
+            <ul id="verzoekenList"></ul>
+          </div>
         </div>
         <div class="textvak3">
           <div class="profielaanpassen">
@@ -120,11 +122,10 @@
         </div>
 
       </main>
-      <script src="script/script.js"></script>
 
-
-    <a href="/uitloggen">Uitloggen</a>
-    
+    <script>
+      var verzoeken = <%- JSON.stringify(verzoeken) %>;
+    </script>
     <script src="script/script.js"></script>
 
   </body>

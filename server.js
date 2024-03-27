@@ -50,7 +50,7 @@ async function checkUser(email, wachtwoord) {
     let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord);
 
     if (checkWachtwoord) {
-      return { id: user._id, email: email };
+      return { id: user._id, voornaam: user.voornaam };
     } else {
       return false;
     }
@@ -61,10 +61,10 @@ async function checkUser(email, wachtwoord) {
 
 /* login */
 app.post("/inloggen", async (req, res) => {
-  let email = req.body.email;
+  let ingvmail = req.body.email;
   let wachtwoord = req.body.wachtwoord;
 
-  logginResultaat = await checkUser(email, wachtwoord);
+  logginResultaat = await checkUser(ingvmail, wachtwoord);
 
   if (logginResultaat) {
     req.session.user = logginResultaat;
@@ -114,6 +114,51 @@ app.post("/", async (req, res) => {
   });
 });
 
+// Verzoeken sturen
+app.post("/verzoek", checkSession, async (req, res) => {
+  let verzoekData = {
+    zoekerId: req.session.user.id, 
+    dierId: req.body.dierId, 
+    aanbiederId: req.session.user.id, 
+    status: 'Nog niet beoordeeld',
+  }
+  console.log(verzoekData);
+  // await db.collection("verzoeken").insertOne(verzoekData);
+  res.redirect("/profiel");
+})
+
+// Verzoeken ontvangen 
+app.get("/profiel", checkSession, async (req, res) => {
+  let verzoeken = await db.collection("verzoeken").find({ aanbiederId: req.session.user.id }).toArray();
+
+  for (let i = 0; i < verzoeken.length; i++) {
+    // Ophalen dier naam
+    let dier = await db.collection("dieren").findOne({ _id: new ObjectId(verzoeken[i].dierId) });
+    if (dier) {
+      verzoeken[i].dierNaam = dier.naam;
+    }
+    // Ophalen zoeker naam
+    let zoeker = await db.collection("users").findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
+    if (zoeker) {
+      verzoeken[i].zoekerNaam = zoeker.voornaam;
+    }
+  }
+  
+  res.render("pages/profiel", { data: req.session.user, verzoeken: verzoeken });
+})
+
+// Accepteren of Weigeren
+app.post("/accepteren", async(req, res) => {
+  let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
+
+  if(req.body.accepteren === 'accepteren') {
+    await db.collection("verzoeken").updateOne( verzoekId, { $set: { status: 'Geaccepteerd' } });
+  } else if (req.body.accepteren === 'weigeren') {
+    await db.collection("verzoeken").updateOne( verzoekId, { $set: { status: 'Geweigerd' } });
+  }
+  res.redirect('/profiel')
+})
+
 // Routes
 app.get("/", (req, res) => {
   res.render("pages/index");
@@ -136,10 +181,6 @@ app.get("/adoptie/:name", async function (req, res) {
   } finally {
     return res.render("pages/dier", { dier: dier });
   }
-});
-
-app.get("/profiel", checkSession, (req, res) => {
-  res.render("pages/profiel");
 });
 
 app.get("/toevoegen", (req, res) => {
@@ -186,6 +227,7 @@ app.post("/like", async (req, res) => {
     res.render("pages/adoptie", { dieren: dieren });
   }
 });
+
 app.listen(port, () => {
   console.log(`Ik luister naar poort: ${port}`);
 });
