@@ -110,8 +110,25 @@ app.post('/', async (req, res) => {
     }
 
     await db.collection('users').insertOne(userData)
-    res.redirect('/profiel')
+    res.redirect('/profiel') //miss redirect naar registreren/vragenlijst 
   })
+})
+
+// Vragenlijst
+// Moet dit nog tegelijk worden gepost met het registreren, dus eigenen lijk komt de vragenlijst meteen na het registreren???
+app.post('/vragenlijst', async (req, res) => {
+  let vragenlijstData = {
+    voldoendeWoonruimte: req.body.vraag1, 
+    dierAlleen: req.body.vraag2, 
+    ervaring: req.body.vraag3, 
+    tuin: req.body.vraag4, 
+    jongeKinderen: req.body.vraag5, 
+    anderenHuisdieren: req.body.vraag6, 
+  }
+
+  console.log(vragenlijstData);
+  // await db.collection('user').insertOne(vragenlijstData);
+  res.redirect('/adopteren');
 })
 
 // Routes
