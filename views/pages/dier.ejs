@@ -14,6 +14,10 @@
       <section>
         <h1><%= dier.naam %></h1>
         <h2><%= dier.gewicht %>kg</h2>
+        <!-- button om te mailen -->
+        <form action="/verzoek" method="post">
+          <input type="submit" name="dierId" value="<%= dier._id %>">
+        </form>
       </section>
     </main>
     <script src="/script/script.js"></script>
