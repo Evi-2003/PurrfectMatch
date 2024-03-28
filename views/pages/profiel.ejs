@@ -6,63 +6,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profiel - PurrfectMatch</title>
     <link rel="stylesheet" href="style.css" />
-    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/fee5056558.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <%- include('../partials/nav') %>
 
-    <div class="profielheadbg">
-      <div class="profielheadcontainer">
-        <i class="fa-solid fa-cat"></i>
-        <div class="profielheadtxt">
-          <p>Mijn account</p>
-          <h1>Welkom <%= account.voornaam %></h1>
+      <div class="profielheadbg">
+        <div class="profielheadcontainer">
+          <i class="fa-solid fa-cat"></i>
+          <div class="profielheadtxt">
+            <h1>Mijn account</h1>
+            <p>ingelogd als <%= data.voornaam %></p>
+          </div>
+          <a href="/uitloggen">Uitloggen account</a>
         </div>
-        <a href="/inloggen">Uitloggen account</a>
       </div>
-    </div>
-    <section class="profielmain">
-      <div class="profieldropdown">
-        <ul>
-          <li class="profielactive"><i class="fa-solid fa-heart"></i></li>
-          <li><i class="fa-solid fa-envelope"></i></li>
-          <li><i class="fa-solid fa-gear"></i></li>
-        </ul>
-      </div>
-    </section>
-    <main>
-      <% dieren.forEach(function(dier) { %>
-
-      <li>
-              <div class="textvak1">
-        <div class="katprofielbg">
-          <div class="katprofielcontainer">
-            <!-- <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="" /> -->
-            <div class="katprofieltext">
-              <div>
-                <h2><%= dier.naam %></h2>
-                <p><%= dier.soort %></p>
+      <section class="profielmain">
+          <div class="profieldropdown">
+            <ul>
+              <li class="profielactive"><i class="fa-solid fa-heart"></i></li>
+              <li><i class="fa-solid fa-envelope"></i></li>
+              <li><i class="fa-solid fa-gear"></i></li>
+            </ul>
+          </div>
+      </section>
+      <main>
+        <div class="textvak1">
+          <div class="katprofielbg">
+            <div class="katprofielcontainer">
+              <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="">
+              <div class="katprofieltext">
+                 <div>
+                  <h2>Danny</h2>
+                  <p>Tijger</p>
+                 </div>
+                  <p>Man</p>
               </div>
-              <p><%= dier.geslacht %></p>
+              <i class="fa-solid fa-heart"></i>
+
             </div>
           </div>
         </div>
-      </li>
-      <% }); %>
-
-      <!-- </div>
-      <div class="textvak2">
-        <p>textvak2</p>
-      </div>
-      <div class="textvak3">
-        <div class="profielaanpassen">
+        <div class="textvak2">
+          <div class="katprofielcontainer">
+            <ul id="verzoekenList"></ul>
+          </div>
+        </div>
+        <div class="textvak3">
+          <div class="profielaanpassen">
           <form class="registreerform" action="/" method="post">
+
             <div class="registreerinput">
               <label for="naam">Naam - <span>verplicht</span></label>
               <div class="naam">
-                <input type="text" id="voornaam" name="voornaam" placeholder="Voornaam" required />
-                <input type="text" id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel" />
-                <input type="text" id="achternaam" name="achternaam" placeholder="Achternaam" required />
+                <input type="text" id="voornaam" name="voornaam" placeholder="Voornaam" required>
+                <input type="text" id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel">
+                <input type="text" id="achternaam" name="achternaam" placeholder="Achternaam" required>
               </div>
             </div>
 
@@ -77,73 +79,55 @@
 
             <div class="registreerinput">
               <label for="adres">Adres - <span>verplicht</span></label>
-              <input
-                type="text"
-                id="postcode"
-                name="postcode"
-                placeholder="Postcode"
-                pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)"
-                title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters."
-                required
-              />
-              <div class="huisadres">
-                <input type="text" id="straatnaam" name="straatnaam" placeholder="Straatnaam" required />
-                <input type="number" id="huisnummer" name="huisnummer" placeholder="Huisnr" required />
-                <input type="text" id="toevoeging" name="toevoeging" placeholder="Toevoeging" />
-              </div>
-              <input type="text" id="woonplaats" name="woonplaats" placeholder="Woonplaats" required />
+                <input type="text" id="postcode" name="postcode" placeholder="Postcode" pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)" title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters." required>
+                <div class="huisadres">
+                  <input type="text" id="straatnaam" name="straatnaam" placeholder="Straatnaam" required>
+                  <input type="number" id="huisnummer" name="huisnummer" placeholder="Huisnr" required>
+                  <input type="text" id="toevoeging" name="toevoeging" placeholder="Toevoeging">
+                </div>
+                <input type="text" id="woonplaats" name="woonplaats" placeholder="Woonplaats" required>
             </div>
 
             <div class="registreerinput">
               <label for="geboortedatum">Geboortedatum - <span>verplicht</span></label>
-              <input type="date" id="geboortedatum" name="geboortedatum" required />
+              <input type="date" id="geboortedatum" name="geboortedatum" required>
             </div>
 
             <div class="registreerinput">
               <label for="telefoon">Telefoon - <span>verplicht</span></label>
-              <input
-                type="tel"
-                id="telefoonnummer"
-                name="telefoonnummer"
-                value="+316"
-                placeholder="12345678"
-                pattern="(\+31|0)(6|)[1-9][0-9]{8}"
-                title="Voer een geldig Nederlands telefoonnummer in"
-                required
-              />
+              <input type="tel" id="telefoonnummer" name="telefoonnummer" value="+316" placeholder="12345678" pattern="(\+31|0)(6|)[1-9][0-9]{8}" title="Voer een geldig Nederlands telefoonnummer in" required>
             </div>
 
             <div class="registreerinput">
               <label for="email">Email - <span>verplicht</span></label>
-              <input type="email" id="email" name="email" placeholder="Email" required />
+              <input type="email" id="email" name="email" placeholder="Email" required>
             </div>
 
             <div class="registreerinput">
               <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
               <label for="wachtwoord">Wachtwoord - <span>verplicht</span></label>
-              <input
-                type="password"
-                id="wachtwoord"
-                name="wachtwoord"
-                placeholder="]t&!KJkd]4#Dn3"
-                pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$"
-                required
-                title="Het wachtwoord moet minstens een nummer bevatten [0-9], één letter [A-Z], één symbool[!@#$%^] en moet minimaal 8 tekens lang zijn"
-              />
+              <input type="password" id="wachtwoord" name="wachtwoord" placeholder="]t&!KJkd]4#Dn3" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" required title="Het wachtwoord moet minstens een nummer bevatten [0-9], één letter [A-Z], één symbool[!@#$%^] en moet minimaal 8 tekens lang zijn">
+                
             </div>
 
             <div class="registreerinput">
               <i class="fa-regular fa-eye-slash" onclick="showrepassword(this)"></i>
               <label for="repassword">Herhaal wachtwoord - <span>verplicht</span></label>
-              <input type="password" id="repassword" name="repassword" placeholder="Re-Enter your password" required />
+              <input type="password" id="repassword" name="repassword" placeholder="Re-Enter your password" required>
             </div>
             <span id="pass"></span>
             <button class="btn" type="submit">Registreren</button>
-          </form> -->
+          </form>
+          </div>
         </div>
-      </div>
-    </main>
 
-    <script src="/script/script.js"></script>
+      </main>
+
+    <script>
+      var verzoeken = <%- JSON.stringify(verzoeken) %>;
+    </script>
+    <script src="script/script.js"></script>
+
   </body>
 </html>
+ 

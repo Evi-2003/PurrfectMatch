@@ -15,61 +15,41 @@
     <%- include('../partials/nav') %>
     <!-- LET OP, DIT WAS NOG HETZELFDE ALS DE ADOPTIE PAGINA TIJDENS OVERZETTEN -->
     <main>
-      <section class="form toevoegen">
-        <div class="breadcrumb">
-          <i class="fa-solid fa-arrow-left-long"></i>
-          <a href="/inloggen">Terug naar login</a>
-        </div>
-        <div class="toevoegentext">
-          <h1>Afstand doen van je dier?</h1>
-          <p>Het afstand doen van een huisdier is een hartverscheurende beslissing die vaak gepaard gaat met een diep gevoel van verdriet en verlies. Voor velen vormt een huisdier een integraal onderdeel van het gezin, een bron van onvoorwaardelijke liefde en vreugde. Echter, om verschillende redenen kunnen mensen zich genoodzaakt voelen om afstand te doen van hun geliefde metgezel.</p>
-          <p>Een van de meest voorkomende redenen voor het afstand doen van een dier is ziekte, zowel van de eigenaar als van het dier zelf. Een ernstige ziekte of handicap kan het moeilijk of zelfs onmogelijk maken voor een persoon om de zorg en aandacht te bieden die een huisdier nodig heeft. Evenzo kunnen financiële problemen een grote rol spelen. De kosten van veterinaire zorg, voeding en andere benodigdheden kunnen overweldigend zijn, vooral in tijden van economische onzekerheid.Z</p>
-        </div>
-        <div class="formcontainer">
-          <div class="formcontainer-container registreergap">
-            <h2 class="registreerh1">Afstandformulier</h1>
-            <form action="" class="toevoegenform">
-              <div class="registreerinput">
-                <label for="diernaam">Naam - <span>verplicht</span></label>
-                <input type="text" id="diernaam" name="diernaam" placeholder="naam" required>
+      <section>
+        <ul class="overzicht">
+          <li>
+            <a href="detail.html">
+              <img
+                src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg"
+                alt=""
+              />
+              <div>
+                <h2>Simba</h2>
+                <h3>Leeuw</h3>
+                <h4>Man</h4>
+                <h5>3 jaar</h5>
               </div>
-
-              <div class="registreerinput">
-                <label for="diersoort">Soort - <span>verplicht</span></label>
-                <input type="text" id="diersoort" name="diersoort" placeholder="soort" required>
+              <i class="fa-solid fa-pen"></i>
+            </a>
+          </li>
+          <li>
+            <a href="detail.html">
+              <img
+                src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg"
+                alt=""
+              />
+              <div>
+                <h2>Samba</h2>
+                <h3>Leeuw</h3>
+                <h4>Vrouw</h4>
+                <h5>3 jaar</h5>
               </div>
-
-              <div class="registreerinput">
-                <label for="dierleeftijd">Leeftijd - <span>verplicht</span></label>
-                <input type="number" id="dierleeftijd" name="dierleeftijd" placeholder="leeftijd" required>
-              </div>
-
-              <div class="registreerinput">
-                <label for="diergewicht">Gewicht - <span>verplicht</span></label>
-                <input type="number" id="diergewicht" name="diergewicht" placeholder="gewicht" required>
-              </div>
-
-              <div class="registreerinput">
-                <label for="diergeslacht">Geslacht - <span>verplicht</span></label>
-                <select id="diergeslacht" name="diergeslacht" required>
-                  <option value="man">Mannetje</option>
-                  <option value="vrouw">Vrouwtje</option>
-                </select>
-              </div>
-
-              <div class="registreerinput">
-                <label for="dieromschrijving">Omschrijving</label>
-                <textarea class="textareawrapper" name="dieromschrijving" id="dieromschrijving" cols="30" rows="10"></textarea>
-              </div>
-
-              <button class="btn" type="submit">Afstand doen</button>
-            </form>
-          </div>
-        </div>
-
+              <i class="fa-solid fa-pen"></i>
+            </a>
+          </li>
+        </ul>
       </section>
-      
-   </main>
+    </main>
     <script src="script/script.js"></script>
   </body>
 </html>

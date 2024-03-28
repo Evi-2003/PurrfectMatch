@@ -16,16 +16,18 @@
 
   --color-header-background: #fff;
 
+
   --font-bold: 600;
-  --font-bold-btn: 550;
+  --font-bold-btn: 500;
   /* ----------form-------------- */
   --form-background-color: #fff;
   --form-inputtext-color: #2c2c2c;
   --form-labeltext-color: gray;
-  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   --formregistreer-input-border-color: #afafaf;
+
 }
+
 
 /* -----------------ALGEMENE-CSS---------------- */
 body {
@@ -34,13 +36,13 @@ body {
   background: var(--color-background);
 }
 
-.container {
+.container{
   padding: 1rem 10%;
 }
 
-.btn {
+.btn{
   width: 100%;
-  padding: 0.5rem;
+  padding: .5rem;
   background: var(--color-oranje);
   color: var(--color-text);
   text-transform: uppercase;
@@ -54,11 +56,11 @@ body {
 
 /* -----------------BEGIN-NAVIGATIE---------------- */
 
-header {
+header{
   background: var(--color-header-background);
 }
 
-header .logo {
+header .logo{
   color: var(--color-oranje);
   font-weight: 700;
   text-decoration: none;
@@ -67,7 +69,7 @@ header .logo {
   letter-spacing: 2px;
 }
 
-nav img {
+nav img{
   width: 2rem;
 }
 
@@ -76,9 +78,17 @@ nav {
   align-items: center;
   justify-content: space-between;
   color: var(--color-text2);
+} 
+
+nav > a{
+  display: flex;
+  flex-direction: row;
+  text-decoration: none;
+  align-items: center;
+  gap: 1em;
 }
 
-nav ul {
+nav ul{
   background: var(--color-oranje);
   color: var(--color-text);
   position: fixed;
@@ -88,47 +98,48 @@ nav ul {
   height: 100vh;
   padding-top: 3em;
   z-index: 2;
-  transition: right 0.5s;
-}
-.sidemenu {
-  right: 0;
+  transition: right .5s;
 }
 
-nav ul li {
+.sidemenu{
+  right:0;
+}
+
+nav ul li{
   display: block;
   list-style: none;
   margin: 1.5rem 2rem;
   text-align: center;
 }
 
-nav ul li a {
+nav ul li a{
   color: var(--color-text);
   text-decoration: none;
   font-size: var(--fontsize-nav);
   position: relative;
 }
 
-nav ul li a::after {
-  content: "";
+nav ul li a::after{
+  content: '';
   width: 0;
   height: 3px;
   background: var(--color-secundaire);
   position: absolute;
   left: 0;
   bottom: -6px;
-  transition: 0.5s;
+  transition: .5s;
 }
 
-nav ul li a:hover::after {
+nav ul li a:hover::after{
   width: 100%;
 }
 
-nav ul .fas {
+nav ul .fas{
   position: absolute;
   top: 2rem;
   right: 3rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.5rem; 
 }
 
 nav > i {
@@ -136,77 +147,9 @@ nav > i {
   cursor: pointer;
 }
 
-nav > a{
-  text-decoration: none;
-  color: black;
-  font-size: 1.5rem;
-  display: flex;
-  align-items: center;
-}
-
 /* -----------------EINDE-NAVIGATIE---------------- */
 
-/* -----------------BEGIN-ADOPTIE---------------- */
-
-.filterensorteren {
-  padding: 1em;
-  padding-bottom: 0;
-}
-
-.filterensorteren p {
-  color: var(--color-oranje);
-  font-weight: 700;
-  font-size: 20px;
-}
-
-.filterensorteren button {
-  width: 100%;
-  background-color: var(--color-oranje);
-  color: var(--color-header-background);
-  padding: 5px 10px 5px 10px;
-  border-radius: 25px;
-  border: none;
-  margin-top: 1em;
-  margin-bottom: 1em;
-}
-
-.filterensorteren div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#sorteerFormulier{
-  width: 10em;
-} 
-
-.filter {
-  background-color: var(--color-oranje);
-  right: 100em;
-  padding-left: 1em;
-  padding-bottom: 1em;
-  color: var(--color-text);
-  border: 1px solid var(--color-darkgreen);
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  display: none;
-}
-
-.filter form h3 {
-  color: var(--color-darkgreen);
-  margin-top: 1em;
-}
-
-.filteroption{
-  right:0;
-}
-
-.submitfilter {
-  background-color: var(--color-darkgreen);
-  color: var(--color-text);
-  border-radius: 10px;
-  padding: 5px 10px 5px 10px;
-}
+/* -----------------BEGIN-INDEX---------------- */
 
 .overzicht {
   display: flex;
@@ -222,7 +165,7 @@ nav > a{
   background-image: linear-gradient(to right, #a5af4d, #98aa58);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 100%;
-  border-radius: 17px;
+  border-radius: 25px;
   margin-bottom: 1em;
 }
 
@@ -242,14 +185,6 @@ nav > a{
   color: white;
   text-decoration: none;
   width: 100%;
-}
-
-/* -----------------EINDE-ADOPTIE---------------- */
-
-/* -----------------BEGIN-INDEX---------------- */
-
-.overzicht li p {
-  width: 95%;
 }
 
 .homefoto {
@@ -325,6 +260,7 @@ nav > a{
   padding: 5px 10px 5px 10px;
   margin-top: 1em;
   /* position: absolute; */
+
 }
 
 .afstand {
@@ -347,6 +283,7 @@ nav > a{
   width: 100%;
   color: black;
   margin-top: 1em;
+  
 }
 
 .contact {
@@ -362,6 +299,7 @@ nav > a{
 .swiper hr {
   color: white;
 }
+
 
 .swiper-slide {
   background-color: yellow;
@@ -381,24 +319,25 @@ nav > a{
   margin-top: 1em;
 }
 
+
 /* -----------------EINDE-INDEX---------------- */
 
 /* -----------------ALGEMEEN-FORMS---------------- */
 
-.breadcrumb {
-  padding: 1rem 10%;
+.breadcrumb{
+  padding:1rem 10%;
   color: var(--color-text2);
-  font-size: 0.9rem;
+  font-size: .9rem;
   align-self: flex-start;
 }
 
 .breadcrumb a,
-.breadcrumbvragenlijst a {
+.breadcrumbvragenlijst a{
   color: var(--color-text2);
   text-decoration: none;
 }
 
-.form {
+.form{
   color: var(--color-text2);
   background: var(--color-background);
   /* background-image: url(img/backgroundforms.png);
@@ -407,30 +346,35 @@ nav > a{
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  height: 100vh;
   align-items: center;
 }
 
-.formcontainer {
+.formcontainer{
   padding: 0 2rem;
-  max-width: 45rem;
-  width: 100%;
+  max-width: 30rem;
 }
 
-.formcontainer-container {
+.formcontainer-container{
   padding: 2.5rem;
   background: var(--form-background-color);
   display: flex;
   flex-direction: column;
   border-radius: 1rem;
   box-shadow: var(--form-box-shadow);
-  margin-bottom: 5rem;
 }
 
-.centerform {
+.centerform{
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 75vh;
+}
+
+form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 form > div {
@@ -448,7 +392,8 @@ form > div {
   cursor: pointer;
 }
 
-.textlabel span {
+
+.textlabel span{
   color: var(--color-oranje);
 }
 
@@ -466,7 +411,7 @@ form > div {
 }
 
 .texinput:focus + label,
-.texinput:valid + label {
+.texinput:valid + label{
   transform: translateY(-1.25rem);
   font-size: 0.8125rem;
   color: var(--form-labeltext-color);
@@ -474,43 +419,41 @@ form > div {
 
 /* ---------LOGIN---------- */
 
-.loginform {
+.loginform{
   gap: 3rem;
-  display: flex;
-  flex-direction: column;
 }
 
-.logingap {
+.logingap{
   gap: 3rem;
   text-align: center;
 }
 
-.loginh1 {
+.loginh1{
   font-size: 2rem;
   font-weight: var(--font-bold);
   color: var(--color-oranje);
 }
 
-.loginp a {
+.loginp a{
   text-decoration: none;
   color: var(--color-oranje);
 }
 
-.loginp {
-  font-size: 0.9rem;
+.loginp{
+  font-size: .9rem;
   margin-bottom: 2rem;
 }
 
-form div > i {
+form div > i{
   position: absolute;
-  top: 10px;
-  right: -20px;
+  top: 0.25rem;
+  right: 0;
   cursor: pointer;
   color: var(--form-inputtext-color);
 }
 
 .wachtwoordvergeten {
-  font-size: 0.9rem;
+  font-size: .9rem;
   align-self: flex-end;
   color: var(--color-text2);
   text-decoration: none;
@@ -519,59 +462,61 @@ form div > i {
 
 /* ---------REGISTREER---------- */
 
-.registreerp {
-  font-size: 0.9rem;
+.registreer{
+  height: 200vh;
+}
+
+.registreerp{
+  font-size: .9rem;
   margin: 1rem 0;
 }
 
-.registreerp a {
+.registreerp a{
   text-decoration: none;
   color: var(--color-oranje);
 }
 
-.registreerform {
+.registreerform{
   gap: 1.5rem;
-  display: flex;
-  flex-direction: column;
 }
 
-.registreergap {
+.registreergap{
   gap: 1rem;
 }
 
-.registreerh1 {
+.registreerh1{
   font-size: 2rem;
   font-weight: var(--font-bold);
   color: var(--color-text2);
   text-align: center;
 }
 
-.registreerinput {
+.registreerinput{
   gap: 0.5rem;
   position: relative;
 }
 
-.registreerinput input {
+.registreerinput input{
   padding: 8px;
   border: 1px solid var(--formregistreer-input-border-color);
   border-radius: 5px;
   width: 100%;
 }
 
-.registreerinput label span {
+.registreerinput label span{
   color: var(--color-oranje);
 }
 
-.naam {
+.naam{
   display: flex;
-  gap: 0.5rem;
+  gap: .5rem;
 }
 
-#tussenvoegsel {
+#tussenvoegsel{
   width: 50%;
 }
 
-#geslacht {
+#geslacht{
   padding: 8px;
   border: 1px solid var(--formregistreer-input-border-color);
   border-radius: 5px;
@@ -579,15 +524,14 @@ form div > i {
   background: transparent;
 }
 
-.huisadres {
+.huisadres{
   display: flex;
-  gap: 0.5rem;
+  gap: .5rem;
 }
 
-#huisnummer,
-#toevoeging {
+#huisnummer, #toevoeging {
   width: 40%;
-}
+} 
 
 /* ----Remove-Arrows-input-number---- */
 /* Chrome, Safari, Edge, Opera */
@@ -598,42 +542,51 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type=number] {
   -moz-appearance: textfield;
 }
 
 .registreerinput > i{
+  position: absolute;
+  top: 61%;
   right: 10px;
   cursor: pointer;
   color: var(--form-inputtext-color);
-  top: 56%;
 }
 
-#pass {
+.registreerinput:nth-of-type(7) > i{
+  top: 61%;
+}
+
+.registreerinput:nth-of-type(8)  > i{
+  top: 71%;
+}
+
+#pass{
   color: red;
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 /* ----------------VRAGENLIJST-------------------- */
-.vragenlijstmain {
+.vragenlijstmain{
   display: flex;
   flex-direction: column;
 }
 
-.breadcrumbvragenlijst {
+.breadcrumbvragenlijst{
   padding: 1rem 10%;
   color: var(--color-text2);
-  font-size: 0.9rem;
+  font-size: .9rem;
   align-self: flex-end;
 }
 
-.vragenlijstgapcontainer {
+.vragenlijstgapcontainer{
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.vragenlijsth1p {
+.vragenlijsth1p{
   align-self: center;
   padding: 0rem 10%;
   display: flex;
@@ -642,25 +595,25 @@ input[type="number"] {
   color: var(--color-text);
 }
 
-.vragenlijsth1p h1 {
+.vragenlijsth1p h1{
   font-weight: bold;
 }
 
-.vragenp {
+.vragenp{
   font-weight: 500;
 }
 
-.radiocontainer {
+.radiocontainer{
   display: flex;
   gap: 2rem;
   flex-flow: wrap;
 }
 
-.vragenlijstradio {
+.vragenlijstradio{
   position: absolute;
 }
 
-.vragenlijstlabel {
+.vragenlijstlabel{
   position: relative;
   background: black;
   color: white;
@@ -673,33 +626,34 @@ input[type="number"] {
   background: var(--color-darkgreen);
 }
 
-.vragenlijstbtn {
+.vragenlijstbtn{
   position: absolute;
   bottom: -1.2rem;
   background: var(--color-oranje);
   color: #fff;
-  padding: 0.5rem 1rem;
+  padding: .5rem 1rem;
   border: none;
   border-radius: 5rem;
   cursor: pointer;
 }
 
-.dots {
+.dots{
   display: flex;
-  gap: 0.2rem;
+  gap: .2rem;
 }
 
-.activespan {
-  background: var(--color-oranje) !important;
+.activespan{
+  background: var(--color-oranje)!important;
 }
 
-.item span {
+.item span{
   background: black;
-  padding: 0.45rem;
+  padding: .45rem;
   border-radius: 5rem;
 }
 
-.vragenlijsttellerp {
+
+.vragenlijsttellerp{
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -707,45 +661,46 @@ input[type="number"] {
   font-weight: bold;
 }
 
-/* ---------KAART-SLIDER------------ */
-.selected {
+/* ---------KAART-SLIDER - VRAGENLIJST------------ */
+.selected{
   background: #005b09;
 }
 
-.hidden {
+.hidden{
   display: none;
 }
 
-.slider {
+.slider{
   position: relative;
   width: 100%;
   height: 370px;
   overflow: hidden;
 }
-.item {
+.item{
   position: absolute;
   width: 274px;
   height: 341px;
   background-color: #fff;
   border-radius: 10px;
   padding: 2rem;
-  transition: 0.5s;
+  transition:  0.5s;
   display: flex;
   align-self: center;
   align-items: center;
   gap: 2rem;
 }
 
-#next {
+
+
+#next{
   position: absolute;
   right: 0rem;
 }
-#prev {
+#prev{
   position: absolute;
   left: 0rem;
 }
-#prev,
-#next {
+#prev, #next{
   color: var(--color-text2);
   background: none;
   border: none;
@@ -761,90 +716,18 @@ input[type="number"] {
   cursor: pointer;
 }
 #prev:hover,
-#next:hover {
+#next:hover{
   opacity: 1;
 }
 
-/* ---------------MEDIA-QUERIES----------------- */
-@media (width > 500px) {
-  nav ul {
-    display: flex;
-    height: auto;
-    background: transparent;
-    color: black;
-    position: inherit;
-    width: auto;
-    padding: 0;
-  }
-
-  nav ul li a {
-    color: var(--color-text2);
-  }
-  nav > i:last-of-type {
-    display: none;
-  }
-
-  nav ul .fas {
-    display: none;
-  }
-}
-
-@media (width > 850px) {
-  #next {
-    right: calc(40% - 22rem);
-  }
-  #prev {
-    left: calc(40% - 22rem);
-  }
-
-  .vragenlijstgapcontainer {
-    gap: 3rem;
-  }
-
-  .container {
-    padding: 0.5rem 10%;
-  }
-}
-
-/* --------------LIKE BUTTON ----------------- */
-#likeForm {
-  width: fit-content;
-  display: flex;
-  gap: 1em;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 1em;
-}
-#likeButton {
-  padding: 5px 7px;
-  font-size: 16px;
-  border: none;
-  background-color: #ffffff;
-  color: #000000;
-  cursor: pointer;
-  width: fit-content;
-  border-radius: 0.5em;
-}
-#likeButton:hover {
-  transform: scale(0.95);
-}
-#likeButton.liked {
-  background-color: #ff0000;
-  color: #ffffff;
-  border-radius: 0.5em;
-}
-.fa-solid.fa-pen {
-  align-self: center;
-}
 /* ---------------PROFIEL----------------- */
-.profielheadbg {
+.profielheadbg{
   padding: 2rem;
   display: flex;
   justify-content: center;
 }
 
-.profielheadcontainer {
+.profielheadcontainer{
   padding: 2rem;
   background: white;
   text-align: center;
@@ -854,7 +737,7 @@ input[type="number"] {
   border-radius: 5px;
 }
 
-.profielmain {
+.profielmain{
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -862,103 +745,103 @@ input[type="number"] {
   position: relative;
 }
 
-.profielmain::before {
-  content: "";
+.profielmain::before{
+  content: '';
   position: absolute;
   border-bottom: 10px black;
 }
 
-.profieldropdown {
+.profieldropdown{
   width: 100%;
   padding: 0rem 10%;
 }
 
-.profieldropdown ul {
+.profieldropdown ul{
   list-style: none;
   display: flex;
   justify-content: space-around;
 }
 
-.profieldropdown ul li {
+.profieldropdown ul li{
   padding: 1rem;
   cursor: pointer;
 }
 
-.profieldropdown ul li i {
+.profieldropdown ul li i{
   font-size: 1.5rem;
 }
 
-.profielactive {
+.profielactive{
   background: var(--color-oranje);
 }
 
 .textvak2,
 .textvak3 {
-  display: none;
+    display: none;
 }
 
 /* ----------------PROFIEL-TEXTVAK1---------------- */
-.katprofielbg {
+.katprofielbg{
   padding: 2rem;
 }
 
-.katprofielcontainer {
+.katprofielcontainer{
   display: flex;
   height: 8rem;
   justify-content: space-around;
+  flex-direction: row;
   background: white;
   align-items: center;
   border-radius: 10px;
 }
 
-.katprofielcontainer i {
+.katprofielcontainer i{
   align-self: flex-start;
   margin-top: 1rem;
 }
 
-.katprofielcontainer img {
+.katprofielcontainer img{
   width: 40%;
 }
 
-.katprofieltext {
+.katprofieltext{
   display: flex;
   flex-direction: column;
   height: inherit;
   padding: 1rem;
 }
 
-/* -----------------DIERENTOEVOEGEN--------------- */
-.registreerinput select{
-  padding: .4rem;
-}
-.toevoegenform{
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
+.textvak2 .katprofielcontainer {
+  position: relative;
+  background-color: transparent;
+  margin: 2rem;
 }
 
-.toevoegentext{
+.textvak2 ul{
   display: flex;
   flex-direction: column;
+  position: absolute;
+  width: 100%;
+  top: 0;
   gap: 1rem;
-  padding: 2rem 10%;
-  margin-bottom: 1rem;
-  color: white;
 }
 
-.toevoegentext h1{
-  color: var(--color-oranje);
+.textvak2 ul li{
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  justify-content: space-around; 
+  padding: 1em;
+  border-radius: 10px;
 }
 
-textarea
-{
-  width:100%;
+.textvak2 ul li div{
+  display: flex;
+  flex-direction: column;
 }
-.textareawrapper
-{
-  border:1px solid #999999;
-  margin:5px 0;
-  padding:3px;
+
+.textvak2 ul li form{
+  width: 2em;
 }
 
 /* ---------------MEDIA-QUERIES----------------- */
@@ -981,10 +864,6 @@ textarea
   }
 
   nav ul .fas{
-    display: none;
-  }
-
-  nav ul li:last-of-type{
     display: none;
   }
 
