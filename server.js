@@ -147,7 +147,7 @@ app.get("/profiel", checkSession, async (req, res) => {
   res.render("pages/profiel", { data: req.session.user, verzoeken: verzoeken });
 })
 
-// Accepteren of Weigeren
+// Accepteren of weigeren
 app.post("/accepteren", async(req, res) => {
   let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
 
