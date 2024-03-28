@@ -12,7 +12,7 @@ app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
 // Verbinden met database
-let db
+let db;
 // ConnectieURL opstellen met de gegevens uit .env
 const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
 // Nieuwe mongo client object aanmaken
@@ -50,7 +50,7 @@ async function checkUser(email, wachtwoord) {
     let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord)
 
     if (checkWachtwoord) {
-      return { id: user._id, email: email }
+      return { id: user._id, voornaam: user.voornaam };
     } else {
       return false
     }
@@ -112,6 +112,51 @@ app.post('/', async (req, res) => {
     await db.collection('users').insertOne(userData)
     res.redirect('/profiel')
   })
+})
+
+// Verzoeken sturen
+app.post("/verzoek", checkSession, async (req, res) => {
+  let verzoekData = {
+    zoekerId: req.session.user.id, 
+    dierId: req.body.dierId, 
+    aanbiederId: req.session.user.id, // nog aanpasse naar aanbieder Id
+    status: 'Nog niet beoordeeld',
+  }
+  console.log(verzoekData);
+  await db.collection("verzoeken").insertOne(verzoekData);
+  res.redirect("/profiel");
+})
+
+// Verzoeken ontvangen 
+// app.get("/profiel", checkSession, async (req, res) => {
+//   let verzoeken = await db.collection("verzoeken").find({ aanbiederId: req.session.user.id }).toArray();
+
+//   for (let i = 0; i < verzoeken.length; i++) {
+//     // Ophalen dier naam
+//     let dier = await db.collection("dieren").findOne({ _id: new ObjectId(verzoeken[i].dierId) });
+//     if (dier) {
+//       verzoeken[i].dierNaam = dier.naam;
+//     }
+//     // Ophalen zoeker naam
+//     let zoeker = await db.collection("users").findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
+//     if (zoeker) {
+//       verzoeken[i].zoekerNaam = zoeker.voornaam;
+//     }
+//   }
+  
+//   res.render("pages/profiel", { data: req.session.user, verzoeken: verzoeken });
+// })
+
+// Accepteren of Weigeren
+app.post("/accepteren", async(req, res) => {
+  let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
+
+  if(req.body.accepteren === 'accepteren') {
+    await db.collection("verzoeken").updateOne( verzoekId, { $set: { status: 'Geaccepteerd' } });
+  } else if (req.body.accepteren === 'weigeren') {
+    await db.collection("verzoeken").updateOne( verzoekId, { $set: { status: 'Geweigerd' } });
+  }
+  res.redirect('/profiel')
 })
 
 // Routes
@@ -176,7 +221,21 @@ app.get('/profiel', checkSession, async (req, res) => {
       })
     )
 
-    res.render('pages/profiel', { account: userFromDb, dieren: likedAnimals })
+  let verzoeken = await db.collection("verzoeken").find({ aanbiederId: req.session.user.id }).toArray();
+  for (let i = 0; i < verzoeken.length; i++) {
+    // Ophalen dier naam
+    let dier = await db.collection("dieren").findOne({ _id: new ObjectId(verzoeken[i].dierId) });
+    if (dier) {
+      verzoeken[i].dierNaam = dier.naam;
+    }
+    // Ophalen zoeker naam
+    let zoeker = await db.collection("users").findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
+    if (zoeker) {
+      verzoeken[i].zoekerNaam = zoeker.voornaam;
+    }
+  }
+
+    res.render('pages/profiel', { account: userFromDb, dieren: likedAnimals, data: req.session.user, verzoeken: verzoeken })
   } catch (error) {
     res.status(500).send('Iets mis gegaan')
   }

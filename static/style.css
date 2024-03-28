@@ -1073,6 +1073,40 @@ input[type="number"] {
   padding: 1rem;
 }
 
+/* ----------------PROFIEL-TEXTVAK2---------------- */
+.textvak2 .katprofielcontainer {
+  position: relative;
+  background-color: transparent;
+  margin: 2rem;
+}
+
+.textvak2 ul{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  gap: 1rem;
+}
+
+.textvak2 ul li{
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  justify-content: space-around; 
+  padding: 1em;
+  border-radius: 10px;
+}
+
+.textvak2 ul li div{
+  display: flex;
+  flex-direction: column;
+}
+
+.textvak2 ul li form{
+  width: 2em;
+}
+
 /* -----------------DIERENTOEVOEGEN--------------- */
 .registreerinput select{
   padding: .4rem;

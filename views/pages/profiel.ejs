@@ -33,27 +33,35 @@
     <main>
       <% dieren.forEach(function(dier) { %>
 
-      <li>
-              <div class="textvak1">
-        <div class="katprofielbg">
-          <div class="katprofielcontainer">
-            <!-- <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="" /> -->
-            <div class="katprofieltext">
-              <div>
-                <h2><%= dier.naam %></h2>
-                <p><%= dier.soort %></p>
+ 
+      <div class="textvak1">
+        <li>
+          <div class="katprofielbg">
+            <div class="katprofielcontainer">
+              <!-- <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="" /> -->
+              <div class="katprofieltext">
+                <div>
+                  <h2><%= dier.naam %></h2>
+                  <p><%= dier.soort %></p>
+                </div>
+                <p><%= dier.geslacht %></p>
               </div>
-              <p><%= dier.geslacht %></p>
             </div>
           </div>
-        </div>
-      </li>
+        </li>
       <% }); %>
-
-      <!-- </div>
-      <div class="textvak2">
-        <p>textvak2</p>
       </div>
+
+      <div class="textvak2">
+        <div class="katprofielcontainer">
+          <ul id="verzoekenList"></ul>
+        </div>
+      </div>    
+      <!--       
+      <div class="katprofielcontainer">
+            <ul id="verzoekenList"></ul>
+          </div>
+        </div>
       <div class="textvak3">
         <div class="profielaanpassen">
           <form class="registreerform" action="/" method="post">
@@ -144,6 +152,9 @@
       </div>
     </main>
 
+    <script>
+      let verzoeken = <%- JSON.stringify(verzoeken) %>;
+    </script>
     <script src="/script/script.js"></script>
   </body>
 </html>
