@@ -127,26 +127,6 @@ app.post("/verzoek", checkSession, async (req, res) => {
   res.redirect("/profiel");
 })
 
-// Verzoeken ontvangen 
-// app.get("/profiel", checkSession, async (req, res) => {
-//   let verzoeken = await db.collection("verzoeken").find({ aanbiederId: req.session.user.id }).toArray();
-
-//   for (let i = 0; i < verzoeken.length; i++) {
-//     // Ophalen dier naam
-//     let dier = await db.collection("dieren").findOne({ _id: new ObjectId(verzoeken[i].dierId) });
-//     if (dier) {
-//       verzoeken[i].dierNaam = dier.naam;
-//     }
-//     // Ophalen zoeker naam
-//     let zoeker = await db.collection("users").findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
-//     if (zoeker) {
-//       verzoeken[i].zoekerNaam = zoeker.voornaam;
-//     }
-//   }
-  
-//   res.render("pages/profiel", { data: req.session.user, verzoeken: verzoeken });
-// })
-
 // Accepteren of Weigeren
 app.post("/accepteren", async(req, res) => {
   let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
@@ -208,6 +188,7 @@ app.get('/adoptie/:name', async function (req, res) {
   }
 })
 
+// Ophalen liked dieren en verzoeken
 app.get('/profiel', checkSession, async (req, res) => {
   const userId = { _id: new ObjectId(req.session.user.id) }
   const userFromDb = await db.collection('users').findOne(userId)
