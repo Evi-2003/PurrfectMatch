@@ -65,7 +65,7 @@
           <% dieren.forEach(function(dier) { %>
           <li>
             <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Ga naar dit dier">
-              <img src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg" alt="" />
+              <img src="/uploads/<%= dier.foto %>" alt="Foto van <%= dier.naam %>" />
               <div>
                 <h2><%= dier.naam %></h2>
                 <h4><%= dier.geslacht %></h4>

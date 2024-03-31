@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb')
 const port = 3000
 const bcrypt = require('bcrypt')
+const multer = require('multer')
 const session = require('express-session')
 
 require('dotenv').config()
@@ -11,8 +12,20 @@ app.set('view engine', 'ejs')
 app.use(express.static('static'))
 app.use(express.urlencoded({ extended: true }))
 
+// Setting up the storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'static/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  },
+})
+
+const upload = multer({ storage: storage })
+
 // Verbinden met database
-let db;
+let db
 // ConnectieURL opstellen met de gegevens uit .env
 const connectionString = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
 // Nieuwe mongo client object aanmaken
@@ -50,7 +63,7 @@ async function checkUser(email, wachtwoord) {
     let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord)
 
     if (checkWachtwoord) {
-      return { id: user._id, voornaam: user.voornaam };
+      return { id: user._id, voornaam: user.voornaam, profielfoto: user.profielfoto }
     } else {
       return false
     }
@@ -90,10 +103,13 @@ app.get('/uitloggen', function (req, res) {
   })
 })
 
-/* registratie */
-app.post('/', async (req, res) => {
+/* registratie van gebruiker */
+app.post('/', upload.single('profielfoto'), async (req, res) => {
+  const filename = req.file.filename
+
   bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
     let userData = {
+      profielfoto: filename,
       voornaam: req.body.voornaam,
       tussenvoegsel: req.body.tussenvoegsel,
       achternaam: req.body.achternaam,
@@ -107,41 +123,59 @@ app.post('/', async (req, res) => {
       telefoonnummer: req.body.telefoonnummer,
       email: req.body.email,
       wachtwoord: hashedWachtwoord,
+      liked: [],
     }
 
     await db.collection('users').insertOne(userData)
     res.redirect('/profiel')
   })
 })
+/* registratie van dier */
+app.post('/registreer-dier', upload.single('foto'), async (req, res) => {
+  const filename = req.file.filename
 
+  let dierData = {
+    foto: filename,
+    naam: req.body.diernaam,
+    soort: req.body.diersoort,
+    leeftijd: req.body.dierleeftijd,
+    gewicht: req.body.diergewicht,
+    geslacht: req.body.diergeslacht,
+    omschrijving: req.body.dieromschrijving,
+  }
+
+  await db.collection('dieren').insertOne(dierData)
+  res.redirect('/adoptie')
+})
 // Verzoeken sturen
-app.post("/verzoek", checkSession, async (req, res) => {
+app.post('/verzoek', checkSession, async (req, res) => {
   let verzoekData = {
-    zoekerId: req.session.user.id, 
-    dierId: req.body.dierId, 
+    zoekerId: req.session.user.id,
+    dierId: req.body.dierId,
     aanbiederId: req.session.user.id, // nog aanpasse naar aanbieder Id
     status: 'Nog niet beoordeeld',
   }
-  console.log(verzoekData);
-  await db.collection("verzoeken").insertOne(verzoekData);
-  res.redirect("/profiel");
+  console.log(verzoekData)
+  await db.collection('verzoeken').insertOne(verzoekData)
+  res.redirect('/profiel')
 })
 
 // Accepteren of Weigeren
-app.post("/accepteren", async(req, res) => {
-  let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
+app.post('/accepteren', async (req, res) => {
+  let verzoekId = { _id: new ObjectId(req.body.verzoekId) }
 
-  if(req.body.accepteren === 'accepteren') {
-    await db.collection("verzoeken").updateOne( verzoekId, { $set: { status: 'Geaccepteerd' } });
+  if (req.body.accepteren === 'accepteren') {
+    await db.collection('verzoeken').updateOne(verzoekId, { $set: { status: 'Geaccepteerd' } })
   } else if (req.body.accepteren === 'weigeren') {
-    await db.collection("verzoeken").updateOne( verzoekId, { $set: { status: 'Geweigerd' } });
+    await db.collection('verzoeken').updateOne(verzoekId, { $set: { status: 'Geweigerd' } })
   }
   res.redirect('/profiel')
 })
 
 // Routes
 app.get('/', (req, res) => {
-  res.render('pages/index')
+  console.log(req.session)
+  res.render('pages/index', { account: req?.session?.user })
 })
 
 app.get('/adoptie', async (req, res) => {
@@ -164,6 +198,7 @@ app.get('/adoptie', async (req, res) => {
           dieren: dieren,
           user: req.session.user,
           likedIds: likedIds,
+          account: req?.session?.user,
         })
       }
     }
@@ -172,6 +207,7 @@ app.get('/adoptie', async (req, res) => {
       dieren: dieren,
       user: null,
       likedIds: null,
+      account: req?.session?.user,
     })
   }
 })
@@ -184,7 +220,7 @@ app.get('/adoptie/:name', async function (req, res) {
     // Zoek de bijhorende dier erbij
     dier = await db.collection('dieren').findOne({ _id: new ObjectId(id) })
   } finally {
-    return res.render('pages/dier', { dier: dier })
+    return res.render('pages/dier', { dier: dier, account: req?.session?.user })
   }
 })
 
@@ -192,33 +228,33 @@ app.get('/adoptie/:name', async function (req, res) {
 app.get('/profiel', checkSession, async (req, res) => {
   const userId = { _id: new ObjectId(req.session.user.id) }
   const userFromDb = await db.collection('users').findOne(userId)
-  let likedAnimalsId = userFromDb.liked.map((element) => element.id._id)
+  let likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id)
 
   try {
     const likedAnimals = await Promise.all(
-      likedAnimalsId.map(async (element) => {
+      likedAnimalsId?.map(async (element) => {
         const dier = await getAnimal(element)
         return dier
       })
     )
 
-  let verzoeken = await db.collection("verzoeken").find({ aanbiederId: req.session.user.id }).toArray();
-  for (let i = 0; i < verzoeken.length; i++) {
-    // Ophalen dier naam
-    let dier = await db.collection("dieren").findOne({ _id: new ObjectId(verzoeken[i].dierId) });
-    if (dier) {
-      verzoeken[i].dierNaam = dier.naam;
+    let verzoeken = await db.collection('verzoeken').find({ aanbiederId: req.session.user.id }).toArray()
+    for (let i = 0; i < verzoeken.length; i++) {
+      // Ophalen dier naam
+      let dier = await db.collection('dieren').findOne({ _id: new ObjectId(verzoeken[i].dierId) })
+      if (dier) {
+        verzoeken[i].dierNaam = dier.naam
+      }
+      // Ophalen zoeker naam
+      let zoeker = await db.collection('users').findOne({ _id: new ObjectId(verzoeken[i].zoekerId) })
+      if (zoeker) {
+        verzoeken[i].zoekerNaam = zoeker.voornaam
+      }
     }
-    // Ophalen zoeker naam
-    let zoeker = await db.collection("users").findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
-    if (zoeker) {
-      verzoeken[i].zoekerNaam = zoeker.voornaam;
-    }
-  }
 
     res.render('pages/profiel', { account: userFromDb, dieren: likedAnimals, data: req.session.user, verzoeken: verzoeken })
   } catch (error) {
-    res.status(500).send('Iets mis gegaan')
+    console.log('Iets mis gegaan')
   }
 })
 
@@ -228,25 +264,25 @@ async function getAnimal(element) {
 }
 
 app.get('/toevoegen', (req, res) => {
-  res.render('pages/toevoegen')
+  res.render('pages/toevoegen', { account: req?.session?.user })
 })
 
 app.get('/favorieten', (req, res) => {
-  res.render('pages/favorieten')
+  res.render('pages/favorieten', { account: req?.session?.user })
 })
 app.get('/mail', (req, res) => {
-  res.render('pages/mail')
+  res.render('pages/mail', { account: req?.session?.user })
 })
 
 app.get('/inloggen', (req, res) => {
-  res.render('pages/inloggen')
+  res.render('pages/inloggen', { account: req?.session?.user })
 })
 app.get('/registreren', (req, res) => {
-  res.render('pages/registreren')
+  res.render('pages/registreren', { account: req?.session?.user })
 })
 
 app.get('/vragenlijst', (req, res) => {
-  res.render('pages/vragenlijst')
+  res.render('pages/vragenlijst', { account: req?.session?.user })
 })
 
 // Liken van een dier
@@ -288,9 +324,10 @@ app.post('/like', async (req, res) => {
         dieren: dieren,
         user: req.session.user,
         likedIds: likedIds,
+        account: req?.session?.user,
       })
     } else {
-      res.render('pages/adoptie', { dieren: dieren, user: null, likedIds: [] })
+      res.render('pages/adoptie', { dieren: dieren, user: null, likedIds: [], account: req?.session?.user })
     }
   }
 })
