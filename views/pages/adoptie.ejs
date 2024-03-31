@@ -67,20 +67,28 @@
             <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Ga naar dit dier">
               <img src="/uploads/<%= dier.foto %>" alt="Foto van <%= dier.naam %>" />
               <div>
-                <h2><%= dier.naam %></h2>
-                <h4><%= dier.geslacht %></h4>
-                <h5><%= dier.leeftijd %></h5>
-                <h6><%= dier.gewicht %></h6>
-                <p><%= dier.omschrijving %></p>
+                <div>
+                  <h2><%= dier.naam %></h2>
+                  <div>
+                    <ul>
+                      <li><%= dier.geslacht %></li>
+                      <li><%= dier.leeftijd %> jaar oud</li>
+                      <li><%= dier.gewicht %>kg</li>
+                    </ul>
+                  </div>
+                  <p><%= dier.omschrijving %></p>
+                </div>
+                <div>
+                  <i class="fa-solid fa-pen"></i>
+                  <% if (user) { %>
+                  <form action="like" method="post" id="likeForm">
+                    <input type="hidden" name="dier" value="<%= dier._id %>" />
+                    <input type="hidden" name="user" value="<%= user.id %>" />
+                    <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>"><%= dier.likes %> ❤️</button>
+                  </form>
+                  <% } %>
+                </div>
               </div>
-              <i class="fa-solid fa-pen"></i>
-              <% if (user) { %>
-              <form action="like" method="post" id="likeForm">
-                <input type="hidden" name="dier" value="<%= dier._id %>" />
-                <input type="hidden" name="user" value="<%= user.id %>" />
-                <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>"><%= dier.likes %> ❤️</button>
-              </form>
-              <% } %>
             </a>
           </li>
           <% }); %>
