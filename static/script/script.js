@@ -23,31 +23,10 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   })
 })
-// -------------PROFIEL VERZOEKEN-------------
-async function laadVerzoeken(verzoeken) {
-  let list = document.getElementById("verzoekenList"); 
-
-  verzoeken.forEach((verzoek) => {
-    let verzoekItem = document.createElement("li");
-    verzoekItem.innerHTML = 
-      ` <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="">
-      <div>
-        <h2>${verzoek.dierNaam}</h2>
-        <p>${verzoek.zoekerNaam}</p>
-        <p>${verzoek.status}</p>
-      </div>
-      <form action="/accepteren" method="post">
-        <input type="hidden" name="verzoekId" value="${verzoek._id}">
-        <button type="submit" name="accepteren" value="accepteren">✓</button>
-        <button type="submit" name="accepteren" value="weigeren">𐤕</button>
-      </form> `;
-    list.appendChild(verzoekItem);
-  });
-}
-laadVerzoeken(verzoeken);
 
 // ---------------FILTER-----------------
 document.getElementById('filterBtn').addEventListener('click', function () {
+  console.log('test')
   var filterSection = document.querySelector('.filter')
   // Controleer of de filtersectie verborgen is
   if (filterSection.style.display === 'none') {
@@ -58,7 +37,27 @@ document.getElementById('filterBtn').addEventListener('click', function () {
     filterSection.style.display = 'none'
   }
 })
+// -------------PROFIEL VERZOEKEN-------------
+async function laadVerzoeken(verzoeken) {
+  let list = document.getElementById('verzoekenList')
 
+  verzoeken.forEach((verzoek) => {
+    let verzoekItem = document.createElement('li')
+    verzoekItem.innerHTML = ` <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="">
+      <div>
+        <h2>${verzoek.dierNaam}</h2>
+        <p>${verzoek.zoekerNaam}</p>
+        <p>${verzoek.status}</p>
+      </div>
+      <form action="/accepteren" method="post">
+        <input type="hidden" name="verzoekId" value="${verzoek._id}">
+        <button type="submit" name="accepteren" value="accepteren">✓</button>
+        <button type="submit" name="accepteren" value="weigeren">𐤕</button>
+      </form> `
+    list.appendChild(verzoekItem)
+  })
+}
+laadVerzoeken(verzoeken)
 // ---------------FORMS PASSWORD-----------------
 function showpassword(x) {
   x.classList.toggle('fa-regular')
