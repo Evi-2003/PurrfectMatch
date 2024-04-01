@@ -218,7 +218,8 @@ nav > a {
   display: flex;
   /* border: 1px #b5c055 solid; */
   background-color: white;
-  width: fit-content;
+  width: 100%;
+  max-width: 30em;
   border-radius: 17px;
   margin-bottom: 1em;
   place-self: center;
