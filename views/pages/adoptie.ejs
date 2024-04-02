@@ -64,6 +64,9 @@
           <input type="checkbox" id="checkserval" name="diersoort" value="serval" <% if (selectedSpecies.includes('serval')) { %> checked <% } %> />
           <label for="checkserval">Serval</label>
           <br />
+          <input type="checkbox" id="checkkat" name="diersoort" value="kat" <% if (selectedSpecies.includes('kat')) { %> checked <% } %> />
+          <label for="checkserval">Kat</label>
+          <br />
 
           <h3>Geslacht</h3>
           <input type="checkbox" id="checkman" name="geslacht" value="man" <% if (selectedGenders.includes('man')) { %> checked <% } %> />
@@ -84,11 +87,11 @@
             <img src="/uploads/<%= dier.foto %>" alt="Foto van <%= dier.naam %>" />
             <div>
               <div>
-                <h2><%= dier.naam %></h2>
+                <h2><%= dier.naam %>(<%= dier.leeftijd %>)</h2>
                 <div>
                   <ul>
                     <li><%= dier.geslacht %></li>
-                    <li><%= dier.leeftijd %> jaar oud</li>
+                    <li><%= dier.soort %></li>
                     <li><%= dier.gewicht %>kg</li>
                   </ul>
                 </div>
