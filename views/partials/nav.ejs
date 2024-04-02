@@ -1,23 +1,27 @@
 <header>
+  <div class="container">
+    <nav>
+      <a href="/">
+        <img src="/img/PM-logo.png" alt="logo" />
+        <p class="logo">PURRFECT MATCH</p>
+      </a>
+      <ul id="sidemenu">
+        <li><a href="/">Home</a></li>
+        <li><a href="/adoptie">Adoptie</a></li>
+        <li><a href="/toevoegen">Toevoegen</a></li>
+        <li><a href="/profiel">Profiel</a></li>
+        <i class="fas fa-times" onclick="sidemenu()"></i>
+      </ul>
 
-    <div class="container">     
-        
-        <nav>
-            <a href="/">
-                <img src="/img/PM-logo.png" alt="">
-                <p class="logo">PURRFECT MATCH</p>
-            </a>
-            <ul id="sidemenu">
-                <li><a href="/">Home</a></li>
-                <li><a href="/adoptie">Adoptie</a></li>
-                <li><a href="/toevoegen">Toevoegen</a></li>
-                <li><a href="/profiel">Profiel</a></li>
-                <i class="fas fa-times" onclick="sidemenu()"></i>
-            </ul>
-            
-            <a href="/profiel"><i class="fa-solid fa-circle-user"></i></a>
-            <i class="fas fa-bars" onclick="sidemenu()"></i>
-        </nav>
-    </div>
-    
+      <a href="/profiel">
+        <% if (typeof account !== 'undefined' && account.profielfoto) { %>
+        <span>Welkom <%= account.voornaam.charAt(0).toUpperCase() + account.voornaam.slice(1) %> !</span>
+        <img src="/uploads/<%= account.profielfoto %>" alt="Profielfoto" id="profielFotoNav" />
+        <% } else { %>
+        <i class="fa-solid fa-circle-user"></i>
+        <% } %>
+      </a>
+      <i class="fas fa-bars" onclick="sidemenu()"></i>
+    </nav>
+  </div>
 </header>

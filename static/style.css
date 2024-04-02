@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
 }
 
@@ -22,8 +22,7 @@
   --form-background-color: #fff;
   --form-inputtext-color: #2c2c2c;
   --form-labeltext-color: gray;
-  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   --formregistreer-input-border-color: #afafaf;
 }
 
@@ -109,7 +108,7 @@ nav ul li a {
 }
 
 nav ul li a::after {
-  content: "";
+  content: '';
   width: 0;
   height: 3px;
   background: var(--color-secundaire);
@@ -136,15 +135,14 @@ nav > i {
   cursor: pointer;
 }
 
-nav > a{
+nav > a {
   text-decoration: none;
   color: black;
   font-size: 1.5rem;
   display: flex;
   align-items: center;
+  gap: 1rem;
 }
-
-/* -----------------EINDE-NAVIGATIE---------------- */
 
 /* -----------------BEGIN-ADOPTIE---------------- */
 
@@ -176,9 +174,9 @@ nav > a{
   align-items: center;
 }
 
-#sorteerFormulier{
+#sorteerFormulier {
   width: 10em;
-} 
+}
 
 .filter {
   background-color: var(--color-oranje);
@@ -197,8 +195,8 @@ nav > a{
   margin-top: 1em;
 }
 
-.filteroption{
-  right:0;
+.filteroption {
+  right: 0;
 }
 
 .submitfilter {
@@ -212,34 +210,73 @@ nav > a{
   display: flex;
   flex-direction: column;
   border-radius: 25px;
-  margin: 1em;
+  margin: 1em 1em;
 }
 
 .overzicht li {
   list-style-type: none;
   display: flex;
-  border: 1px #b5c055 solid;
-  background-image: linear-gradient(to right, #a5af4d, #98aa58);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  /* border: 1px #b5c055 solid; */
+  background-color: white;
   width: 100%;
+  max-width: 30em;
   border-radius: 17px;
   margin-bottom: 1em;
+  place-self: center;
 }
 
 .overzicht li img {
-  width: 6em;
-  height: 6em;
+  width: 100%;
+  height: 15em;
   padding: 0.5em;
+  object-fit: cover;
   border-radius: 25px;
 }
 
-.overzicht li div {
-  padding: 0.5em;
+.overzicht li a div {
+  padding: 0.5em 1em;
+  display: flex;
+  justify-content: space-between;
+  justify-items: start;
+  gap: 0.5em;
+}
+.overzicht li a div div:nth-child(1) {
+  padding: 0;
+  padding-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+.overzicht li a div div:nth-child(1) div {
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+}
+.overzicht li a div div:nth-child(1) div ul {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+  width: 100%;
+  font-weight: 500;
+  text-wrap: nowrap;
+  place-self: center;
+}
+.overzicht li a div div:nth-child(1) div ul li {
+  margin: 0;
+}
+.overzicht li a div div:nth-child(2) {
+  border: solid 1px black;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 1em;
 }
 
 .overzicht li a {
   display: flex;
-  color: white;
+  flex-direction: column;
+  color: black;
   text-decoration: none;
   width: 100%;
 }
@@ -254,48 +291,98 @@ nav > a{
 
 .homefoto {
   background-color: var(--color-background);
-  display: flex;
-  justify-content: space-between;
   color: var(--color-text2);
-  padding-right: 1em;
+  position: relative;
+}
+
+.homefotocontainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.homefotocontainer div {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+  text-transform: uppercase;
 }
 
 .homefoto img {
-  width: 13em;
-  height: 13em;
+  padding: 1rem;
 }
 
 .homefoto div h2 {
   font-size: 17px;
-  padding-left: 1em;
+  padding: 0.5rem;
 }
 
 .homefoto div h2:nth-of-type(1) {
   background-color: var(--color-text);
-  margin-top: 7em;
+  width: fit-content;
+  border-radius: 0 5px 0 0;
 }
 
 .homefoto div h2:nth-of-type(2) {
   background-color: var(--color-geel);
+  border-radius: 0 5px 5px 0;
 }
 
 .kiessection {
   background-color: var(--color-secundaire);
-  height: fit-content;
-  padding: 1em;
+  padding: 2rem 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-.kiessection div div {
+.kiessection > p {
+  color: var(--color-text);
+  font-size: 1.5rem;
+  font-weight: var(--font-bold);
+}
+.kiessection > div a {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.kiessectiontext {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.kiessectiontext p {
+  font-size: 1rem;
+}
+
+.kiessection > div a > div {
   background-color: var(--color-text);
   color: var(--color-darkgreen);
-  margin: 1em;
   display: flex;
   color: black;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.8rem;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 10px 10px 2px 1px var(--color-darkgreen);
+}
+
+.kiessection a i {
+  position: absolute;
+  right: 1rem;
+  font-size: 1.5rem;
 }
 
 .dieren {
   color: var(--color-text2);
-  padding: 1em;
+  padding: 2em 10%;
+  background: white;
+  display: grid;
+  gap: 1rem;
 }
 
 .dieren p {
@@ -303,54 +390,144 @@ nav > a{
 }
 
 .doneren {
-  background-image: url("../img/backgroundimg2.png");
-  height: 8em;
-  padding: 1em;
+  background-image: url('../img/backgroundimg2.png');
+  padding: 2rem 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.1em;
+  gap: 2rem;
+  position: relative;
+}
+
+.doneren::after {
+  content: '';
+  background: var(--color-text2);
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  opacity: 0.55;
 }
 
 .doneren h4 {
-  font-size: 19px;
+  font-weight: var(--font-bold);
   text-align: center;
+  text-transform: uppercase;
+  color: var(--color-text);
+  width: 75%;
+  z-index: 2;
 }
 
 .doneren a {
   background-color: var(--color-background);
-  color: white;
+  color: var(--color-text);
   text-decoration: none;
   border-radius: 25px;
-  padding: 5px 10px 5px 10px;
-  margin-top: 1em;
-  /* position: absolute; */
+  padding: 0.5rem 2rem;
+  text-transform: capitalize;
+  font-weight: var(--font-bold-btn);
+  z-index: 2;
 }
 
 .afstand {
-  background-color: var(--color-background);
-  height: 27em;
-  padding: 3em;
-  outline: 3px dashed yellow;
-  outline-offset: -25px;
+  background: var(--color-background);
+  padding: 2rem 10%;
+  border-radius: 5px;
+  position: relative;
+}
+
+.afstand > div {
+  background: var(--color-background);
+  border-radius: 15px;
+  border: dashed var(--color-geel) 3px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--color-text);
 }
 
 .afstand h4 {
   color: var(--color-geel);
-  margin-bottom: 1em;
 }
 
-.afstand :nth-of-type(2) {
+.afstand div div {
   background-color: var(--color-geel);
   padding: 1em;
-  height: 6em;
-  width: 100%;
+  z-index: 2;
+  width: 20rem;
+  display: flex;
+  align-self: center;
+  justify-content: center;
+}
+
+.afstand div div a {
+  text-align: center;
+  text-decoration: none;
+  border: solid 1px black;
   color: black;
-  margin-top: 1em;
+  padding: 1rem;
+  border-radius: 5rem;
+}
+
+.afstand > div::before {
+  content: '';
+  position: absolute;
+  background: var(--color-geel);
+  left: 0;
+  right: 0;
+  bottom: 59px;
+  top: 307px;
 }
 
 .contact {
-  background-color: var(--color-darkgreen);
+  background-color: var(--color-secundaire);
+  padding: 2rem 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: white;
+}
+
+.contactform {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contactnaam {
+  display: flex;
+  flex-direction: row;
+}
+
+.contactnaam div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contactform label {
+  font-size: 0.8rem;
+  color: white;
+}
+
+.contactform input {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 90%;
+}
+
+.contactform textarea {
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.contactform > div:not(:first-of-type) {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .swiper {
@@ -424,6 +601,12 @@ nav > a{
   border-radius: 1rem;
   box-shadow: var(--form-box-shadow);
   margin-bottom: 5rem;
+}
+
+.formcontainer-container h2 {
+  font-weight: var(--font-bold);
+  color: var(--color-text2);
+  text-align: center;
 }
 
 .centerform {
@@ -598,11 +781,11 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type="number"] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.registreerinput > i{
+.registreerinput > i {
   right: 10px;
   cursor: pointer;
   color: var(--form-inputtext-color);
@@ -810,14 +993,11 @@ input[type="number"] {
 #likeForm {
   width: fit-content;
   display: flex;
-  gap: 1em;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 1em;
 }
 #likeButton {
-  padding: 5px 7px;
   font-size: 16px;
   border: none;
   background-color: #ffffff;
@@ -833,6 +1013,7 @@ input[type="number"] {
   background-color: #ff0000;
   color: #ffffff;
   border-radius: 0.5em;
+  padding: 0.5em 1em;
 }
 .fa-solid.fa-pen {
   align-self: center;
@@ -863,7 +1044,7 @@ input[type="number"] {
 }
 
 .profielmain::before {
-  content: "";
+  content: '';
   position: absolute;
   border-bottom: 10px black;
 }
@@ -927,17 +1108,51 @@ input[type="number"] {
   padding: 1rem;
 }
 
-/* -----------------DIERENTOEVOEGEN--------------- */
-.registreerinput select{
-  padding: .4rem;
+/* ----------------PROFIEL-TEXTVAK2---------------- */
+.textvak2 .katprofielcontainer {
+  position: relative;
+  background-color: transparent;
+  margin: 2rem;
 }
-.toevoegenform{
+
+.textvak2 ul {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  gap: 1rem;
+}
+
+.textvak2 ul li {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  justify-content: space-around;
+  padding: 1em;
+  border-radius: 10px;
+}
+
+.textvak2 ul li div {
+  display: flex;
+  flex-direction: column;
+}
+
+.textvak2 ul li form {
+  width: 2em;
+}
+
+/* -----------------DIERENTOEVOEGEN--------------- */
+.registreerinput select {
+  padding: 0.4rem;
+}
+.toevoegenform {
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 
-.toevoegentext{
+.toevoegentext {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -946,19 +1161,18 @@ input[type="number"] {
   color: white;
 }
 
-.toevoegentext h1{
+.toevoegentext h1 {
   color: var(--color-oranje);
 }
 
-textarea
-{
-  width:100%;
+textarea {
+  width: 100%;
+  border-radius: 5px;
 }
-.textareawrapper
-{
-  border:1px solid #999999;
-  margin:5px 0;
-  padding:3px;
+.textareawrapper {
+  border: 1px solid #999999;
+  margin: 5px 0;
+  padding: 3px;
 }
 
 /* -----------------DETAILDIEREN--------------- */
@@ -1022,8 +1236,8 @@ textarea
 }
 
 /* ---------------MEDIA-QUERIES----------------- */
-@media (width > 500px){
-  nav ul{
+@media (width > 500px) {
+  nav ul {
     display: flex;
     height: auto;
     background: transparent;
@@ -1033,38 +1247,49 @@ textarea
     padding: 0;
   }
 
-  nav ul li a{
+  nav ul li a {
     color: var(--color-text2);
   }
-  nav > i:last-of-type{
+  nav > i:last-of-type {
     display: none;
   }
 
-  nav ul .fas{
+  nav ul .fas {
     display: none;
   }
 
-  nav ul li:last-of-type{
+  nav ul li:last-of-type {
     display: none;
   }
-
 }
 
-@media (width > 850px){
-
-  #next{
+@media (width > 850px) {
+  #next {
     right: calc(40% - 22rem);
-
   }
-  #prev{
+  #prev {
     left: calc(40% - 22rem);
   }
 
-  .vragenlijstgapcontainer{
+  .vragenlijstgapcontainer {
     gap: 3rem;
   }
 
-  .container{
-    padding: .5rem 10%;
+  .container {
+    padding: 0.5rem 10%;
   }
+}
+#profilePhoto {
+  width: 10em;
+  height: 10em;
+  border-radius: 100%;
+  object-fit: cover;
+  place-self: center;
+}
+#profielFotoNav {
+  width: 3em;
+  height: 3em;
+  border-radius: 100%;
+  object-fit: cover;
+  place-self: center;
 }

@@ -2,7 +2,29 @@
 function sidemenu() {
   let menu = document.getElementById("sidemenu");
   menu.classList.toggle("sidemenu");
-} 
+}
+// --------------PROFIEL-----------
+document.addEventListener("DOMContentLoaded", function () {
+  let listItems = document.querySelectorAll(".profieldropdown ul li");
+  let textvakken = document.querySelectorAll('main > div[class^="textvak"]');
+
+  listItems.forEach(function (item, index) {
+    item.addEventListener("click", function () {
+      // Verplaats de 'profielactive'-klasse van het huidige actieve lijstitem naar het geselecteerde lijstitem
+      document
+        .querySelector(".profielactive")
+        .classList.remove("profielactive");
+      this.classList.add("profielactive");
+
+      // Verberg alle tekstvakken
+      textvakken.forEach(function (textvak) {
+        textvak.style.display = "none";
+      });
+      // Toon alleen het tekstvak met dezelfde index als het geselecteerde lijstitem
+      textvakken[index].style.display = "block";
+    });
+  });
+});
 
 // ---------------FILTER-----------------
 let filterBtn = document.getElementById("filterBtn")
@@ -14,8 +36,8 @@ if(filterBtn) {
       // Als het verborgen is, maak het zichtbaar
       filterSection.style.display = "block";
   } else {
-      // Als het zichtbaar is, verberg het
-      filterSection.style.display = "none";
+    // Als het zichtbaar is, verberg het
+    filterSection.style.display = "none";
   }
   });
 }
@@ -57,10 +79,10 @@ function showpassword(x) {
   let inputElement = document.getElementById("wachtwoord");
 
   if (inputElement.type === "password") {
-      inputElement.type = "text";
-    } else {
-      inputElement.type = "password";
-    }
+    inputElement.type = "text";
+  } else {
+    inputElement.type = "password";
+  }
 }
 
 function showrepassword(x) {
@@ -72,13 +94,13 @@ function showrepassword(x) {
   let inputElement = document.getElementById("repassword");
 
   if (inputElement.type === "password") {
-      inputElement.type = "text";
-    } else {
-      inputElement.type = "password";
-    }
+    inputElement.type = "text";
+  } else {
+    inputElement.type = "password";
+  }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   let passwordField = document.getElementById("wachtwoord");
   let repasswordField = document.getElementById("repassword");
   let errorSpan = document.getElementById("pass");
@@ -106,10 +128,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 });
 
-
 // ---------------VRAGENLIJST CARD SLIDER-----------------
 
-let items = document.querySelectorAll('.slider .item');
+let items = document.querySelectorAll(".slider .item");
 let active = 0;
 let next = document.getElementById('next');
 let prev = document.getElementById('prev');
@@ -146,19 +167,19 @@ loadShow();
 
 // Functie om de knoppen te tonen/verbergen op basis van de actieve vraag
 function toggleButtonsVisibility() {
-    if (active === 0) {
-        prev.style.display = 'none'; // Verberg de vorige knop als op de eerste vraag bent
-    } else {
-        prev.style.display = 'block'; // Toon de vorige knop als niet op de eerste vraag bent
-    }
+  if (active === 0) {
+    prev.style.display = "none"; // Verberg de vorige knop als op de eerste vraag bent
+  } else {
+    prev.style.display = "block"; // Toon de vorige knop als niet op de eerste vraag bent
+  }
 
-    if (active === items.length - 1) {
-        next.style.display = 'none'; // Verberg de volgende knop als op de laatste vraag bent
-        submitButton.style.display = 'block'; // Toon de verzendknop als op de laatste vraag bent
-    } else {
-        next.style.display = 'block'; // Toon de volgende knop als niet op de laatste vraag bent
-        submitButton.style.display = 'none'; // Verberg de verzendknop als niet op de laatste vraag bent
-    }
+  if (active === items.length - 1) {
+    next.style.display = "none"; // Verberg de volgende knop als op de laatste vraag bent
+    submitButton.style.display = "block"; // Toon de verzendknop als op de laatste vraag bent
+  } else {
+    next.style.display = "block"; // Toon de volgende knop als niet op de laatste vraag bent
+    submitButton.style.display = "none"; // Verberg de verzendknop als niet op de laatste vraag bent
+  }
 }
 
 // Controleer de zichtbaarheid van de knoppen bij het laden van de pagina
@@ -184,24 +205,22 @@ if(prev)
 
 
 // ---------------SLIDER INDEX-----------------
-const swiper = new Swiper('.swiper', {
+const swiper = new Swiper(".swiper", {
   // Optional parameters
 
   // If we need pagination
   pagination: {
-    el: '.swiper-pagination',
+    el: ".swiper-pagination",
   },
 
   // Navigation arrows
   navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
   },
 
   // And if we need scrollbar
   scrollbar: {
-    el: '.swiper-scrollbar',
+    el: ".swiper-scrollbar",
   },
 });
-
-

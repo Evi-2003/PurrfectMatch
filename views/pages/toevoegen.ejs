@@ -13,12 +13,11 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    <!-- LET OP, DIT WAS NOG HETZELFDE ALS DE ADOPTIE PAGINA TIJDENS OVERZETTEN -->
     <main>
       <section class="form toevoegen">
         <div class="breadcrumb">
           <i class="fa-solid fa-arrow-left-long"></i>
-          <a href="/inloggen">Terug naar login</a>
+          <a href="/">Terug naar Home</a>
         </div>
         <div class="toevoegentext">
           <h1>Afstand doen van je dier?</h1>
@@ -27,8 +26,10 @@
         </div>
         <div class="formcontainer">
           <div class="formcontainer-container registreergap">
-            <h2 class="registreerh1">Afstandformulier</h1>
-            <form action="" class="toevoegenform">
+            <h2>Afstandformulier</h1>
+            <form action="/registreer-dier" method="post" class="toevoegenform" enctype="multipart/form-data">
+                <label for="foto">Foto*</label>
+              <input type="file" name="foto" id="imageupload" required accept=".jpg, .jpeg, .png, .gif"  />
               <div class="registreerinput">
                 <label for="diernaam">Naam - <span>verplicht</span></label>
                 <input type="text" id="diernaam" name="diernaam" placeholder="naam" required>

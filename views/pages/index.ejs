@@ -18,31 +18,36 @@ crossorigin="anonymous"
     <%- include('../partials/nav') %>
     <main>
       <section class="homefoto">
+        <div class="homefotocontainer">
           <div>
               <h2>Ik zoek een match</h2>
               <h2>Ben jij mijn PURRFECT MATCH</h2>
           </div>
           <img src="img/homefoto.png" alt="">
+        </div>  
       </section>
       <section class="kiessection">
           <p>Neem een kijkje bij onze opvangdieren</p>
          <div>
-          <div>
+          <a href="/"><div>
               <img src="img/katpoot.png" alt="">
-              <div>
+              <div class="kiessectiontext">
                   <h3>Katten</h3>
-                  <h2>21</h2>
+                  <p>21</p>
               </div>
               <i class="fa-solid fa-arrow-right"></i>
-          </div>
-          <div>
+          </div></a>
+          <a href="">
+            <div>
               <img src="img/grootpoot.png" alt="">
-              <div>
+              <div class="kiessectiontext">
                   <h3>Wilde katten</h3>
-                  <h2>12</h2>
+                  <p>12</p>
               </div>
+          
               <i class="fa-solid fa-arrow-right"></i>
           </div>
+        </a>
          </div>
       </section>
       <section class="dieren">
@@ -54,7 +59,7 @@ crossorigin="anonymous"
   <div class="swiper-wrapper">
     <!-- Slides -->
     <div class="swiper-slide">
-      <img src="#" alt="">
+      <img src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg" alt="">
       <div>
           <p>mannelijk</p>
           <p>4</p>
@@ -84,23 +89,41 @@ crossorigin="anonymous"
           <a href="#">€ Steun ons</a>
       </section>
       <section class="afstand">
+        <div>
           <h4>Afstand doen van een dier?</h4>
           <p>Mensen doen afstand van hun huisdieren om verschillende redenen, zoals  ziekte, financiële problemen, ruimtegebrek, allergieën, of veranderingen  in levensomstandigheden. Hoe moeilijk het ook is, we respecteren altijd  hun beslissing. Gelukkig zijn er nieuwe eigenaren die met liefde deze  dieren een nieuw thuis bieden.</p>
-          <p><strong>LET OP:</strong> Er dient altijd eerst een e-mail gestuurd te worden om afstand te doen van een dier</p>
-      </section>
+          <div>
+            <a href="/toevoegen">Afstand doen van je kat <i class="fa-solid fa-arrow-right-long"></i></a>
+          </div>
+        </div>
+                </section>
       <section class="contact">
           <h3>NEEM CONTACT MET ONS OP</h3>
           <p>Stuur een bericht naar ons toe, we reageren zo snel mogelijk!</p>
-          <div>
-              <p>Voornaam</p>
-             <input type="text">
-             <p>Achternaam</p>
-             <input type="text">
-          </div>
-          <p>e-mail</p>
-          <input type="text" name="" id="">
-          <p>text</p>
-          <input type="text" name="" id="">
+
+          <form class="contactform" action="">
+            <div class="contactnaam">
+              <div>
+                <label for="voornaam">Voornaam</label>
+                <input type="text" id="voornaam" name="voornaam" placeholder="voornaam">
+              </div>
+              <div>
+                <label for="achternaam">Achternaam</label>
+                <input type="text" id="achternaam" name="achternaam" placeholder="achternaam">
+              </div>
+            </div>
+            <div>
+              <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="email">
+            </div>
+            <div>
+              <label for="bericht">Bericht</label>
+              <textarea class="textareawrapper" name="bericht" id="bericht" cols="30" rows="10"></textarea>
+            </div>
+
+            <button class="btn" type="submit">Verzenden</button>
+            
+          </form>
       </section>
   </main>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>

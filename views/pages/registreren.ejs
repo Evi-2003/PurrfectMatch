@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registreren - PurrfectMatch</title>
     <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/fee5056558.js"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <%- include('../partials/nav') %>
@@ -19,74 +16,99 @@
           <i class="fa-solid fa-arrow-left-long"></i>
           <a href="/inloggen">Terug naar login</a>
         </div>
-          <div class="formcontainer">
-            <div class="formcontainer-container registreergap">
-              <h1 class="registreerh1">Registreren</h1>
-              <form class="registreerform" action="/" method="post">
+        <div class="formcontainer">
+          <div class="formcontainer-container registreergap">
+            <h1 class="registreerh1">Registreren</h1>
+            <form class="registreerform" action="/" method="post" enctype="multipart/form-data">
+              <label for="profielfoto">Profielfoto*</label>
+              <input type="file" name="profielfoto" id="imageupload" accept=".jpg, .jpeg, .png, .gif" required />
 
-                <div class="registreerinput">
-                  <label for="naam">Naam - <span>verplicht</span></label>
-                  <div class="naam">
-                    <input type="text" id="voornaam" name="voornaam" placeholder="Voornaam" required>
-                    <input type="text" id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel">
-                    <input type="text" id="achternaam" name="achternaam" placeholder="Achternaam" required>
-                  </div>
+              <div class="registreerinput">
+                <label for="naam">Naam - <span>verplicht</span></label>
+                <div class="naam">
+                  <input type="text" id="voornaam" name="voornaam" placeholder="Voornaam" required />
+                  <input type="text" id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel" />
+                  <input type="text" id="achternaam" name="achternaam" placeholder="Achternaam" required />
                 </div>
+              </div>
 
-                <div class="registreerinput">
-                  <label for="geslacht">Geslacht</label>
-                  <select id="geslacht" name="geslacht" required>
-                    <option value="niet van toepassing">Niet van toepassing</option>
-                    <option value="man">Man</option>
-                    <option value="vrouw">Vrouw</option>
-                  </select>
-                </div>
+              <div class="registreerinput">
+                <label for="geslacht">Geslacht</label>
+                <select id="geslacht" name="geslacht" required>
+                  <option value="niet van toepassing">Niet van toepassing</option>
+                  <option value="man">Man</option>
+                  <option value="vrouw">Vrouw</option>
+                </select>
+              </div>
 
-                <div class="registreerinput">
-                  <label for="adres">Adres - <span>verplicht</span></label>
-                    <input type="text" id="postcode" name="postcode" placeholder="Postcode" pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)" title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters." required>
-                    <div class="huisadres">
-                      <input type="text" id="straatnaam" name="straatnaam" placeholder="Straatnaam" required>
-                      <input type="number" id="huisnummer" name="huisnummer" placeholder="Huisnr" required>
-                      <input type="text" id="toevoeging" name="toevoeging" placeholder="Toevoeging">
-                    </div>
-                    <input type="text" id="woonplaats" name="woonplaats" placeholder="Woonplaats" required>
+              <div class="registreerinput">
+                <label for="adres">Adres - <span>verplicht</span></label>
+                <input
+                  type="text"
+                  id="postcode"
+                  name="postcode"
+                  placeholder="Postcode"
+                  pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)"
+                  title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters."
+                  required
+                />
+                <div class="huisadres">
+                  <input type="text" id="straatnaam" name="straatnaam" placeholder="Straatnaam" required />
+                  <input type="number" id="huisnummer" name="huisnummer" placeholder="Huisnr" required />
+                  <input type="text" id="toevoeging" name="toevoeging" placeholder="Toevoeging" />
                 </div>
+                <input type="text" id="woonplaats" name="woonplaats" placeholder="Woonplaats" required />
+              </div>
 
-                <div class="registreerinput">
-                  <label for="geboortedatum">Geboortedatum - <span>verplicht</span></label>
-                  <input type="date" id="geboortedatum" name="geboortedatum" required>
-                </div>
+              <div class="registreerinput">
+                <label for="geboortedatum">Geboortedatum - <span>verplicht</span></label>
+                <input type="date" id="geboortedatum" name="geboortedatum" required />
+              </div>
 
-                <div class="registreerinput">
-                  <label for="telefoon">Telefoon - <span>verplicht</span></label>
-                  <input type="tel" id="telefoonnummer" name="telefoonnummer" value="+316" placeholder="12345678" pattern="(\+31|0)(6|)[1-9][0-9]{8}" title="Voer een geldig Nederlands telefoonnummer in" required>
-                </div>
+              <div class="registreerinput">
+                <label for="telefoon">Telefoon - <span>verplicht</span></label>
+                <input
+                  type="tel"
+                  id="telefoonnummer"
+                  name="telefoonnummer"
+                  value="+316"
+                  placeholder="12345678"
+                  pattern="(\+31|0)(6|)[1-9][0-9]{8}"
+                  title="Voer een geldig Nederlands telefoonnummer in"
+                  required
+                />
+              </div>
 
-                <div class="registreerinput">
-                  <label for="email">Email - <span>verplicht</span></label>
-                  <input type="email" id="email" name="email" placeholder="Email" required>
-                </div>
+              <div class="registreerinput">
+                <label for="email">Email - <span>verplicht</span></label>
+                <input type="email" id="email" name="email" placeholder="Email" required />
+              </div>
 
-                <div class="registreerinput">
-                  <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
-                  <label for="wachtwoord">Wachtwoord - <span>verplicht</span></label>
-                  <input type="password" id="wachtwoord" name="wachtwoord" placeholder="]t&!KJkd]4#Dn3" pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$" required title="Het wachtwoord moet minstens een nummer bevatten [0-9], één letter [A-Z], één symbool[!@#$%^] en moet minimaal 8 tekens lang zijn">
-                    
-                </div>
-    
-                <div class="registreerinput">
-                  <i class="fa-regular fa-eye-slash" onclick="showrepassword(this)"></i>
-                  <label for="repassword">Herhaal wachtwoord - <span>verplicht</span></label>
-                  <input type="password" id="repassword" name="repassword" placeholder="Re-Enter your password" required>
-                </div>
-                <span id="pass"></span>
-                <button class="btn" type="submit">Registreren</button>
-              </form>
-              <p class="registreerp">Heb je al een account? <a href="/inloggen">Inloggen</a></p>
-            </div>
+              <div class="registreerinput">
+                <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
+                <label for="wachtwoord">Wachtwoord - <span>verplicht</span></label>
+                <input
+                  type="password"
+                  id="wachtwoord"
+                  name="wachtwoord"
+                  placeholder="]t&!KJkd]4#Dn3"
+                  pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$"
+                  required
+                  title="Het wachtwoord moet minstens een nummer bevatten [0-9], één letter [A-Z], één symbool[!@#$%^] en moet minimaal 8 tekens lang zijn"
+                />
+              </div>
+
+              <div class="registreerinput">
+                <i class="fa-regular fa-eye-slash" onclick="showrepassword(this)"></i>
+                <label for="repassword">Herhaal wachtwoord - <span>verplicht</span></label>
+                <input type="password" id="repassword" name="repassword" placeholder="Re-Enter your password" required />
+              </div>
+              <span id="pass"></span>
+              <button class="btn" type="submit">Registreren</button>
+            </form>
+            <p class="registreerp">Heb je al een account? <a href="/inloggen">Inloggen</a></p>
           </div>
-
+        </div>
       </section>
     </main>
     <script src="script/script.js"></script>
