@@ -354,10 +354,12 @@ app.get("/profiel", checkSession, async (req, res) => {
       account: userFromDb,
       dieren: likedAnimals,
       data: req.session.user,
+      selectedSortingMethod: "",
       verzoeken: verzoeken,
     });
   } catch (error) {
     console.log("Iets mis gegaan");
+    console.log(error);
   }
 });
 
@@ -440,6 +442,9 @@ app.post("/like", async (req, res) => {
         user: req.session.user,
         likedIds: likedIds,
         account: req?.session?.user,
+        selectedSortingMethod: "",
+        selectedSpecies: "",
+        selectedGenders: "",
       });
     } else {
       res.render("pages/adoptie", {
@@ -447,6 +452,9 @@ app.post("/like", async (req, res) => {
         user: null,
         likedIds: [],
         account: req?.session?.user,
+        selectedSortingMethod: "",
+        selectedSpecies: "",
+        selectedGenders: "",
       });
     }
   }
