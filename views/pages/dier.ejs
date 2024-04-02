@@ -40,29 +40,46 @@
         <h1><%= dier.naam %></h1>
         <h2><%= dier.gewicht %>kg</h2>
       </section> -->
-    <section class="infosec">
-      <div class="naam">
-        <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
-        <i class="fa-solid fa-heart"></i>
-      </div>
-      <p><%= dier.omschrijving %></p>
-      <h4>Kenmerken</h4>
-      <div class="kenmerken">
-        <div>
-          <p>Soort:</p>
-          <p>Geslacht:</p>
-          <p>Gewicht:</p>
+      <section class="infosec">
+        <div class="naam">
+          <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
+          <i class="fa-solid fa-heart"></i>
         </div>
-        <div>
-          <p>soort</p>
-          <p><%= dier.geslacht %></p>
-          <p><%= dier.gewicht %></p>
+        <p><%= dier.omschrijving %></p>
+        <h4>Kenmerken</h4>
+        <div class="kenmerken">
+          <div>
+            <p>Soort:</p>
+            <p>Geslacht:</p>
+            <p>Gewicht:</p>
+          </div>
+          <div>
+            <p><%= dier.soort %></p>
+            <p><%= dier.geslacht %></p>
+            <p><%= dier.gewicht %></p>
+          </div>
         </div>
-      </div>
-      <div class="container">
+
+        <div class="container">
+          <button id="open-popup">Adopteren</button>
+        </div>
+        <div class="popup" id="popup">
+          <div class="overlay"></div>
+          <div class="popup-content">
+              <h2>hallo</h2>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, illum nihil. Unde labore, ad dolore nesciunt quasi sapiente mollitia totam at minima maiores voluptas, placeat nam aliquid illum, culpa optio?</p>
+              <div class="controls">
+                  <button class="close-btn">Close</button>
+                  <button class="submit-btn">Submit</button>
+                        <div class="container">
         <form action="/verzoek" method="post">
           <button type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
         </form>
+
+      </div>
+              </div>
+          </div>
+
       </div>
     </section>
 
