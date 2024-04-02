@@ -151,20 +151,26 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
     gewicht: req.body.diergewicht,
     geslacht: req.body.diergeslacht,
     omschrijving: req.body.dieromschrijving,
+    aanbieder: req.session.user.id,
   };
 
   await db.collection("dieren").insertOne(dierData);
   res.redirect("/adoptie");
 });
+
 // Verzoeken sturen
 app.post("/verzoek", checkSession, async (req, res) => {
+  //Ophalen aanbiederId via de dierId
+  let dierId = { _id: new ObjectId(req.body.dierId) };
+  let dierCollection = await db.collection('dieren').findOne(dierId);
+
   let verzoekData = {
     zoekerId: req.session.user.id,
     dierId: req.body.dierId,
-    aanbiederId: req.session.user.id, // nog aanpasse naar aanbieder Id
+    aanbiederId: dierCollection.aanbieder,
     status: "Nog niet beoordeeld",
   };
-  console.log(verzoekData);
+
   await db.collection("verzoeken").insertOne(verzoekData);
   res.redirect("/profiel");
 });
@@ -368,7 +374,7 @@ async function getAnimal(element) {
   return dier;
 }
 
-app.get("/toevoegen", (req, res) => {
+app.get("/toevoegen", checkSession, (req, res) => {
   res.render("pages/toevoegen", { account: req?.session?.user });
 });
 
