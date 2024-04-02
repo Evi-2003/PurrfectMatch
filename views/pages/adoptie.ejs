@@ -1,92 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Adoptie - PurrfectMatch</title>
-    <link rel="stylesheet" href="style.css" />
-    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <main>
-      <section class="filterensorteren">
-        <div>
-          <p>19 dieren</p>
-          <form id="sorteerFormulier">
-            <select id="sorteerModus" name="sorteerModus">
-              <option value="relevant">Relevant</option>
-              <option value="jongOud">Jong naar Oud</option>
-              <option value="oudJong">Oud naar Jong</option>
-              <option value="lichtZwaar">Licht naar Zwaar</option>
-              <option value="zwaarLicht">Zwaar naar Licht</option>
-            </select>
-          </form>
-        </div>
-        <button id="filterBtn"><i class="fa-solid fa-filter"></i>Filters</button>
-        <section class="filter">
-          <form>
-            <h3>Diersoort</h3>
-            <input type="checkbox" id="checkleeuw" name="diersoort" value="leeuw" />
-            <label for="checkleeuw">Leeuw</label>
-            <br />
-            <input type="checkbox" id="checktijger" name="diersoort" value="tijger" />
-            <label for="checktijger">Tijger</label>
-            <br />
-            <input type="checkbox" id="checkcheetah" name="diersoort" value="cheetah" />
-            <label for="checkcheetah">Cheetah</label>
-            <br />
-            <input type="checkbox" id="checkjaguar" name="diersoort" value="jaguar" />
-            <label for="checkjaguar">Jaguar</label>
-            <br />
-            <input type="checkbox" id="checklynx" name="diersoort" value="lynx" />
-            <label for="checklynx">Lynx</label>
-            <br />
-            <input type="checkbox" id="checkpoema" name="diersoort" value="poema" />
-            <label for="checkpoema">Poema</label>
-            <br />
-            <input type="checkbox" id="checkserval" name="diersoort" value="serval" />
-            <label for="checkserval">Serval</label>
-            <br />
-            <h3>Geslacht</h3>
-            <input type="checkbox" id="checkman" name="geslacht" value="man" />
-            <label for="checkman">Man</label>
-            <br />
-            <input type="checkbox" id="checkvrouw" name="geslacht" value="vrouw" />
-            <label for="checkvrouw">Vrouw</label>
-            <br />
-            <input class="submitfilter" type="submit" value="Aanpassen" />
-          </form>
-        </section>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adoptie - PurrfectMatch</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main>
+    <section class="filterensorteren">
+      <div>
+        <p>Gevonden resultaten: <%= dieren.length %></p>
+        <form id="sorteerFormulier" action="/sorteren" method="post">
+          <select id="sorteerModus" name="sorteerModus" onchange="if(this.value != 0) { this.form.submit(); }">
+            <option value="relevant">Relevant</option>
+            <option value="jongOud" <%= selectedSortingMethod === 'jongOud' ? 'selected' : '' %>>
+              Jong naar Oud
+            </option>
+            <option value="oudJong" <option value="oudJong" <%= selectedSortingMethod === 'oudJong' ? 'selected' : '' %>>
+
+              Oud naar Jong
+            </option>
+            <option value="lichtZwaar" <option value="lichtZwaar" <%= selectedSortingMethod === 'lichtZwaar' ? 'selected' : '' %>>Licht naar Zwaar</option>
+            >
+            Licht naar Zwaar
+            </option>
+            <option value="zwaarLicht" <option value="zwaarLicht" <%= selectedSortingMethod === 'zwaarLicht' ? 'selected' : '' %>>Zwaar naar Licht</option>
+            >
+            Zwaar naar Licht
+            </option>
+          </select>
+        </form>
+      </div>
+      <button id="filterBtn">
+        <i class="fa-solid fa-filter"></i>Filters
+      </button>
+      <section class="filter">
+        <form action="/filteren" method="post">
+          <h3>Diersoort</h3>
+          <input type="checkbox" id="checkleeuw" name="diersoort" value="leeuw" <% if (selectedSpecies.includes('leeuw')) { %> checked <% } %> />
+          <label for="checkleeuw">Leeuw</label>
+          <br />
+          <input type="checkbox" id="checktijger" name="diersoort" value="tijger" <% if (selectedSpecies.includes('tijger')) { %> checked <% } %> />
+          <label for="checktijger">Tijger</label>
+          <br />
+          <input type="checkbox" id="checkcheetah" name="diersoort" value="cheetah" <% if (selectedSpecies.includes('cheetah')) { %> checked <% } %> />
+          <label for="checkcheetah">Cheetah</label>
+          <br />
+          <input type="checkbox" id="checkjaguar" name="diersoort" value="jaguar" <% if (selectedSpecies.includes('jaguar')) { %> checked <% } %> />
+          <label for="checkjaguar">Jaguar</label>
+          <br />
+          <input type="checkbox" id="checklynx" name="diersoort" value="lynx" <% if (selectedSpecies.includes('lynx')) { %> checked <% } %> />
+          <label for="checklynx">Lynx</label>
+          <br />
+          <input type="checkbox" id="checkpoema" name="diersoort" value="poema" <% if (selectedSpecies.includes('poema')) { %> checked <% } %> />
+          <label for="checkpoema">Poema</label>
+          <br />
+          <input type="checkbox" id="checkserval" name="diersoort" value="serval" <% if (selectedSpecies.includes('serval')) { %> checked <% } %> />
+          <label for="checkserval">Serval</label>
+          <br />
+
+          <h3>Geslacht</h3>
+          <input type="checkbox" id="checkman" name="geslacht" value="man" <% if (selectedGenders.includes('man')) { %> checked <% } %> />
+          <label for="checkman">Man</label>
+          <br />
+          <input type="checkbox" id="checkvrouw" name="geslacht" value="vrouw" <% if (selectedGenders.includes('vrouw')) { %> checked <% } %> />
+          <label for="checkvrouw">Vrouw</label>
+          <br />
+          <input class="submitfilter" type="submit" value="Aanpassen" />
+        </form>
       </section>
-      <section>
-        <ul class="overzicht">
-          <% dieren.forEach(function(dier) { %>
-          <li>
-            <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Ga naar dit dier">
-              <img src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg" alt="" />
+    </section>
+    <section>
+      <ul class="overzicht">
+        <% dieren.forEach(function(dier) { %>
+        <li>
+          <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Ga naar dit dier">
+            <img src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>" />
+            <div>
               <div>
                 <h2><%= dier.naam %></h2>
-                <h4><%= dier.geslacht %></h4>
-                <h5><%= dier.leeftijd %></h5>
-                <h6><%= dier.gewicht %></h6>
+                <div>
+                  <ul>
+                    <li><%= dier.geslacht %></li>
+                    <li><%= dier.leeftijd %> jaar oud</li>
+                    <li><%= dier.gewicht %>kg</li>
+                  </ul>
+                </div>
                 <p><%= dier.omschrijving %></p>
               </div>
-              <i class="fa-solid fa-pen"></i>
-              <% if (user) { %>
-              <form action="like" method="post" id="likeForm">
-                <input type="hidden" name="dier" value="<%= dier._id %>" />
-                <input type="hidden" name="user" value="<%= user.id %>" />
-                <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>"><%= dier.likes %> ❤️</button>
-              </form>
-              <% } %>
-            </a>
-          </li>
-          <% }); %>
-        </ul>
-      </section>
-    </main>
-    <script src="script/script.js"></script>
-  </body>
+              <div>
+                <i class="fa-solid fa-pen"></i>
+                <% if (user) { %>
+                <form action="like" method="post" id="likeForm">
+                  <input type="hidden" name="dier" value="<%= dier._id %>" />
+                  <input type="hidden" name="user" value="<%= user.id %>" />
+                  <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                    <%= dier.likes %> ❤️
+                  </button>
+                </form>
+                <% } %>
+              </div>
+            </div>
+          </a>
+        </li>
+        <% }); %>
+      </ul>
+    </section>
+  </main>
+  <script src="/script/script.js"></script>
+</body>
+
 </html>
