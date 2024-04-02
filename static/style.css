@@ -541,7 +541,7 @@ nav > a {
 }
 
 .swiper-slide {
-  background-color: yellow;
+  background-color: var(--color-geel);
 }
 
 .swiper-slide img {
@@ -1173,6 +1173,66 @@ textarea {
   border: 1px solid #999999;
   margin: 5px 0;
   padding: 3px;
+}
+
+/* -----------------DETAILDIEREN--------------- */
+
+
+#detail-dier .swiper-slide img{
+  width: 100%;
+  height: 17em;
+  border-radius: 0px;
+}
+
+#detail-dier .swiper {
+  width: 100%;
+  height: 17em;
+  border-radius: 0px;
+  padding: 0;
+}
+
+#detail-dier {
+  background-image: url(img/backgroundforms.png);
+  background-repeat: repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+#detail-dier .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.infosec {
+  margin: 0 1em 1em 1em;
+  padding: 1em;
+  background-color: var(--color-header-background);
+  box-shadow: 5px 10px 20px var(--color-darkgreen);
+}
+
+.infosec h4 {
+  margin-top: 1em;
+}
+
+.infosec .naam{
+  display: flex;
+  justify-content: space-between;
+} 
+
+.infosec .kenmerken {
+  display: flex;
+  justify-content: space-around;
+}
+
+#detail-dier .infosec .container button {
+  background-color: var(--color-oranje);
+  border-radius: 25px;
+  align-self: center;
+  padding: 10px 20px 10px 20px;
+  border: var(--color-header-background);
+  box-shadow: 5px 10px 20px var(--color-darkgreen);
+  color: var(--color-text);
 }
 
 /* ---------------MEDIA-QUERIES----------------- */
