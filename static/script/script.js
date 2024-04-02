@@ -5,23 +5,30 @@ function sidemenu() {
 } 
 
 // ---------------FILTER-----------------
-document.getElementById("filterBtn").addEventListener("click", function() {
-  var filterSection = document.querySelector(".filter");
-  // Controleer of de filtersectie verborgen is
-  if (filterSection.style.display === "none") {
+let filterBtn = document.getElementById("filterBtn")
+if(filterBtn) {
+  filterBtn.addEventListener("click", function() {
+    let filterSection = document.querySelector(".filter");
+    // Controleer of de filtersectie verborgen is
+    if (filterSection.style.display === "none") {
       // Als het verborgen is, maak het zichtbaar
       filterSection.style.display = "block";
   } else {
       // Als het zichtbaar is, verberg het
       filterSection.style.display = "none";
   }
-});
+  });
+}
+
+
+
 
 // --------------PROFIEL-----------
 document.addEventListener('DOMContentLoaded', function() {
   let listItems = document.querySelectorAll('.profieldropdown ul li');
   let textvakken = document.querySelectorAll('main > div[class^="textvak"]');
 
+ if(listItems){
   listItems.forEach(function(item, index) {
     item.addEventListener('click', function() {
       // Verplaats de 'profielactive'-klasse van het huidige actieve lijstitem naar het geselecteerde lijstitem
@@ -36,6 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
       textvakken[index].style.display = 'block';
     });
   });
+ }
 });
 
 
@@ -76,20 +84,26 @@ document.addEventListener("DOMContentLoaded", function() {
   let errorSpan = document.getElementById("pass");
   let form = document.querySelector(".registreerform");
 
-  repasswordField.addEventListener("input", function() {
-    if (passwordField.value !== repasswordField.value) {
-      errorSpan.textContent = "De wachtwoorden komen niet overeen";
-    } else {
-      errorSpan.textContent = "";
-    }
-  });
-
-  form.addEventListener("submit", function(event) {
-  if (passwordField.value !== repasswordField.value) {
-    errorSpan.textContent = "De wachtwoorden komen niet overeen";
-    event.preventDefault(); // Voorkom dat het formulier wordt ingediend
+  if (repasswordField){
+    repasswordField.addEventListener("input", function() {
+      if (passwordField.value !== repasswordField.value) {
+        errorSpan.textContent = "De wachtwoorden komen niet overeen";
+      } else {
+        errorSpan.textContent = "";
+      }
+    });
   }
-});
+
+  if (form){
+    form.addEventListener("submit", function(event) {
+      if (passwordField.value !== repasswordField.value) {
+        errorSpan.textContent = "De wachtwoorden komen niet overeen";
+        event.preventDefault(); // Voorkom dat het formulier wordt ingediend
+      }
+    });
+  }
+  
+
 });
 
 
@@ -100,8 +114,9 @@ let active = 0;
 let next = document.getElementById('next');
 let prev = document.getElementById('prev');
 let submitButton = document.querySelector('.vragenlijstbtn');
-
-function loadShow(){
+console.log(items)
+if(items > 0) {
+  function loadShow(){
     items[active].style.transform = `none`;
     items[active].style.zIndex = 1;
     items[active].style.filter = 'none';
@@ -126,6 +141,8 @@ function loadShow(){
 }
 
 loadShow();
+}
+
 
 // Functie om de knoppen te tonen/verbergen op basis van de actieve vraag
 function toggleButtonsVisibility() {
@@ -145,20 +162,26 @@ function toggleButtonsVisibility() {
 }
 
 // Controleer de zichtbaarheid van de knoppen bij het laden van de pagina
+if (prev && next && submitButton) {
 toggleButtonsVisibility();
+}
 
 // Voeg klikgebeurtenissen toe aan de knoppen om door de vragen te navigeren
-next.onclick = function(){
+if(next) {
+  next.onclick = function(){
     active = active + 1 < items.length ?  active + 1 : active;
     loadShow();
     toggleButtonsVisibility(); // Controleer de zichtbaarheid van de knoppen na het veranderen van de actieve vraag
 }
-
-prev.onclick = function(){
-    active = active - 1 >= 0 ? active -1 : active;
-    loadShow();
-    toggleButtonsVisibility(); // Controleer de zichtbaarheid van de knoppen na het veranderen van de actieve vraag
 }
+
+if(prev)
+{prev.onclick = function(){
+  active = active - 1 >= 0 ? active -1 : active;
+  loadShow();
+  toggleButtonsVisibility(); // Controleer de zichtbaarheid van de knoppen na het veranderen van de actieve vraag
+}}
+
 
 // ---------------SLIDER INDEX-----------------
 const swiper = new Swiper('.swiper', {
