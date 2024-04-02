@@ -1,25 +1,72 @@
 <!DOCTYPE html>
 <html lang="nl-NL">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= dier.naam %> - PurrfectMatch</title>
-    <link rel="stylesheet" href="/style.css" />
-    <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <main>
-      <section>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= dier.naam %> - PurrfectMatch</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main id="detail-dier">
+    <div class="breadcrumb">
+      <i class="fa-solid fa-arrow-left-long"></i>
+      <a href="/adoptie">Terug naar adoptie</a>
+    </div>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <% dier.foto.forEach(function(dier) { %>
+        <div class="swiper-slide"><img src="/uploads/<%= dier %>" alt="Foto van <%= dier.naam %>"></div>
+        <% }); %>
+        ...
+      </div>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <!-- If we need scrollbar -->
+      <div class="swiper-scrollbar"></div>
+    </div>
+    <!-- <section>
         <h1><%= dier.naam %></h1>
         <h2><%= dier.gewicht %>kg</h2>
-        <!-- button om te mailen -->
-        <form action="/verzoek" method="post">
-          <input type="submit" name="dierId" value="<%= dier._id %>">
-        </form>
-      </section>
-    </main>
-    <script src="/script/script.js"></script>
-  </body>
+      </section> -->
+    <section class="infosec">
+      <div class="naam">
+        <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
+        <i class="fa-solid fa-heart"></i>
+      </div>
+      <p><%= dier.omschrijving %></p>
+      <h4>Kenmerken</h4>
+      <div class="kenmerken">
+        <div>
+          <p>Soort:</p>
+          <p>Geslacht:</p>
+          <p>Gewicht:</p>
+        </div>
+        <div>
+          <p>soort</p>
+          <p><%= dier.geslacht %></p>
+          <p><%= dier.gewicht %></p>
+        </div>
+      </div>
+      <div class="container">
+        <button>Adopteren</button>
+      </div>
+    </section>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/script/script.js"></script>
+</body>
+
 </html>
