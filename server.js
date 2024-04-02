@@ -53,7 +53,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  })
+  }),
 );
 
 /* check wachtwoord */
@@ -135,11 +135,16 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
   });
 });
 /* registratie van dier */
-app.post("/registreer-dier", upload.single("foto"), async (req, res) => {
-  const filename = req.file.filename;
+app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
+  const images = req.files;
+  let filenames = [];
+  images.forEach((element) => {
+    filenames.push(element.filename);
+  });
+  console.log(filenames);
 
   let dierData = {
-    foto: filename,
+    foto: filenames,
     naam: req.body.diernaam,
     soort: req.body.diersoort,
     leeftijd: req.body.dierleeftijd,
@@ -213,12 +218,16 @@ app.get("/adoptie", async (req, res) => {
 
     // Filtering based on selected species
     if (selectedSpecies.length > 0) {
-      dieren = dieren.filter(dier => selectedSpecies.includes(dier.soort.toLowerCase()));
+      dieren = dieren.filter((dier) =>
+        selectedSpecies.includes(dier.soort.toLowerCase()),
+      );
     }
 
     // Filtering based on selected genders
     if (selectedGenders.length > 0) {
-      dieren = dieren.filter(dier => selectedGenders.includes(dier.geslacht.toLowerCase()));
+      dieren = dieren.filter((dier) =>
+        selectedGenders.includes(dier.geslacht.toLowerCase()),
+      );
     }
 
     // Sorting based on selected method
@@ -262,12 +271,15 @@ app.get("/adoptie", async (req, res) => {
   }
 });
 
-
 // Route for filtering
 app.post("/filteren", async (req, res) => {
   // Convert submitted values to lowercase and ensure they are arrays
-  const selectedSpecies = Array.isArray(req.body.diersoort) ? req.body.diersoort.map(species => species.toLowerCase()) : [req.body.diersoort?.toLowerCase()].filter(Boolean);
-  const selectedGenders = Array.isArray(req.body.geslacht) ? req.body.geslacht.map(gender => gender.toLowerCase()) : [req.body.geslacht?.toLowerCase()].filter(Boolean);
+  const selectedSpecies = Array.isArray(req.body.diersoort)
+    ? req.body.diersoort.map((species) => species.toLowerCase())
+    : [req.body.diersoort?.toLowerCase()].filter(Boolean);
+  const selectedGenders = Array.isArray(req.body.geslacht)
+    ? req.body.geslacht.map((gender) => gender.toLowerCase())
+    : [req.body.geslacht?.toLowerCase()].filter(Boolean);
 
   // Save selected species and genders in session
   req.session.selectedSpecies = selectedSpecies;
@@ -287,8 +299,6 @@ app.post("/sorteren", async (req, res) => {
   // Redirect back to adoption page
   res.redirect("/adoptie");
 });
-
-
 
 // Dynamic route for the animals
 app.get("/adoptie/:name", async function (req, res) {
@@ -316,7 +326,7 @@ app.get("/profiel", checkSession, async (req, res) => {
       likedAnimalsId?.map(async (element) => {
         const dier = await getAnimal(element);
         return dier;
-      })
+      }),
     );
 
     let verzoeken = await db
@@ -344,10 +354,12 @@ app.get("/profiel", checkSession, async (req, res) => {
       account: userFromDb,
       dieren: likedAnimals,
       data: req.session.user,
+      selectedSortingMethod: "",
       verzoeken: verzoeken,
     });
   } catch (error) {
     console.log("Iets mis gegaan");
+    console.log(error);
   }
 });
 
@@ -430,6 +442,9 @@ app.post("/like", async (req, res) => {
         user: req.session.user,
         likedIds: likedIds,
         account: req?.session?.user,
+        selectedSortingMethod: "",
+        selectedSpecies: "",
+        selectedGenders: "",
       });
     } else {
       res.render("pages/adoptie", {
@@ -437,6 +452,9 @@ app.post("/like", async (req, res) => {
         user: null,
         likedIds: [],
         account: req?.session?.user,
+        selectedSortingMethod: "",
+        selectedSpecies: "",
+        selectedGenders: "",
       });
     }
   }

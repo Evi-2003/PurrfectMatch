@@ -84,7 +84,7 @@
         <% dieren.forEach(function(dier) { %>
         <li>
           <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Ga naar dit dier">
-            <img src="/uploads/<%= dier.foto %>" alt="Foto van <%= dier.naam %>" />
+            <img src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>" />
             <div>
               <div>
                 <h2><%= dier.naam %>(<%= dier.leeftijd %>)</h2>
