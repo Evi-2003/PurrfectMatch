@@ -60,7 +60,9 @@
         </div>
       </div>
       <div class="container">
-        <button>Adopteren</button>
+        <form action="/verzoek" method="post">
+          <button type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
+        </form>
       </div>
     </section>
 
