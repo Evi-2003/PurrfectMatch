@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   box-sizing: border-box;
 }
 
@@ -22,7 +22,8 @@
   --form-background-color: #fff;
   --form-inputtext-color: #2c2c2c;
   --form-labeltext-color: gray;
-  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  --form-box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   --formregistreer-input-border-color: #afafaf;
 }
 
@@ -108,7 +109,7 @@ nav ul li a {
 }
 
 nav ul li a::after {
-  content: '';
+  content: "";
   width: 0;
   height: 3px;
   background: var(--color-secundaire);
@@ -186,7 +187,9 @@ nav > a {
   color: var(--color-text);
   border: 1px solid var(--color-darkgreen);
   border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: none;
 }
 
@@ -390,7 +393,7 @@ nav > a {
 }
 
 .doneren {
-  background-image: url('../img/backgroundimg2.png');
+  background-image: url("../img/backgroundimg2.png");
   padding: 2rem 10%;
   display: flex;
   flex-direction: column;
@@ -400,7 +403,7 @@ nav > a {
 }
 
 .doneren::after {
-  content: '';
+  content: "";
   background: var(--color-text2);
   position: absolute;
   top: 0;
@@ -472,7 +475,7 @@ nav > a {
 }
 
 .afstand > div::before {
-  content: '';
+  content: "";
   position: absolute;
   background: var(--color-geel);
   left: 0;
@@ -547,6 +550,7 @@ nav > a {
 .swiper-slide img {
   width: 100%;
   height: 50%;
+  object-fit: cover;
 }
 
 .swiper-slide div {
@@ -781,7 +785,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -1044,7 +1048,7 @@ input[type='number'] {
 }
 
 .profielmain::before {
-  content: '';
+  content: "";
   position: absolute;
   border-bottom: 10px black;
 }
@@ -1177,8 +1181,7 @@ textarea {
 
 /* -----------------DETAILDIEREN--------------- */
 
-
-#detail-dier .swiper-slide img{
+#detail-dier .swiper-slide img {
   width: 100%;
   height: 17em;
   border-radius: 0px;
@@ -1215,10 +1218,10 @@ textarea {
   margin-top: 1em;
 }
 
-.infosec .naam{
+.infosec .naam {
   display: flex;
   justify-content: space-between;
-} 
+}
 
 .infosec .kenmerken {
   display: flex;
