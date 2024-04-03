@@ -136,7 +136,7 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
 });
 
 /* Profiel aanpassen */ 
-app.post("/profielAanpassen", async(req, res) => {
+app.post("/profielAanpassen", upload.single("profielfoto"), async(req, res) => {
   let userId = { _id: new ObjectId(req.session.user.id) };
   let userGegv = await db.collection("users").findOne(userId);
   let email = userGegv.email;
@@ -158,9 +158,14 @@ app.post("/profielAanpassen", async(req, res) => {
       telefoonnummer: req.body.telefoonnummer,
       email: req.body.email,
     };
+    
+    if (req.file) {
+      userData.profielfoto = req.file.filename;
+    }
+
     await db.collection("users").updateOne(userId, { $set: userData });
   } else {
-    console.log("fout")
+    console.log("fout wachtwoord")
   }
 
   //post naar database
