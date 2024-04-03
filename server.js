@@ -158,7 +158,7 @@ app.post("/profielAanpassen", upload.single("profielfoto"), async(req, res) => {
       telefoonnummer: req.body.telefoonnummer,
       email: req.body.email,
     };
-    
+
     if (req.file) {
       userData.profielfoto = req.file.filename;
     }
@@ -167,8 +167,6 @@ app.post("/profielAanpassen", upload.single("profielfoto"), async(req, res) => {
   } else {
     console.log("fout wachtwoord")
   }
-
-  //post naar database
   res.redirect("/profiel");
 });
 
