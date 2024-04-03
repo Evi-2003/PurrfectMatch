@@ -1150,6 +1150,15 @@ input[type="number"] {
   width: 2em;
 }
 
+/* ----------------PROFIEL-TEXTVAK3---------------- */
+.textvak3 {
+  padding: 2.5rem;
+  background: var(--form-background-color);
+  border-radius: 1rem;
+  box-shadow: var(--form-box-shadow);
+  margin: 2rem 2rem 5rem 2rem;
+}
+
 /* -----------------DIERENTOEVOEGEN--------------- */
 .registreerinput select {
   padding: 0.4rem;

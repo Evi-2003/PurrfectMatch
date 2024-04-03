@@ -134,6 +134,39 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
     res.redirect("/profiel");
   });
 });
+
+/* Profiel aanpassen */ 
+app.post("/profielAanpassen", async(req, res) => {
+  let userId = { _id: new ObjectId(req.session.user.id) };
+  let userGegv = await db.collection("users").findOne(userId);
+  let email = userGegv.email;
+  let wachtwoord = req.body.wachtwoord;
+
+  profielAanpassen = await checkUser(email, wachtwoord);
+  if (profielAanpassen) {
+    let userData = {
+      voornaam: req.body.voornaam,
+      tussenvoegsel: req.body.tussenvoegsel,
+      achternaam: req.body.achternaam,
+      geslacht: req.body.geslacht,
+      postcode: req.body.postcode,
+      straatnaam: req.body.straatnaam,
+      huisnummer: parseInt(req.body.huisnummer),
+      toevoeging: req.body.toevoeging,
+      woonplaats: req.body.woonplaats,
+      geboortedatum: req.body.geboortedatum,
+      telefoonnummer: req.body.telefoonnummer,
+      email: req.body.email,
+    };
+    await db.collection("users").updateOne(userId, { $set: userData });
+  } else {
+    console.log("fout")
+  }
+
+  //post naar database
+  res.redirect("/profiel");
+});
+
 /* registratie van dier */
 app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
   const images = req.files;
