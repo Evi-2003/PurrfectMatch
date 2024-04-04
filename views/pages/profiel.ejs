@@ -18,10 +18,10 @@
           <p>Mijn account</p>
           <h1>Welkom <%= account.voornaam %></h1>
         </div>
-        <a href="/inloggen">Uitloggen account</a>
+        <a href="/inloggen">Uitloggen</a>
       </div>
     </div>
-    <section class="profielmain">
+    <section class="profieldropdowncontainer">
       <div class="profieldropdown">
         <ul>
           <li class="profielactive"><i class="fa-solid fa-heart"></i></li>
@@ -30,23 +30,32 @@
         </ul>
       </div>
     </section>
-    <main>
+    <main class="profielmain">
       <% dieren.forEach(function(dier) { %>
 
  
       <div class="textvak1">
         <li>
           <div class="katprofielbg">
-            <div class="katprofielcontainer">
+            <a href="dier" class="katprofielcontainer">
               <img src="/uploads/<%= dier.foto[0] %>" alt="" />
               <div class="katprofieltext">
                 <div>
-                  <h2><%= dier.naam %></h2>
-                  <p><%= dier.soort %></p>
+                  <h2><%= dier.naam %> (<%= dier.leeftijd %>)</h2>
+                  <p>
+                    <i class="fa-solid fa-message">
+                      <i class="fa-solid fa-heart"><%= dier.likes %></i> 
+                    </i>
+                  </p>
                 </div>
-                <p><%= dier.geslacht %></p>
+                <ul>
+                  <li><p><%= dier.soort %></p></li>
+                  <li><p><%= dier.geslacht %></p></li>
+                  <li><p><%= dier.gewicht %>kg</p></li>
+                </ul>
+                <p><%= dier.omschrijving %></p>
               </div>
-            </div>
+            </a>
           </div>
         </li>
       <% }); %>
@@ -57,13 +66,12 @@
           <ul id="verzoekenList"></ul>
         </div>
       </div>    
-            
+           
       <div class="textvak3">
         <div class="profielaanpassen">
           <form class="registreerform" action="/profielAanpassen" method="post" enctype="multipart/form-data">
             <label for="profielfoto">Profielfoto*</label>
             <input type="file" name="profielfoto" id="imageupload" accept=".jpg, .jpeg, .png, .gif"/>
-
             <div class="registreerinput">
               <label for="naam">Naam</label>
               <div class="naam">
@@ -119,6 +127,7 @@
         </div>
       </div>
     </main>
+    <%- include('../partials/footer') %>
 
     <script src="/script/script.js">
       let verzoeken = <%- JSON.stringify(verzoeken) %>;
