@@ -62,9 +62,6 @@ async function laadVerzoeken(verzoeken) {
     list.appendChild(verzoekItem);
   });
 }
-laadVerzoeken(verzoeken);
-
-
 
 // --------------PROFIEL-----------
 document.addEventListener('DOMContentLoaded', function() {

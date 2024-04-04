@@ -24,8 +24,8 @@
             <p>Om het zoeken gemakkelijker te maken kunnen we beginnen bij de volgende vragen</p>
           </div>
         <div class="slider">
-            <form action="/">
-            <div class="item">
+            <form action="/matchenVragenlijst" method="post">
+            <div>
                 <div class="dots">
                     <span class="activespan"></span><span></span><span></span><span></span><span></span><span></span>
                 </div>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
             </div>
-            <div class="item">
+            <div>
                 <div class="dots">
                     <span></span><span class="activespan"></span><span></span><span></span><span></span><span></span>
                 </div>
@@ -57,27 +57,23 @@
                         </div>
                     </div>
             </div>
-            <div class="item">
+            <div>
                 <div class="dots">
                     <span></span><span></span><span class="activespan"></span><span></span><span></span><span></span>
                 </div>
                     <p class="vragenp">3. Heeft u enige ervaringen met wilde katachtigen?</p>   
                     <div class="radiocontainer">
                         <div>
-                            <input class="vragenlijstradio" type="radio" id="geen" value="geen" name="vraag3">
-                            <label class="vragenlijstlabel" for="geen">Geen</label>
-                        </div>
-                        <div>
-                            <input class="vragenlijstradio" type="radio" id="weinig" value="weinig" name="vraag3">
+                            <input class="vragenlijstradio" type="radio" id="weinig" value="nee" name="vraag3">
                             <label class="vragenlijstlabel" for="weinig">Weinig</label>
                         </div>
                         <div>
-                            <input class="vragenlijstradio" type="radio" id="veel" value="veel" name="vraag3">
+                            <input class="vragenlijstradio" type="radio" id="veel" value="ja" name="vraag3">
                             <label class="vragenlijstlabel" for="veel">Veel</label>
                         </div>
                     </div>
             </div>
-            <div class="item">
+            <div>
                 <div class="dots">
                     <span></span><span></span><span></span><span class="activespan"></span><span></span><span></span>
                 </div>
@@ -93,7 +89,7 @@
                         </div>
                     </div>
             </div>
-            <div class="item">
+            <div>
                 <div class="dots">
                     <span></span><span></span><span></span><span></span><span class="activespan"></span><span></span>
                 </div>
@@ -109,7 +105,7 @@
                         </div>
                     </div>
             </div>
-            <div class="item">
+            <div>
                 <div class="dots">
                     <span></span><span></span><span></span><span></span><span></span><span class="activespan"></span>
                 </div>
@@ -124,17 +120,16 @@
                             <label class="vragenlijstlabel" for="nee6">Nee</label>
                         </div>
                     </div>
-                    <input type="submit" class="vragenlijstbtn" name="Beginnen_met_zoeken" value="Beginnen met zoeken">
-
             </div>
+            <input type="submit" class="vragenlijstbtn" name="Beginnen_met_zoeken" value="Beginnen met zoeken">
         </form>
             
-            <button id="next">></button>
-            <button id="prev"><</button>
+            <!-- <button id="next">></button>
+            <button id="prev"><</button> -->
         </div>
         </div>
     </main>
     <%- include('../partials/footer') %>
-    <script src="script/script.js"></script>
+    <!-- <script src="script/script.js"></script> -->
   </body>
 </html>

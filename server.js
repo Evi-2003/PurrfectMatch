@@ -188,6 +188,12 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
     geslacht: req.body.diergeslacht,
     omschrijving: req.body.dieromschrijving,
     aanbieder: req.session.user.id,
+    vraag1: req.body.vraag1 || 'nee', 
+    vraag2: req.body.vraag2 || 'nee', 
+    vraag3: req.body.vraag3 || 'nee', 
+    vraag4: req.body.vraag4 || 'nee', 
+    vraag5: req.body.vraag5 || 'nee', 
+    vraag6: req.body.vraag6 || 'nee', 
   };
 
   await db.collection("dieren").insertOne(dierData);
@@ -225,6 +231,47 @@ app.post("/accepteren", async (req, res) => {
       .updateOne(verzoekId, { $set: { status: "Geweigerd" } });
   }
   res.redirect("/profiel");
+});
+
+/* Matchen Vragenlijst */ 
+async function match(antwoorden) {
+  let dieren = await db.collection('dieren').find().toArray();
+
+  let matchedDieren = dieren.map(dier => {
+    let matchedCount = 0;
+    for(let vraag in antwoorden) {
+      if(antwoorden[vraag] === dier[vraag]) {
+        matchedCount++; 
+      }
+    }
+    dier.matchedCount = matchedCount;
+    return dier
+  });
+
+  matchedDieren.sort(((a, b) => b.matchedCount - a.matchedCount))
+  return matchedDieren;
+}
+
+app.post('/matchenVragenlijst', async(req, res) => {
+  let antwoorden = {
+    vraag1: req.body.vraag1,
+    vraag2: req.body.vraag2,
+    vraag3: req.body.vraag3,
+    vraag4: req.body.vraag4,
+    vraag5: req.body.vraag5,
+    vraag6: req.body.vraag6,
+  };
+
+  let matchedDier = await match(antwoorden);
+
+  if (matchedDier.length > 0) {
+    let besteMatch = matchedDier.filter(dier => dier.matchedCount === matchedDier[0].matchedCount)
+
+    let randomNummer = Math.floor(Math.random() * besteMatch.length)
+    res.redirect(`/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`);
+  } else {
+    res.send("er is iets fout gegaan");
+  }
 });
 
 // Routes
