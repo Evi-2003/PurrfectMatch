@@ -749,7 +749,7 @@ form div > i {
   width: 100%;
 }
 
-.registreerinput label span {
+.registreerinput label span, .registreervraag label span {
   color: var(--color-oranje);
 }
 
@@ -1311,6 +1311,15 @@ textarea {
   border: 1px solid #999999;
   margin: 5px 0;
   padding: 3px;
+}
+
+.registreervraag {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.registreervraag label {
+  padding-bottom: 0.5rem;
 }
 
 /* -----------------DETAILDIEREN--------------- */

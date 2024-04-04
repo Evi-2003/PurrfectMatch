@@ -35,31 +35,18 @@
               </div>
 
               <div class="registreerinput">
-                <label for="diersoort">Soort - <span>verplicht</span></label> <!-- moet nog requered bij -->
-                <input type="radio" id="checkleeuw" name="diersoort" value="leeuw">
-                <label for="checkleeuw">Leeuw</label>
-                <br />
-                <input type="radio" id="checktijger" name="diersoort" value="tijger">
-                <label for="checktijger">Tijger</label>
-                <br />
-                <input type="radio" id="checkcheetah" name="diersoort" value="cheetah">
-                <label for="checkcheetah">Cheetah</label>
-                <br />
-                <input type="radio" id="checkjaguar" name="diersoort" value="jaguar">
-                <label for="checkjaguar">Jaguar</label>
-                <br />
-                <input type="radio" id="checklynx" name="diersoort" value="lynx">
-                <label for="checklynx">Lynx</label>
-                <br />
-                <input type="radio" id="checkpoema" name="diersoort" value="poema">
-                <label for="checkpoema">Poema</label>
-                <br />
-                <input type="radio" id="checkserval" name="diersoort" value="serval">
-                <label for="checkserval">Serval</label>
-                <br />
-                <input type="radio" id="checkkat" name="diersoort" value="kat">
-                <label for="checkserval">Kat</label>
-                <br />
+                <label for="diersoort">Soort - <span>verplicht</span></label>
+                <select name="diersoort" id="diersoort" required>
+                  <option value="" disabled selected>Selecteer een optie</option>
+                  <option value="leeuw">leeuw</option>
+                  <option value="tijger">tijger</option>
+                  <option value="cheetah">cheetah</option>
+                  <option value="jaguar">jaguar</option>
+                  <option value="lynx">lynx</option>
+                  <option value="poema">poema</option>
+                  <option value="serval">serval</option>
+                  <option value="kat">kat</option>
+                </select>
               </div>
 
               <div class="registreerinput">
@@ -84,30 +71,63 @@
                 <label for="dierkenmerken">Kenmerken dier - <span>verplicht</span></label>
 
                 <label for="vraag1">
-                  <input type="checkbox" id="vraag1" name="vraag1" value="ja" required>
                   Veel ruimte nodig
+                  <div>
+                    <input type="radio" id="vraag1" name="vraag1" value="ja" required>
+                    <label for="vraag1">Ja</label>
+                    <input type="radio" id="vraag1" name="vraag1" value="nee" required>
+                    <label for="vraag1">nee</label>
+                  </div>
                 </label>
-
 
                 <label for="vraag2">
-                  <input type="checkbox" id="vraag2" name="vraag2" value="ja" required>
                   Graag samen
+                  <div>
+                    <input type="radio" id="vraag2" name="vraag2" value="ja" required>
+                    <label for="vraag2">Ja</label>
+                    <input type="radio" id="vraag2" name="vraag2" value="nee" required>
+                    <label for="vraag2">nee</label>
+                  </div>
                 </label>
 
-
                 <label for="vraag3">
-                  <input type="checkbox" id="vraag3" name="vraag3" value="ja" required>
-                  Dier graag buiten
+                  Ervaring voor nodig
+                  <div>
+                    <input type="radio" id="vraag3" name="vraag3" value="ja" required>
+                    <label for="vraag3">Veel</label>
+                    <input type="radio" id="vraag3" name="vraag3" value="nee" required>
+                    <label for="vraag3">Weinig</label>
+                  </div>
                 </label>
 
                 <label for="vraag4">
-                  <input type="checkbox" id="vraag4" name="vraag4" value="ja" required>
-                  Gaat lastig met kinderen
+                  Graag buiten
+                  <div>
+                    <input type="radio" id="vraag4" name="vraag4" value="ja" required>
+                    <label for="vraag4">Ja</label>
+                    <input type="radio" id="vraag4" name="vraag4" value="nee" required>
+                    <label for="vraag4">nee</label>
+                  </div>
                 </label>
 
                 <label for="vraag5">
-                  <input type="checkbox" id="vraag5" name="vraag5" value="ja" required>
+                  Gaat lastig met kinderen
+                  <div>
+                    <input type="radio" id="vraag5" name="vraag5" value="ja" required>
+                    <label for="vraag5">Ja</label>
+                    <input type="radio" id="vraag5" name="vraag5" value="nee" required>
+                    <label for="vraag5">nee</label>
+                  </div>
+                </label>
+
+                <label for="vraag6">
                   Gaat lastige met andere dieren
+                  <div>
+                    <input type="radio" id="vraag6" name="vraag6" value="ja" required>
+                    <label for="vraag6">Ja</label>
+                    <input type="radio" id="vraag6" name="vraag6" value="nee" required>
+                    <label for="vraag6">nee</label>
+                  </div>
                 </label>
               </div>
 

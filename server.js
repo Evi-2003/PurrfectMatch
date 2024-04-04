@@ -168,10 +168,10 @@ app.post("/profielAanpassen", upload.single("profielfoto"), async(req, res) => {
     }
 
     await db.collection("users").updateOne(userId, { $set: userData });
+    res.redirect("/profiel");
   } else {
-    console.log("fout wachtwoord")
+    res.redirect("/profiel");
   }
-  res.redirect("/profiel");
 });
 
 /* registratie van dier */
@@ -192,12 +192,12 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
     geslacht: req.body.diergeslacht,
     omschrijving: req.body.dieromschrijving,
     aanbieder: req.session.user.id,
-    vraag1: req.body.vraag1 || 'nee', 
-    vraag2: req.body.vraag2 || 'nee', 
-    vraag3: req.body.vraag3 || 'nee', 
-    vraag4: req.body.vraag4 || 'nee', 
-    vraag5: req.body.vraag5 || 'nee', 
-    vraag6: req.body.vraag6 || 'nee', 
+    vraag1: req.body.vraag1, 
+    vraag2: req.body.vraag2, 
+    vraag3: req.body.vraag3, 
+    vraag4: req.body.vraag4, 
+    vraag5: req.body.vraag5, 
+    vraag6: req.body.vraag6, 
   };
 
   await db.collection("dieren").insertOne(dierData);
@@ -286,9 +286,9 @@ app.post('/matchenVragenlijst', async(req, res) => {
 
 // Routes
 app.get("/", (req, res) => {
-  console.log(req.session);
   res.render("pages/index", { account: req?.session?.user });
 });
+
 // Route for the adoption page// Route for the adoption page
 app.get("/adoptie", async (req, res) => {
   let likedIds;
