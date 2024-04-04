@@ -87,7 +87,7 @@ app.post("/inloggen", async (req, res) => {
     req.session.user = logginResultaat;
     res.redirect("/profiel");
   } else {
-    res.send("email of wachtwoord is onjuist");
+    res.render("pages/inloggen", { error: "Email of wachtwoord is onjuist", email: email});
   }
 });
 
