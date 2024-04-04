@@ -131,7 +131,11 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
     };
 
     await db.collection("users").insertOne(userData);
-    res.redirect("/profiel");
+    req.session.user = {
+      email: userData.email,
+      wachtwoord: req.body.repassword,
+    };
+    res.redirect("/vragenlijst");
   });
 });
 
@@ -261,7 +265,13 @@ app.post('/matchenVragenlijst', async(req, res) => {
     vraag5: req.body.vraag5,
     vraag6: req.body.vraag6,
   };
-
+  
+  let email = req.session.user.email;
+  let wachtwoord = req.session.user.wachtwoord;
+  logginResultaat = await checkUser(email, wachtwoord);
+  let id = logginResultaat.id
+  await db.collection('users').updateOne({ _id: id }, { $set: { antwoorden: antwoorden } });
+  
   let matchedDier = await match(antwoorden);
 
   if (matchedDier.length > 0) {
