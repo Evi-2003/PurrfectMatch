@@ -36,30 +36,17 @@
 
               <div class="registreerinput">
                 <label for="diersoort">Soort - <span>verplicht</span></label>
-                <input type="radio" id="checkleeuw" name="diersoort" value="leeuw">
-                <label for="checkleeuw">Leeuw</label>
-                <br />
-                <input type="radio" id="checktijger" name="diersoort" value="tijger">
-                <label for="checktijger">Tijger</label>
-                <br />
-                <input type="radio" id="checkcheetah" name="diersoort" value="cheetah">
-                <label for="checkcheetah">Cheetah</label>
-                <br />
-                <input type="radio" id="checkjaguar" name="diersoort" value="jaguar">
-                <label for="checkjaguar">Jaguar</label>
-                <br />
-                <input type="radio" id="checklynx" name="diersoort" value="lynx">
-                <label for="checklynx">Lynx</label>
-                <br />
-                <input type="radio" id="checkpoema" name="diersoort" value="poema">
-                <label for="checkpoema">Poema</label>
-                <br />
-                <input type="radio" id="checkserval" name="diersoort" value="serval">
-                <label for="checkserval">Serval</label>
-                <br />
-                <input type="radio" id="checkkat" name="diersoort" value="kat">
-                <label for="checkserval">Kat</label>
-                <br />
+                <select name="diersoort" id="diersoort" required>
+                  <option value="" disabled selected>Selecteer een optie</option>
+                  <option value="leeuw">leeuw</option>
+                  <option value="tijger">tijger</option>
+                  <option value="cheetah">cheetah</option>
+                  <option value="jaguar">jaguar</option>
+                  <option value="lynx">lynx</option>
+                  <option value="poema">poema</option>
+                  <option value="serval">serval</option>
+                  <option value="kat">kat</option>
+                </select>
               </div>
 
               <div class="registreerinput">
@@ -80,44 +67,74 @@
                 </select>
               </div>
 
-              <div class="registreerinput">
+              <div class="registreervraag">
                 <label for="dierkenmerken">Kenmerken dier - <span>verplicht</span></label>
-                <input type="checkbox" id="dierveelruimte" name="dierveelruimte" placeholder="veelruimte" required>
-                <label for="dierveelruimte">Veel ruimte nodig</label>
 
-                <input type="checkbox" id="dierweinigruimte" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Weinig ruimte nodig</label>
+                <label for="vraag1">
+                  Veel ruimte nodig
+                  <div>
+                    <input type="radio" id="vraag1" name="vraag1" value="ja" required>
+                    <label for="vraag1">Ja</label>
+                    <input type="radio" id="vraag1" name="vraag1" value="nee" required>
+                    <label for="vraag1">nee</label>
+                  </div>
+                </label>
 
-                <input type="checkbox" id="dieralleen" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Graag alleen</label>
+                <label for="vraag2">
+                  Graag samen
+                  <div>
+                    <input type="radio" id="vraag2" name="vraag2" value="ja" required>
+                    <label for="vraag2">Ja</label>
+                    <input type="radio" id="vraag2" name="vraag2" value="nee" required>
+                    <label for="vraag2">nee</label>
+                  </div>
+                </label>
 
-                <input type="checkbox" id="diersamen" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Graag samen</label>
+                <label for="vraag3">
+                  Ervaring voor nodig
+                  <div>
+                    <input type="radio" id="vraag3" name="vraag3" value="ja" required>
+                    <label for="vraag3">Veel</label>
+                    <input type="radio" id="vraag3" name="vraag3" value="nee" required>
+                    <label for="vraag3">Weinig</label>
+                  </div>
+                </label>
 
-                <input type="checkbox" id="dierbuiten" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Dier graag buiten</label>
+                <label for="vraag4">
+                  Graag buiten
+                  <div>
+                    <input type="radio" id="vraag4" name="vraag4" value="ja" required>
+                    <label for="vraag4">Ja</label>
+                    <input type="radio" id="vraag4" name="vraag4" value="nee" required>
+                    <label for="vraag4">nee</label>
+                  </div>
+                </label>
 
-                <input type="checkbox" id="dierbinnen" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Dier graag binnen</label>
+                <label for="vraag5">
+                  Gaat lastig met kinderen
+                  <div>
+                    <input type="radio" id="vraag5" name="vraag5" value="ja" required>
+                    <label for="vraag5">Ja</label>
+                    <input type="radio" id="vraag5" name="vraag5" value="nee" required>
+                    <label for="vraag5">nee</label>
+                  </div>
+                </label>
 
-                <input type="checkbox" id="dierleukkinderen" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Houdt van kinderen</label>
-
-                <input type="checkbox" id="diergeenkinderen" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Gaat lastig met kinderen</label>
-
-                <input type="checkbox" id="dierleukdieren" name="dierweinigruimte" placeholder="weinigruimte" required>
-                <label for="dierweinigruimte">Houdt van andere dieren</label>
-
-                <input type="checkbox" id="diergeendieren" name="diergeendieren" placeholder="weinigruimte" required>
-                <label for="diergeendieren">Gaat lastige met andere dieren</label>
+                <label for="vraag6">
+                  Gaat lastige met andere dieren
+                  <div>
+                    <input type="radio" id="vraag6" name="vraag6" value="ja" required>
+                    <label for="vraag6">Ja</label>
+                    <input type="radio" id="vraag6" name="vraag6" value="nee" required>
+                    <label for="vraag6">nee</label>
+                  </div>
+                </label>
               </div>
 
               <div class="registreerinput">
                 <label for="dieromschrijving">Omschrijving</label>
                 <textarea class="textareawrapper" name="dieromschrijving" id="dieromschrijving" cols="30" rows="10"></textarea>
               </div>
-
               <button class="btn" type="submit">Afstand doen</button>
             </form>
         </div>

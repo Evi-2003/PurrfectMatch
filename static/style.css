@@ -749,7 +749,7 @@ form div > i {
   width: 100%;
 }
 
-.registreerinput label span {
+.registreerinput label span, .registreervraag label span {
   color: var(--color-oranje);
 }
 
@@ -1257,16 +1257,23 @@ input[type="number"] {
   width: 2em;
 }
 
-
 /* ----------------PROFIEL-TEXTVAK3---------------- */
-.profielaanpassen{
+.textvak3 {
+  padding: 2.5rem;
+  background: var(--form-background-color);
+  border-radius: 1rem;
+  box-shadow: var(--form-box-shadow);
+  margin: 2rem 2rem 5rem 2rem;
+}
+
+.profielaanpassen {
   padding: 2rem 10%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.pfaanpassen{
+.profielaanpassen {
   background: white;
   padding: 1rem;
   max-width: 35rem;
@@ -1304,6 +1311,15 @@ textarea {
   border: 1px solid #999999;
   margin: 5px 0;
   padding: 3px;
+}
+
+.registreervraag {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.registreervraag label {
+  padding-bottom: 0.5rem;
 }
 
 /* -----------------DETAILDIEREN--------------- */

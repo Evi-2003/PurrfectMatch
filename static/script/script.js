@@ -69,17 +69,6 @@ function laadVerzoeken(verzoeken) {
   });
 }
 
-// Roep laadVerzoeken alleen aan als het element met het id "verzoekenList" aanwezig is
-window.addEventListener('DOMContentLoaded', function() {
-  const verzoekenElement = document.getElementById("verzoekenList");
-  if (verzoekenElement) {
-    // Voer laadVerzoeken uit met de nodige verzoeken
-    laadVerzoeken(verzoeken);
-  }
-});
-
-
-
 // --------------PROFIEL-----------
 document.addEventListener('DOMContentLoaded', function() {
   let listItems = document.querySelectorAll('.profieldropdown ul li');

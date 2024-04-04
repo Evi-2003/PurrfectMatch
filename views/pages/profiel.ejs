@@ -66,22 +66,24 @@
           <ul id="verzoekenList"></ul>
         </div>
       </div>    
-        </div>
+           
       <div class="textvak3">
         <div class="profielaanpassen">
-          <form class="registreerform pfaanpassen" action="/" method="post">
+          <form class="registreerform" action="/profielAanpassen" method="post" enctype="multipart/form-data">
+            <label for="profielfoto">Profielfoto*</label>
+            <input type="file" name="profielfoto" id="imageupload" accept=".jpg, .jpeg, .png, .gif"/>
             <div class="registreerinput">
-              <label for="naam">Naam - <span>verplicht</span></label>
+              <label for="naam">Naam</label>
               <div class="naam">
-                <input type="text" id="voornaam" name="voornaam" placeholder="Voornaam" required />
-                <input type="text" id="tussenvoegsel" name="tussenvoegsel" placeholder="Tussenvoegsel" />
-                <input type="text" id="achternaam" name="achternaam" placeholder="Achternaam" required />
+                <input type="text" id="voornaam" name="voornaam" value= "<%= account.voornaam %>"/>
+                <input type="text" id="tussenvoegsel" name="tussenvoegsel" value="<%= account.tussenvoegsel %>" />
+                <input type="text" id="achternaam" name="achternaam" value="<%= account.achternaam %>"/>
               </div>
             </div>
 
             <div class="registreerinput">
               <label for="geslacht">Geslacht</label>
-              <select id="geslacht" name="geslacht" required>
+              <select id="geslacht" name="geslacht" value="<%= account.geslacht %>">
                 <option value="niet van toepassing">Niet van toepassing</option>
                 <option value="man">Man</option>
                 <option value="vrouw">Vrouw</option>
@@ -89,78 +91,47 @@
             </div>
 
             <div class="registreerinput">
-              <label for="adres">Adres - <span>verplicht</span></label>
-              <input
-                type="text"
-                id="postcode"
-                name="postcode"
-                placeholder="Postcode"
-                pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)"
-                title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters."
-                required
-              />
+              <label for="adres">Adres</label>
+              <input type="text" id="postcode" name="postcode" value="<%= account.postcode %>" pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)" title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters."/>
               <div class="huisadres">
-                <input type="text" id="straatnaam" name="straatnaam" placeholder="Straatnaam" required />
-                <input type="number" id="huisnummer" name="huisnummer" placeholder="Huisnr" required />
-                <input type="text" id="toevoeging" name="toevoeging" placeholder="Toevoeging" />
+                <input type="text" id="straatnaam" name="straatnaam" value="<%= account.straatnaam %>"/>
+                <input type="number" id="huisnummer" name="huisnummer" value="<%= account.huisnummer %>"/>
+                <input type="text" id="toevoeging" name="toevoeging" value="<%= account.toevoeging %>" />
               </div>
-              <input type="text" id="woonplaats" name="woonplaats" placeholder="Woonplaats" required />
+              <input type="text" id="woonplaats" name="woonplaats" value="<%= account.woonplaats %>"/>
             </div>
 
             <div class="registreerinput">
-              <label for="geboortedatum">Geboortedatum - <span>verplicht</span></label>
-              <input type="date" id="geboortedatum" name="geboortedatum" required />
+              <label for="geboortedatum">Geboortedatum</label>
+              <input type="date" id="geboortedatum" name="geboortedatum" value="<%= account.geboortedatum %>"/>
             </div>
 
             <div class="registreerinput">
-              <label for="telefoon">Telefoon - <span>verplicht</span></label>
-              <input
-                type="tel"
-                id="telefoonnummer"
-                name="telefoonnummer"
-                value="+316"
-                placeholder="12345678"
-                pattern="(\+31|0)(6|)[1-9][0-9]{8}"
-                title="Voer een geldig Nederlands telefoonnummer in"
-                required
-              />
+              <label for="telefoon">Telefoon</label>
+              <input type="tel" id="telefoonnummer" name="telefoonnummer" value="<%= account.telefoonnummer %>" pattern="(\+31|0)(6|)[1-9][0-9]{8}" title="Voer een geldig Nederlands telefoonnummer in"/>
             </div>
 
             <div class="registreerinput">
-              <label for="email">Email - <span>verplicht</span></label>
-              <input type="email" id="email" name="email" placeholder="Email" required />
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" value="<%= account.email %>"/>
             </div>
 
             <div class="registreerinput">
-              <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
               <label for="wachtwoord">Wachtwoord - <span>verplicht</span></label>
-              <input
-                type="password"
-                id="wachtwoord"
-                name="wachtwoord"
-                placeholder="]t&!KJkd]4#Dn3"
-                pattern="^(?=.*\d)(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9])\S{8,}$"
-                required
-                title="Het wachtwoord moet minstens een nummer bevatten [0-9], één letter [A-Z], één symbool[!@#$%^] en moet minimaal 8 tekens lang zijn"
-              />
+              <input type="password" id="wachtwoord" name="wachtwoord" required/>
             </div>
-
-            <div class="registreerinput">
-              <i class="fa-regular fa-eye-slash" onclick="showrepassword(this)"></i>
-              <label for="repassword">Herhaal wachtwoord - <span>verplicht</span></label>
-              <input type="password" id="repassword" name="repassword" placeholder="Re-Enter your password" required />
-            </div>
+        
             <span id="pass"></span>
-            <button class="btn" type="submit">Aanpassen</button>
+            <button class="btn" type="submit">Pass account aan</button>
           </form>
         </div>
       </div>
     </main>
     <%- include('../partials/footer') %>
 
-    <script>
+    <script src="/script/script.js">
       let verzoeken = <%- JSON.stringify(verzoeken) %>;
+      laadVerzoeken(verzoeken);
     </script>
-    <script src="/script/script.js"></script>
   </body>
 </html>

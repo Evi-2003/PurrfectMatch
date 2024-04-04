@@ -24,12 +24,11 @@
             <p>Om het zoeken gemakkelijker te maken kunnen we beginnen bij de volgende vragen</p>
           </div>
         <div class="slider">
-            <form action="/">
+            <form action="/matchenVragenlijst" method="post">
             <div class="item">
                 <div class="dots">
                     <span class="activespan"></span><span></span><span></span><span></span><span></span><span></span>
                 </div>
-                    <!-- <p class="vragenp">1. Denkt u voldoende woonruimte voor het dier te hebben?</p>    -->
                     <p class="vragenp">1. Heeft u veel ruimte thuis</p>   
                     <div class="radiocontainer">
                         <div>
@@ -65,15 +64,11 @@
                     <p class="vragenp">3. Heeft u enige ervaringen met wilde katachtigen?</p>   
                     <div class="radiocontainer">
                         <div>
-                            <input class="vragenlijstradio" type="radio" id="geen" value="geen" name="vraag3">
-                            <label class="vragenlijstlabel" for="geen">Geen</label>
-                        </div>
-                        <div>
-                            <input class="vragenlijstradio" type="radio" id="weinig" value="weinig" name="vraag3">
+                            <input class="vragenlijstradio" type="radio" id="weinig" value="nee" name="vraag3">
                             <label class="vragenlijstlabel" for="weinig">Weinig</label>
                         </div>
                         <div>
-                            <input class="vragenlijstradio" type="radio" id="veel" value="veel" name="vraag3">
+                            <input class="vragenlijstradio" type="radio" id="veel" value="ja" name="vraag3">
                             <label class="vragenlijstlabel" for="veel">Veel</label>
                         </div>
                     </div>
@@ -125,9 +120,8 @@
                             <label class="vragenlijstlabel" for="nee6">Nee</label>
                         </div>
                     </div>
-                    <input type="submit" class="vragenlijstbtn" name="Beginnen_met_zoeken" value="Beginnen met zoeken">
-
             </div>
+            <input type="submit" class="vragenlijstbtn" name="Beginnen_met_zoeken" value="Beginnen met zoeken">
         </form>
             
             <button id="next">></button>

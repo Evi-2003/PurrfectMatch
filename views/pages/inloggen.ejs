@@ -33,6 +33,11 @@
                   <label class="textlabel" for="wachtwoord"><i class="fa-solid fa-lock"></i> Wachtwoord - <span>verplicht</span></label>
                   <a class="wachtwoordvergeten" href="#">Wachtwoord vergeten?</a>
                 </div>
+                <div class="error-message">
+                  <% if (typeof error !== 'undefined' && error) { %>
+                    <p><%= error %></p>
+                  <% } %>
+                </div>                
                 <button class="btn" type="submit">Login</button>
               </form>
             <p class="loginp">Nog geen account? <a href="registreren">Registreren</a></p>
