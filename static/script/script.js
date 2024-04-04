@@ -42,11 +42,17 @@ if(filterBtn) {
   });
 }
 // -------------PROFIEL VERZOEKEN-------------
-async function laadVerzoeken(verzoeken) {
-  let list = document.getElementById("verzoekenList"); 
+function laadVerzoeken(verzoeken) {
+  // Controleren of het element met het id "verzoekenList" aanwezig is op de pagina
+  const list = document.getElementById("verzoekenList"); 
+  if (!list) {
+    console.error("Element met id 'verzoekenList' niet gevonden op de pagina.");
+    return; // Stop de functie als het element niet gevonden is
+  }
 
+  // Element is gevonden, voeg verzoeken toe aan de lijst
   verzoeken.forEach((verzoek) => {
-    let verzoekItem = document.createElement("li");
+    const verzoekItem = document.createElement("li");
     verzoekItem.innerHTML = 
       ` <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="">
       <div>
@@ -62,7 +68,15 @@ async function laadVerzoeken(verzoeken) {
     list.appendChild(verzoekItem);
   });
 }
-laadVerzoeken(verzoeken);
+
+// Roep laadVerzoeken alleen aan als het element met het id "verzoekenList" aanwezig is
+window.addEventListener('DOMContentLoaded', function() {
+  const verzoekenElement = document.getElementById("verzoekenList");
+  if (verzoekenElement) {
+    // Voer laadVerzoeken uit met de nodige verzoeken
+    laadVerzoeken(verzoeken);
+  }
+});
 
 
 
@@ -226,41 +240,59 @@ if(prev)
 
 
 // ---------------SLIDER-----------------
-const swiper = new Swiper(".swiper", {
-  // Optional parameters
+// Controleer of het element met de klasse "swiper" aanwezig is op de pagina
+const swiperElement = document.querySelector(".swiper");
+if (swiperElement) {
+    // Initialiseer de Swiper alleen als het element aanwezig is
+    const swiper = new Swiper(swiperElement, {
+        // Optionele parameters
 
-  // If we need pagination
-  pagination: {
-    el: ".swiper-pagination",
-  },
+        // Als we paginering nodig hebben
+        pagination: {
+            el: ".swiper-pagination",
+        },
 
-  // Navigation arrows
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
+        // Navigatieknoppen
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
 
-  // And if we need scrollbar
-  scrollbar: {
-    el: ".swiper-scrollbar",
-  },
-});
+        // En als we een scrollbar nodig hebben
+        scrollbar: {
+            el: ".swiper-scrollbar",
+        },
+    });
+}
+
 
 // ---------------POPUP-----------------
-function createPopup(id){
-  let popupNode = document.querySelector(id);
-  let overlay = popupNode.querySelector(".overlay");
-  let closeBtn = popupNode.querySelector(".close-btn");
-  function openPopup(){
-      popupNode.classList.add("active");
+function createPopup(id) {
+  const popupNode = document.querySelector(id);
+  
+  if (!popupNode) {
+    console.error(`Element met id '${id}' niet gevonden op de pagina.`);
+    return;
   }
-  function closePopup(){
-      popupNode.classList.remove("active");
+
+  const overlay = popupNode.querySelector(".overlay");
+  const closeBtn = popupNode.querySelector(".close-btn");
+
+  function openPopup() {
+    popupNode.classList.add("active");
   }
+
+  function closePopup() {
+    popupNode.classList.remove("active");
+  }
+
   overlay.addEventListener("click", closePopup);
   closeBtn.addEventListener("click", closePopup);
+
   return openPopup;
 }
 
-let popup = createPopup("#popup");
-document.querySelector("#open-popup").addEventListener("click", popup)
+const popupOpener = createPopup("#popup");
+if (popupOpener) {
+  document.querySelector("#open-popup").addEventListener("click", popupOpener);
+}
