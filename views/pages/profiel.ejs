@@ -33,21 +33,31 @@
     </div>
   </section>
   <main class="profielmain">
-    <% if(dieren.length === 0) { %> <h2>Geen dieren geliked</h2><% } %>
-    <% dieren.forEach(function(dier) { %>
+
 
 
     <div class="textvak1">
+      <% if(dieren.length === 0) { %> <h3>Geen dieren geliked</h3><% } %>
+      <% dieren.forEach(function(dier) { %>
       <li>
         <div class="katprofielbg">
           <a href="dier" class="katprofielcontainer">
             <img src="/uploads/<%= dier.foto[0] %>" alt="" />
+
             <div class="katprofieltext">
               <div>
                 <h2><%= dier.naam %> (<%= dier.leeftijd %>)</h2>
                 <p>
                   <i class="fa-solid fa-message">
-                    <i class="fa-solid fa-heart"><%= dier.likes %></i>
+                    <% if (account) { %>
+                    <form action="like" method="post" id="likeForm">
+                      <input type="hidden" name="dier" value="<%= dier._id %>" />
+                      <input type="hidden" name="user" value="<%= account._id %>" />
+                      <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                        <%= dier.likes %> ❤️
+                      </button>
+                    </form>
+                    <% } %>
                   </i>
                 </p>
               </div>

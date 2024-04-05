@@ -1220,7 +1220,10 @@ input[type="number"] {
   flex-direction: row;
   gap: 0.2rem;
 }
-
+.textvak1 h3 {
+  padding: 1em;
+  text-align: center;
+}
 /* ----------------PROFIEL-TEXTVAK2---------------- */
 .textvak2 .katprofielcontainer {
   position: relative;
