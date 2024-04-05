@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
               // ---------------VRAGENLIJST CARD SLIDER-----------------
               document.addEventListener("DOMContentLoaded", function() {
                 let items = document.querySelectorAll(".slider .item");
-                let active = 0;
+                let active = -1;
                 let next = document.getElementById('next');
                 let prev = document.getElementById('prev');
                 let submitButton = document.querySelector('.vragenlijstbtn');
