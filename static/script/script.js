@@ -27,20 +27,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ---------------FILTER-----------------
-let filterBtn = document.getElementById("filterBtn")
-if(filterBtn) {
-  filterBtn.addEventListener("click", function() {
-    let filterSection = document.querySelector(".filter");
+const filterBtn = document.getElementById("filterBtn");
+
+if (filterBtn) {
+  filterBtn.addEventListener("click", () => {
+    const filterSection = document.querySelector(".filter");
+    
     // Controleer of de filtersectie verborgen is
     if (filterSection.style.display === "none") {
       // Als het verborgen is, maak het zichtbaar
       filterSection.style.display = "block";
-  } else {
-    // Als het zichtbaar is, verberg het
-    filterSection.style.display = "none";
-  }
+    } else {
+      // Als het zichtbaar is, verberg het
+      filterSection.style.display = "none";
+    }
   });
 }
+
 // -------------PROFIEL VERZOEKEN-------------
 function laadVerzoeken(verzoeken) {
   // Controleren of het element met het id "verzoekenList" aanwezig is op de pagina
@@ -229,6 +232,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // ---------------SLIDER-----------------
 // Controleer of het element met de klasse "swiper" aanwezig is op de pagina
+
 const swiperElement = document.querySelector(".swiper");
 if (swiperElement) {
     // Initialiseer de Swiper alleen als het element aanwezig is
@@ -255,32 +259,38 @@ if (swiperElement) {
 
 
 // ---------------POPUP-----------------
-function createPopup(id) {
+const createPopup = (id) => {
   const popupNode = document.querySelector(id);
-  
+
   if (!popupNode) {
     console.error(`Element met id '${id}' niet gevonden op de pagina.`);
     return;
   }
-
+  
   const overlay = popupNode.querySelector(".overlay");
   const closeBtn = popupNode.querySelector(".close-btn");
 
-  function openPopup() {
+  const openPopup = () => {
     popupNode.classList.add("active");
-  }
+  };
 
-  function closePopup() {
+  const closePopup = () => {
     popupNode.classList.remove("active");
-  }
+  };
 
   overlay.addEventListener("click", closePopup);
   closeBtn.addEventListener("click", closePopup);
 
   return openPopup;
-}
+};
 
-const popupOpener = createPopup("#popup");
-if (popupOpener) {
-  document.querySelector("#open-popup").addEventListener("click", popupOpener);
-}
+document.addEventListener('DOMContentLoaded', () => {
+  const popupOpener = createPopup("#popup");
+  if (popupOpener) {
+    document.querySelector("#open-popup").addEventListener("click", popupOpener);
+  }
+});
+
+
+
+

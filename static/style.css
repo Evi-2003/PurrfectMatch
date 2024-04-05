@@ -1439,13 +1439,20 @@ textarea {
   box-shadow: 5px 10px 20px var(--color-darkgreen);
   color: var(--color-text);
 }
-
+#detail-dier .infosec .container button:disabled {
+  background-color: gray;
+  box-shadow: none;
+}
 .popup {
   position: fixed;
   top: -100vh;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+#popup{
+  z-index: 2;
 }
 
 .popup .overlay {
@@ -1508,7 +1515,7 @@ textarea {
   color: #3284ed;
 }
 
-.popup .popup-content .controls .submit-btn {
+.popup .popup-content .controls form button {
   background: #3284ed;
   color: #fff;
 }

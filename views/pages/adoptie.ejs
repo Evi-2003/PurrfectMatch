@@ -37,11 +37,11 @@
           </select>
         </form>
       </div>
-      <button id="filterBtn">
+      <button id="filterBtn" aria-label="filter button">
         <i class="fa-solid fa-filter"></i>Filters
       </button>
       <section class="filter">
-        <form action="/filteren" method="post">
+        <form aria-label="filteren" action="/filteren" method="post">
           <h3>Diersoort</h3>
           <input type="checkbox" id="checkleeuw" name="diersoort" value="leeuw" <% if (selectedSpecies.includes('leeuw')) { %> checked <% } %> />
           <label for="checkleeuw">Leeuw</label>
@@ -95,7 +95,6 @@
                     <li><%= dier.gewicht %>kg</li>
                   </ul>
                 </div>
-                <p><%= dier.omschrijving %></p>
               </div>
               <div class="likecontainer">
 
@@ -103,7 +102,7 @@
                 <form action="like" method="post" id="likeForm">
                   <input type="hidden" name="dier" value="<%= dier._id %>" />
                   <input type="hidden" name="user" value="<%= user.id %>" />
-                  <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                  <button aria-label="like dier" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
                     <%= dier.likes %> ❤️
                   </button>
                 </form>
@@ -116,6 +115,7 @@
       </ul>
     </section>
   </main>
+  <%- include('../partials/footer') %>
   <script src="/script/script.js"></script>
 </body>
 
