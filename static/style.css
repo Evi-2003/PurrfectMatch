@@ -749,7 +749,8 @@ form div > i {
   width: 100%;
 }
 
-.registreerinput label span, .registreervraag label span {
+.registreerinput label span,
+.registreervraag label span {
   color: var(--color-oranje);
 }
 
@@ -1035,6 +1036,7 @@ input[type="number"] {
   object-fit: cover;
   place-self: center;
   border: solid black;
+  max-height: 10em;
 }
 #profielFotoNav {
   border-radius: 100%;
@@ -1080,21 +1082,20 @@ input[type="number"] {
   z-index: 1;
 }
 
-.profielheadcontainer a{
+.profielheadcontainer a {
   color: white;
-  padding: .5rem;
+  padding: 0.5rem;
   text-decoration: none;
   text-transform: uppercase;
   background: black;
 }
 
-.profielheadtxt{
+.profielheadtxt {
   background: white;
   padding: 10px;
   border: dashed black 2px;
   text-transform: capitalize;
 }
-
 
 .profieldropdowncontainer {
   display: flex;
@@ -1154,7 +1155,7 @@ input[type="number"] {
 }
 
 /* ----------------PROFIEL-TEXTVAK1---------------- */
-.textvak1{
+.textvak1 {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -1178,37 +1179,36 @@ input[type="number"] {
   max-width: 25rem;
 }
 
-
 .katprofielcontainer img {
   width: 100%;
   border-radius: 5px;
   border: black solid 1px;
 }
 
-.katprofieltext{
+.katprofieltext {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.katprofieltext div{
+.katprofieltext div {
   display: flex;
   justify-content: space-between;
 }
 
-.katprofieltext ul{
+.katprofieltext ul {
   display: flex;
-  gap: .3rem;
+  gap: 0.3rem;
 }
 
-.katprofieltext ul li{
+.katprofieltext ul li {
   list-style: none;
   border: solid black 1px;
-  padding: .3rem;
+  padding: 0.3rem;
   border-radius: 10px;
 }
 
-.katprofieltext div p > i{
+.katprofieltext div p > i {
   display: flex;
   position: relative;
   font-size: 2rem;
@@ -1217,18 +1217,19 @@ input[type="number"] {
   color: red;
 }
 
-.katprofieltext div p > i i{
+.katprofieltext div p > i i {
   position: absolute;
-  font-size: .5rem;
+  font-size: 0.5rem;
   bottom: 14px;
   color: white;
   display: flex;
   flex-direction: row;
-  gap: .2rem;
+  gap: 0.2rem;
 }
-
-
-
+.textvak1 h3 {
+  padding: 1em;
+  text-align: center;
+}
 /* ----------------PROFIEL-TEXTVAK2---------------- */
 .textvak2 .katprofielcontainer {
   position: relative;
@@ -1404,7 +1405,7 @@ textarea {
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   opacity: 0;
-  transition:opacity 100ms ease-in-out 200ms;
+  transition: opacity 100ms ease-in-out 200ms;
 }
 
 .popup .popup-content {
@@ -1418,7 +1419,7 @@ textarea {
   padding: 25px;
   border-radius: 20px;
   opacity: 0;
-  box-shadow:0px 2px 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 2px 2px 5px rgba(0, 0, 0, 0.05);
   transition: all 300ms ease-in-out;
 }
 
@@ -1477,42 +1478,42 @@ textarea {
 }
 
 /* -----------------FOOTER------------------- */
-footer{
+footer {
   color: var(--color-text);
   background: #2c2c2c;
 }
-.footercontainer{
+.footercontainer {
   padding: 2rem 10%;
   display: flex;
   justify-content: space-between;
 }
 
-.footercontainer div{
+.footercontainer div {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-.footercontainer ul{
+.footercontainer ul {
   list-style: none;
 }
 
-.footercontainer ul li a{
+.footercontainer ul li a {
   text-decoration: none;
   color: var(--color-text);
 }
 
-.footercontainer div > p{
+.footercontainer div > p {
   letter-spacing: 1px;
   text-transform: uppercase;
   font-weight: var(--font-bold);
 }
 
-.footercontact{
+.footercontact {
   text-align: center;
 }
 
-footer > ul{
+footer > ul {
   display: flex;
   gap: 2rem;
   justify-content: center;
@@ -1521,29 +1522,29 @@ footer > ul{
   font-size: 2rem;
 }
 
-footer > ul li i{
+footer > ul li i {
   padding: 1rem;
 }
 
-footer > ul li i:hover{
+footer > ul li i:hover {
   transform: translateY(-5px);
-  transition: transform .3s;
+  transition: transform 0.3s;
 }
 
-.madeby{
+.madeby {
   text-align: center;
   padding: 1rem;
   border-top: solid 1px gray;
   margin-top: 2rem;
 }
 
-.usefullinks ul{
+.usefullinks ul {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
-.usefullinks ul li a{
+.usefullinks ul li a {
   position: relative;
 }
 
@@ -1562,21 +1563,19 @@ footer > ul li i:hover{
   width: 100%;
 }
 
-.footercontact ul{
+.footercontact ul {
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 0.5rem;
 }
-
 
 /* ---------------MEDIA-QUERIES----------------- */
 @media (width > 850px) {
-
-  nav{
+  nav {
     justify-content: flex-end;
   }
 
-  nav > a{
+  nav > a {
     position: absolute;
     left: 10%;
   }
@@ -1620,15 +1619,14 @@ footer > ul li i:hover{
   .container {
     padding: 0.5rem 10%;
   }
-  .pfaanpassen{
+  .pfaanpassen {
     padding: 2rem;
   }
-  nav div a img{
+  nav div a img {
     width: 3rem;
   }
 
-  .profieldropdown ul li i{
+  .profieldropdown ul li i {
     font-size: 2.5rem;
   }
-
 }
