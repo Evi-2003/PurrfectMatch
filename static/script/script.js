@@ -230,6 +230,7 @@ if(prev)
 
 // ---------------SLIDER-----------------
 // Controleer of het element met de klasse "swiper" aanwezig is op de pagina
+
 const swiperElement = document.querySelector(".swiper");
 if (swiperElement) {
     // Initialiseer de Swiper alleen als het element aanwezig is
@@ -258,12 +259,12 @@ if (swiperElement) {
 // ---------------POPUP-----------------
 function createPopup(id) {
   const popupNode = document.querySelector(id);
-  
+
   if (!popupNode) {
     console.error(`Element met id '${id}' niet gevonden op de pagina.`);
     return;
   }
-
+  
   const overlay = popupNode.querySelector(".overlay");
   const closeBtn = popupNode.querySelector(".close-btn");
 
@@ -281,7 +282,12 @@ function createPopup(id) {
   return openPopup;
 }
 
-const popupOpener = createPopup("#popup");
-if (popupOpener) {
-  document.querySelector("#open-popup").addEventListener("click", popupOpener);
-}
+document.addEventListener('DOMContentLoaded', function() {
+  const popupOpener = createPopup("#popup");
+  if (popupOpener) {
+    document.querySelector("#open-popup").addEventListener("click", popupOpener);
+  }
+});
+
+
+
