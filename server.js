@@ -63,7 +63,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 
 /* check wachtwoord */
@@ -189,7 +189,7 @@ app.post(
     } else {
       res.redirect("/profiel");
     }
-  },
+  }
 );
 
 /* registratie van dier */
@@ -322,12 +322,12 @@ app.post("/matchenVragenlijst", async (req, res) => {
 
   if (matchedDier.length > 0) {
     let besteMatch = matchedDier.filter(
-      (dier) => dier.matchedCount === matchedDier[0].matchedCount,
+      (dier) => dier.matchedCount === matchedDier[0].matchedCount
     );
 
     let randomNummer = Math.floor(Math.random() * besteMatch.length);
     res.redirect(
-      `/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`,
+      `/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`
     );
   } else {
     res.send("er is iets fout gegaan");
@@ -368,14 +368,14 @@ app.get("/adoptie", async (req, res) => {
     // Filtering based on selected species
     if (selectedSpecies.length > 0) {
       dieren = dieren.filter((dier) =>
-        selectedSpecies.includes(dier.soort.toLowerCase()),
+        selectedSpecies.includes(dier.soort.toLowerCase())
       );
     }
 
     // Filtering based on selected genders
     if (selectedGenders.length > 0) {
       dieren = dieren.filter((dier) =>
-        selectedGenders.includes(dier.geslacht.toLowerCase()),
+        selectedGenders.includes(dier.geslacht.toLowerCase())
       );
     }
 
@@ -384,8 +384,14 @@ app.get("/adoptie", async (req, res) => {
       // Ophalen antwoorden matching voor soorteren
       const userId = { _id: new ObjectId(req.session.user.id) };
       userFromDb = await db.collection("users").findOne(userId);
-      let matchedDier = await match(userFromDb.antwoorden);
-      dieren = matchedDier;
+      // If the user, for whatever reaseon, does not have the answered question in it's profile, just load all the animals in default sorting
+      const doesAnswersExist = userFromDb?.antwoorden ? true : false;
+      if (doesAnswersExist) {
+        let matchedDier = await match(userFromDb.antwoorden);
+        dieren = matchedDier;
+      } else {
+        dieren = await db.collection("dieren").find().toArray();
+      }
     } else if (selectedSortingMethod === "jongOud") {
       dieren.sort((a, b) => a.leeftijd - b.leeftijd);
     } else if (selectedSortingMethod === "oudJong") {
@@ -500,7 +506,7 @@ app.get("/profiel", checkSession, async (req, res) => {
       likedAnimalsId?.map(async (element) => {
         const dier = await getAnimal(element);
         return dier;
-      }),
+      })
     );
 
     let verzoeken = await db
