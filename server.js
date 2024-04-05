@@ -482,10 +482,16 @@ app.get("/adoptie/:name", async function (req, res) {
   const id = req.query.id;
   let dier;
   let adoptionRequestAlreadySent = false;
+  let likedIds;
+
   if (req?.session.user) {
     try {
       // Find the animale
       dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
+      // Checking if the user has liked the animal
+      const userId = { _id: new ObjectId(req.session.user.id) };
+      userFromDb = await db.collection("users").findOne(userId);
+      likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
     } finally {
       // Set the id of the animal in a const
       const dierId = dier._id;
@@ -504,6 +510,7 @@ app.get("/adoptie/:name", async function (req, res) {
         dier: dier,
         adoptionRequestAlreadySent: adoptionRequestAlreadySent,
         user: req?.session?.user,
+        likedIds: likedIds,
       });
     }
   } else {
