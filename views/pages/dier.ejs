@@ -16,7 +16,7 @@
   <main id="detail-dier">
     <div class="breadcrumb">
       <i class="fa-solid fa-arrow-left-long"></i>
-      <a aria-label="terug naar adoptie pagina" href="/adoptie">Terug naar adoptie</a>
+      <a href="/adoptie">Terug naar adoptie</a>
     </div>
     <div class="swiper">
       <div class="swiper-wrapper">
@@ -36,48 +36,83 @@
       <!-- If we need scrollbar -->
       <div class="swiper-scrollbar"></div>
     </div>
-      <section class="infosec">
-        <div class="naam">
-          <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
-          <i class="fa-solid fa-heart"></i>
+    <!-- <section>
+        <h1><%= dier.naam %></h1>
+        <h2><%= dier.gewicht %>kg</h2>
+      </section> -->
+    <section class="infosec">
+      <div class="naam">
+        <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
+        <i class="fa-solid fa-heart"></i>
+      </div>
+      <p><%= dier.omschrijving %></p>
+      <h4>Kenmerken</h4>
+      <div class="kenmerken">
+        <div>
+          <p>Soort:</p>
+          <p>Geslacht:</p>
+          <p>Gewicht:</p>
         </div>
-        <p><%= dier.omschrijving %></p>
-        <h4>Kenmerken</h4>
-        <div class="kenmerken">
-          <div>
-            <p>Soort:</p>
-            <p>Geslacht:</p>
-            <p>Gewicht:</p>
-          </div>
-          <div>
-            <p><%= dier.soort %></p>
-            <p><%= dier.geslacht %></p>
-            <p><%= dier.gewicht %></p>
-          </div>
+        <div>
+          <p><%= dier.soort %></p>
+          <p><%= dier.geslacht %></p>
+          <p><%= dier.gewicht %></p>
         </div>
+      </div>
 
-        <div class="container">
-          <button aria-label="adopteren knop" id="open-popup">Adopteren</button>
-        </div>
+
+      <div class="container">
+        <button id="open-popup" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
+          Verzoek gestuurd
+          <% } else { %>
+          Adopteren
+          <% } %>
+        </button>
+
+
         <div class="popup" id="popup">
           <div class="overlay"></div>
           <div class="popup-content">
-              <h2>Weet je het zeker?</h2>
-              <p>We zijn super blij met het nieuws dat onze liefe <%= dier.naam %>  een nieuw plekje kan vinden bij jou <%= account.voornaam %>.
+            <h2>Weet je het zeker?</h2>
+            <p>We zijn super blij met het nieuws dat onze liefe <%= dier.naam %> een nieuw plekje kan vinden bij jou <%= user.voornaam %>.
               Dus als jet het echt wil doen druk dan op adopteren en er zal een bericht gestuurd worden naar de eigenaar van het dier en hoor later meer, anders druk op close.</p>
-              <div class="controls">
-                  <button aria-label="close button" class="close-btn">Close</button>
-                  <form action="/verzoek" method="post">
-                    <button aria-label="echt adopteren button" type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
-                  </form>
-              </div>
-          </div>
+            <div class="controls">
+              <button class="close-btn">Close</button>
+              <form action="/verzoek" method="post">
+                <button type="submit" name="dierId" value="<%= dier._id %>" aria-label="Adopteren">Adopteren</button>
+              </form>
+              <div class="container">
 
-      </div>
+
+
+              </div>
+              <div class="popup" id="popup">
+                <div class="overlay"></div>
+                <div class="popup-content">
+                  <h2>hallo</h2>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, illum nihil. Unde labore, ad dolore nesciunt quasi sapiente mollitia totam at minima maiores voluptas, placeat nam aliquid illum, culpa optio?</p>
+                  <div class="controls">
+                    <button class="close-btn">Close</button>
+                    <button class="submit-btn">Submit</button>
+                    <div class="container">
+                      <form action="/verzoek" method="post">
+                        <input type="hidden" name="user" value="<%= user.id %>" />
+                        <button type="submit" name="dierId" aria-label="Adopteren" value="<%= dier._id %>" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
+                          Verzoek gestuurd
+                          <% } else { %>
+                          Adopteren
+                          <% } %>
+                        </button>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
     </section>
 
   </main>
-  <%- include('../partials/footer') %>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
   <script src="/script/script.js"></script>
 </body>

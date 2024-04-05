@@ -1388,7 +1388,10 @@ textarea {
   box-shadow: 5px 10px 20px var(--color-darkgreen);
   color: var(--color-text);
 }
-
+#detail-dier .infosec .container button:disabled {
+  background-color: gray;
+  box-shadow: none;
+}
 .popup {
   position: fixed;
   top: -100vh;
