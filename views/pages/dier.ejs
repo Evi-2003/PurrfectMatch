@@ -60,6 +60,7 @@
         </div>
       </div>
 
+
       <div class="container">
         <button id="open-popup" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
           Verzoek gestuurd
@@ -67,6 +68,24 @@
           Adopteren
           <% } %>
         </button>
+
+        <div class="container">
+          <button id="open-popup">Adopteren</button>
+        </div>
+        <div class="popup" id="popup">
+          <div class="overlay"></div>
+          <div class="popup-content">
+              <h2>Weet je het zeker?</h2>
+              <p>We zijn super blij met het nieuws dat onze liefe <%= dier.naam %>  een nieuw plekje kan vinden bij jou <%= account.voornaam %>.
+              Dus als jet het echt wil doen druk dan op adopteren en er zal een bericht gestuurd worden naar de eigenaar van het dier en hoor later meer, anders druk op close.</p>
+              <div class="controls">
+                  <button class="close-btn">Close</button>
+                  <form action="/verzoek" method="post">
+                    <button type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
+                  </form>
+                        <div class="container">
+       
+
 
       </div>
       <div class="popup" id="popup">
