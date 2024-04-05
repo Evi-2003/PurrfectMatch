@@ -3,6 +3,8 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "@node-minify/core": "^8.0.6",
+    "@node-minify/uglify-es": "^8.0.6",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.9",
@@ -11,7 +13,8 @@
     "express-session": "^1.18.0",
     "mongodb": "^6.4.0",
     "multer": "^1.4.5-lts.1",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "uglify-js": "^3.17.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

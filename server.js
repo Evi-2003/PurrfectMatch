@@ -6,11 +6,21 @@ const port = 3000;
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const session = require("express-session");
+const minify = require("@node-minify/core");
+const uglifyES = require("@node-minify/uglify-es");
 
 require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
+
+
+// minify({
+//   compressor: uglifyES,
+//   input: 'static/script/script.js',
+//   output: 'static/script/output.min.js',
+// });
+
 
 // Setting up the storage
 const storage = multer.diskStorage({
