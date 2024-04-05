@@ -70,10 +70,10 @@ async function checkUser(email, wachtwoord) {
         verstuurdeVerzoeken: user.verstuurdeVerzoeken,
       };
     } else {
-      return false;
+      return {verkeerdWachtwoord: true};
     }
   } else {
-    return false;
+    return { geenAccount: true };
   }
 }
 
@@ -84,13 +84,16 @@ app.post("/inloggen", async (req, res) => {
 
   logginResultaat = await checkUser(email, wachtwoord);
 
-  if (logginResultaat) {
+  if (logginResultaat && !logginResultaat.verkeerdWachtwoord && !logginResultaat.geenAccount) {
     req.session.user = logginResultaat;
     res.redirect("/profiel");
-  } else {
+  } else if (logginResultaat && logginResultaat.verkeerdWachtwoord) {
     res.render("pages/inloggen", {
       error: "Email of wachtwoord is onjuist",
-      email: email,
+    });
+  } else if (logginResultaat && logginResultaat.geenAccount) {
+    res.render("pages/inloggen", {
+      error: "Nog geen account",
     });
   }
 });
