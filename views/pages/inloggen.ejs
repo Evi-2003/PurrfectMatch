@@ -1,51 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inloggen - PurrfectMatch</title>
-    <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/fee5056558.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <main>
-      <section class="form">
-        <div class="breadcrumb">
-          <i class="fa-solid fa-arrow-left-long"></i>
-          <a aria-label="terug naar homepagina" href="/">Terug naar homepagina</a>
-        </div>
-          <div class="formcontainer">
-            <div class="formcontainer-container logingap">
-              <h1 class="loginh1">Login</h1>
-              <form class="loginform" action="/inloggen" method="post">
-                <div>
-                  <input aria-label="email" class="texinput" type="email" id="email" name="email" required>
-                  <label class="textlabel" for="email"><i class="fa-solid fa-user"></i> Email - <span>verplicht</span></label>
-                </div>  
-                <div>
-                  <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
-                  <input aria-label="wachtwoord" class="texinput" type="password" id="wachtwoord" name="wachtwoord" required>
-                  <label class="textlabel" for="wachtwoord"><i class="fa-solid fa-lock"></i> Wachtwoord - <span>verplicht</span></label>
-                  <a class="wachtwoord vergeten" href="#">Wachtwoord vergeten?</a>
-                </div>
-                <div class="error-message">
-                  <% if (typeof error !== 'undefined' && error) { %>
-                    <p><%= error %></p>
-                  <% } %>
-                </div>                
-                <button aria-label="inlog knop" class="btn" type="submit">Login</button>
-              </form>
-            <p class="loginp">Nog geen account? <a aria-label="registreren knop" href="registreren">Registreren</a></p>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inloggen - PurrfectMatch</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main>
+    <section class="form">
+      <div class="breadcrumb">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <a aria-label="terug naar homepagina" href="/">Terug naar homepagina</a>
+      </div>
+      <div class="formcontainer">
+        <div class="formcontainer-container logingap">
+          <h1 class="loginh1">Login</h1>
+          <form class="loginform" action="/inloggen" method="post">
+            <div>
+              <input aria-label="email" class="texinput" type="email" id="email" name="email" required>
+              <label class="textlabel" for="email"><i class="fa-solid fa-user"></i> Email - <span>verplicht</span></label>
             </div>
-          </div>
-      </section>
-    </main>
-    <%- include('../partials/footer') %>
-    <script src="script/script.js"></script>
-  </body>
+            <div>
+              <i class="fa-regular fa-eye-slash" onclick="showpassword(this)"></i>
+              <input aria-label="wachtwoord" class="texinput" type="password" id="wachtwoord" name="wachtwoord" required>
+              <label class="textlabel" for="wachtwoord"><i class="fa-solid fa-lock"></i> Wachtwoord - <span>verplicht</span></label>
+              <a class="wachtwoord vergeten" href="#">Wachtwoord vergeten?</a>
+            </div>
+            <div class="error-message">
+              <% if (typeof error !== 'undefined' && error) { %>
+              <p><%= error %></p>
+              <% } %>
+            </div>
+            <button aria-label="inlog knop" class="btn" type="submit">Login</button>
+          </form>
+          <p class="loginp">Nog geen account? <a aria-label="registreren knop" href="registreren">Registreren</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <%- include('../partials/footer') %>
+  <script src="script/script.js"></script>
+</body>
+
 </html>

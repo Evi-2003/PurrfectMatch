@@ -47,22 +47,22 @@
             <div class="katprofieltext">
               <div>
                 <h2><%= dier.naam %> (<%= dier.leeftijd %>)</h2>
-                    <% if (account) { %>
-                    <form action="like" method="post" id="likeForm">
-                      <input type="hidden" name="dier" value="<%= dier._id %>" />
-                      <input type="hidden" name="user" value="<%= account._id %>" />
+                <% if (account) { %>
+                <form action="like" method="post" id="likeForm">
+                  <input type="hidden" name="dier" value="<%= dier._id %>" />
+                  <input type="hidden" name="user" value="<%= account._id %>" />
 
-                      <i class="fa-solid fa-message">
-                      <button id="likeButton" class="pflikebutton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
-                        <i class="fa-solid fa-heart"></i><%= dier.likes %>
+                  <i class="fa-solid fa-message">
+                    <button id="likeButton" class="pflikebutton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                      <i class="fa-solid fa-heart"></i><%= dier.likes %>
 
                       <button aria-label="like button" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
                         <%= dier.likes %> ❤️
 
                       </button>
-                    </form>
-                    <% } %>
-                  </i>
+                </form>
+                <% } %>
+                </i>
               </div>
               <ul>
                 <li>

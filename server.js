@@ -14,13 +14,11 @@ app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
 
-
 // minify({
 //   compressor: uglifyES,
 //   input: 'static/script/script.js',
 //   output: 'static/script/output.min.js',
 // });
-
 
 // Setting up the storage
 const storage = multer.diskStorage({
@@ -335,8 +333,9 @@ app.post("/matchenVragenlijst", async (req, res) => {
 });
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("pages/index", { account: req?.session?.user });
+app.get("/", async (req, res) => {
+  const dieren = await db.collection("dieren").find().toArray();
+  res.render("pages/index", { account: req?.session?.user, dieren: dieren });
 });
 
 // Route for the adoption page// Route for the adoption page
