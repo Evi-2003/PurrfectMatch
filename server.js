@@ -593,7 +593,10 @@ app.get("/registreren", (req, res) => {
 app.get("/vragenlijst", (req, res) => {
   res.render("pages/vragenlijst", { account: req?.session?.user });
 });
-
+app.post("/contactformulier", async (req, res) => {
+  await db.collection("contactformulieren").insertOne(req.body);
+  res.redirect("/");
+});
 // Liken van een dier
 app.post("/like", async (req, res) => {
   const id = { _id: new ObjectId(req.body.dier) };
