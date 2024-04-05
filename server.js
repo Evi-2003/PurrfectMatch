@@ -87,7 +87,10 @@ app.post("/inloggen", async (req, res) => {
     req.session.user = logginResultaat;
     res.redirect("/profiel");
   } else {
-    res.render("pages/inloggen", { error: "Email of wachtwoord is onjuist", email: email});
+    res.render("pages/inloggen", {
+      error: "Email of wachtwoord is onjuist",
+      email: email,
+    });
   }
 });
 
@@ -139,40 +142,44 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
   });
 });
 
-/* Profiel aanpassen */ 
-app.post("/profielAanpassen", upload.single("profielfoto"), async(req, res) => {
-  let userId = { _id: new ObjectId(req.session.user.id) };
-  let userGegv = await db.collection("users").findOne(userId);
-  let email = userGegv.email;
-  let wachtwoord = req.body.wachtwoord;
+/* Profiel aanpassen */
+app.post(
+  "/profielAanpassen",
+  upload.single("profielfoto"),
+  async (req, res) => {
+    let userId = { _id: new ObjectId(req.session.user.id) };
+    let userGegv = await db.collection("users").findOne(userId);
+    let email = userGegv.email;
+    let wachtwoord = req.body.wachtwoord;
 
-  profielAanpassen = await checkUser(email, wachtwoord);
-  if (profielAanpassen) {
-    let userData = {
-      voornaam: req.body.voornaam,
-      tussenvoegsel: req.body.tussenvoegsel,
-      achternaam: req.body.achternaam,
-      geslacht: req.body.geslacht,
-      postcode: req.body.postcode,
-      straatnaam: req.body.straatnaam,
-      huisnummer: parseInt(req.body.huisnummer),
-      toevoeging: req.body.toevoeging,
-      woonplaats: req.body.woonplaats,
-      geboortedatum: req.body.geboortedatum,
-      telefoonnummer: req.body.telefoonnummer,
-      email: req.body.email,
-    };
+    profielAanpassen = await checkUser(email, wachtwoord);
+    if (profielAanpassen) {
+      let userData = {
+        voornaam: req.body.voornaam,
+        tussenvoegsel: req.body.tussenvoegsel,
+        achternaam: req.body.achternaam,
+        geslacht: req.body.geslacht,
+        postcode: req.body.postcode,
+        straatnaam: req.body.straatnaam,
+        huisnummer: parseInt(req.body.huisnummer),
+        toevoeging: req.body.toevoeging,
+        woonplaats: req.body.woonplaats,
+        geboortedatum: req.body.geboortedatum,
+        telefoonnummer: req.body.telefoonnummer,
+        email: req.body.email,
+      };
 
-    if (req.file) {
-      userData.profielfoto = req.file.filename;
+      if (req.file) {
+        userData.profielfoto = req.file.filename;
+      }
+
+      await db.collection("users").updateOne(userId, { $set: userData });
+      res.redirect("/profiel");
+    } else {
+      res.redirect("/profiel");
     }
-
-    await db.collection("users").updateOne(userId, { $set: userData });
-    res.redirect("/profiel");
-  } else {
-    res.redirect("/profiel");
-  }
-});
+  },
+);
 
 /* registratie van dier */
 app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
@@ -192,12 +199,12 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
     geslacht: req.body.diergeslacht,
     omschrijving: req.body.dieromschrijving,
     aanbieder: req.session.user.id,
-    vraag1: req.body.vraag1, 
-    vraag2: req.body.vraag2, 
-    vraag3: req.body.vraag3, 
-    vraag4: req.body.vraag4, 
-    vraag5: req.body.vraag5, 
-    vraag6: req.body.vraag6, 
+    vraag1: req.body.vraag1,
+    vraag2: req.body.vraag2,
+    vraag3: req.body.vraag3,
+    vraag4: req.body.vraag4,
+    vraag5: req.body.vraag5,
+    vraag6: req.body.vraag6,
   };
 
   await db.collection("dieren").insertOne(dierData);
@@ -208,7 +215,7 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
 app.post("/verzoek", checkSession, async (req, res) => {
   //Ophalen aanbiederId via de dierId
   let dierId = { _id: new ObjectId(req.body.dierId) };
-  let dierCollection = await db.collection('dieren').findOne(dierId);
+  let dierCollection = await db.collection("dieren").findOne(dierId);
 
   let verzoekData = {
     zoekerId: req.session.user.id,
@@ -237,26 +244,26 @@ app.post("/accepteren", async (req, res) => {
   res.redirect("/profiel");
 });
 
-/* Matchen Vragenlijst */ 
+/* Matchen Vragenlijst */
 async function match(antwoorden) {
-  let dieren = await db.collection('dieren').find().toArray();
+  let dieren = await db.collection("dieren").find().toArray();
 
-  let matchedDieren = dieren.map(dier => {
+  let matchedDieren = dieren.map((dier) => {
     let matchedCount = 0;
-    for(let vraag in antwoorden) {
-      if(antwoorden[vraag] === dier[vraag]) {
-        matchedCount++; 
+    for (let vraag in antwoorden) {
+      if (antwoorden[vraag] === dier[vraag]) {
+        matchedCount++;
       }
     }
     dier.matchedCount = matchedCount;
-    return dier
+    return dier;
   });
 
-  matchedDieren.sort(((a, b) => b.matchedCount - a.matchedCount))
+  matchedDieren.sort((a, b) => b.matchedCount - a.matchedCount);
   return matchedDieren;
 }
 
-app.post('/matchenVragenlijst', async(req, res) => {
+app.post("/matchenVragenlijst", async (req, res) => {
   let antwoorden = {
     vraag1: req.body.vraag1,
     vraag2: req.body.vraag2,
@@ -265,20 +272,26 @@ app.post('/matchenVragenlijst', async(req, res) => {
     vraag5: req.body.vraag5,
     vraag6: req.body.vraag6,
   };
-  
+
   let email = req.session.user.email;
   let wachtwoord = req.session.user.wachtwoord;
   logginResultaat = await checkUser(email, wachtwoord);
-  let id = logginResultaat.id
-  await db.collection('users').updateOne({ _id: id }, { $set: { antwoorden: antwoorden } });
-  
+  let id = logginResultaat.id;
+  await db
+    .collection("users")
+    .updateOne({ _id: id }, { $set: { antwoorden: antwoorden } });
+
   let matchedDier = await match(antwoorden);
 
   if (matchedDier.length > 0) {
-    let besteMatch = matchedDier.filter(dier => dier.matchedCount === matchedDier[0].matchedCount)
+    let besteMatch = matchedDier.filter(
+      (dier) => dier.matchedCount === matchedDier[0].matchedCount,
+    );
 
-    let randomNummer = Math.floor(Math.random() * besteMatch.length)
-    res.redirect(`/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`);
+    let randomNummer = Math.floor(Math.random() * besteMatch.length);
+    res.redirect(
+      `/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`,
+    );
   } else {
     res.send("er is iets fout gegaan");
   }
@@ -418,7 +431,9 @@ app.get("/adoptie/:name", async function (req, res) {
 app.get("/profiel", checkSession, async (req, res) => {
   const userId = { _id: new ObjectId(req.session.user.id) };
   const userFromDb = await db.collection("users").findOne(userId);
-  let likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id);
+  let likedAnimalsId = userFromDb.liked
+    ? userFromDb?.liked?.map((element) => element.id._id)
+    : [];
 
   try {
     const likedAnimals = await Promise.all(
@@ -448,7 +463,7 @@ app.get("/profiel", checkSession, async (req, res) => {
         verzoeken[i].zoekerNaam = zoeker.voornaam;
       }
     }
-
+    console.log(likedAnimals);
     res.render("pages/profiel", {
       account: userFromDb,
       dieren: likedAnimals,
