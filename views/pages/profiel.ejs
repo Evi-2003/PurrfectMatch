@@ -20,7 +20,7 @@
         <p>Mijn account</p>
         <h1>Welkom <%= account.voornaam %></h1>
       </div>
-      <a href="/uitloggen">Uitloggen</a>
+      <a aria-label="uitloggen" href="/uitloggen">Uitloggen</a>
     </div>
   </div>
   <section class="profieldropdowncontainer">
@@ -41,8 +41,8 @@
       <% dieren.forEach(function(dier) { %>
       <li>
         <div class="katprofielbg">
-          <a href="dier" class="katprofielcontainer">
-            <img src="/uploads/<%= dier.foto[0] %>" alt="" />
+          <a aria-label="ga naar dier" href="dier" class="katprofielcontainer">
+            <img src="/uploads/<%= dier.foto[0] %>" alt="profiel foto" />
 
             <div class="katprofieltext">
               <div>
@@ -53,7 +53,7 @@
                     <form action="like" method="post" id="likeForm">
                       <input type="hidden" name="dier" value="<%= dier._id %>" />
                       <input type="hidden" name="user" value="<%= account._id %>" />
-                      <button id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                      <button aria-label="like button" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
                         <%= dier.likes %> ❤️
                       </button>
                     </form>
@@ -141,7 +141,7 @@
           </div>
 
           <span id="pass"></span>
-          <button class="btn" type="submit">Pass account aan</button>
+          <button aria-label="pas account aan knop" class="btn" type="submit">Pass account aan</button>
         </form>
       </div>
     </div>
