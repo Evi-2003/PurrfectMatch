@@ -329,8 +329,16 @@ app.get("/adoptie", async (req, res) => {
       );
     }
 
+
+
     // Sorting based on selected method
-    if (selectedSortingMethod === "jongOud") {
+    if (req.session.user) {
+      // Ophalen antwoorden matching voor soorteren
+      const userId = { _id: new ObjectId(req.session.user.id) };
+      userFromDb = await db.collection("users").findOne(userId);
+      let matchedDier = await match(userFromDb.antwoorden);
+      dieren = matchedDier;
+    } else if (selectedSortingMethod === "jongOud") {
       dieren.sort((a, b) => a.leeftijd - b.leeftijd);
     } else if (selectedSortingMethod === "oudJong") {
       dieren.sort((a, b) => b.leeftijd - a.leeftijd);
@@ -448,13 +456,14 @@ app.get("/profiel", checkSession, async (req, res) => {
         verzoeken[i].zoekerNaam = zoeker.voornaam;
       }
     }
-
+    console.log(userFromDb);
     res.render("pages/profiel", {
       account: userFromDb,
       dieren: likedAnimals,
       data: req.session.user,
       selectedSortingMethod: "",
       verzoeken: verzoeken,
+      likedIds: likedAnimalsId,
     });
   } catch (error) {
     console.log("Iets mis gegaan");
@@ -491,8 +500,11 @@ app.get("/vragenlijst", (req, res) => {
 
 // Liken van een dier
 app.post("/like", async (req, res) => {
+  console.log("a");
+  console.log(req.body);
   const id = { _id: new ObjectId(req.body.dier) };
   const user = { _id: new ObjectId(req.body.user) };
+  console.log("b");
   let userFromDb;
   let likeCount; // Voor het bijhouden van de likes
   let dier;
