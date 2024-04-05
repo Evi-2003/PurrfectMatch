@@ -463,13 +463,14 @@ app.get("/profiel", checkSession, async (req, res) => {
         verzoeken[i].zoekerNaam = zoeker.voornaam;
       }
     }
-    console.log(likedAnimals);
+    console.log(userFromDb);
     res.render("pages/profiel", {
       account: userFromDb,
       dieren: likedAnimals,
       data: req.session.user,
       selectedSortingMethod: "",
       verzoeken: verzoeken,
+      likedIds: likedAnimalsId,
     });
   } catch (error) {
     console.log("Iets mis gegaan");
@@ -506,8 +507,11 @@ app.get("/vragenlijst", (req, res) => {
 
 // Liken van een dier
 app.post("/like", async (req, res) => {
+  console.log("a");
+  console.log(req.body);
   const id = { _id: new ObjectId(req.body.dier) };
   const user = { _id: new ObjectId(req.body.user) };
+  console.log("b");
   let userFromDb;
   let likeCount; // Voor het bijhouden van de likes
   let dier;
