@@ -6,11 +6,49 @@ const port = 3000;
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const session = require("express-session");
+const nodemailer = require("nodemailer");
+const minify = require("@node-minify/core");
+const uglifyES = require("@node-minify/uglify-es");
 
 require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
+
+// Settings smtp
+const smtpServer = nodemailer.createTransport({
+  host: "smtp.mailersend.net",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "MS_dbCI4o@trial-ynrw7gyqe2k42k8e.mlsender.net",
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
+
+// E-mail versturen functie
+function sendEmail({ toEmail, content, subject }) {
+  const mailOptions = {
+    from: "PurrfectMatch <purrfect@trial-ynrw7gyqe2k42k8e.mlsender.net>",
+    to: toEmail, // Geadresseerde e-mailadres
+    subject: subject, // Onderwerp van het e-mailbericht
+    text: content, // Tekst van het e-mailbericht
+  };
+  smtpServer.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log("Fout bij het versturen van het e-mailbericht:", error);
+    } else {
+      console.log("E-mailbericht succesvol verstuurd:", info.response);
+    }
+  });
+}
+// Example use of sending a e-mail: sendEmail({ toEmail: "mail@eviwammes.nl", subject: "test", content: "This is a test!" });
+
+// minify({
+//   compressor: uglifyES,
+//   input: 'static/script/script.js',
+//   output: 'static/script/output.min.js',
+// });
 
 // Setting up the storage
 const storage = multer.diskStorage({
@@ -53,7 +91,7 @@ app.use(
     secret: "secret",
     resave: false,
     saveUninitialized: false,
-  }),
+  })
 );
 
 /* check wachtwoord */
@@ -68,12 +106,13 @@ async function checkUser(email, wachtwoord) {
         voornaam: user.voornaam,
         profielfoto: user.profielfoto,
         verstuurdeVerzoeken: user.verstuurdeVerzoeken,
+        email: user.email,
       };
     } else {
-      return false;
+      return { verkeerdWachtwoord: true };
     }
   } else {
-    return false;
+    return { geenAccount: true };
   }
 }
 
@@ -84,13 +123,20 @@ app.post("/inloggen", async (req, res) => {
 
   logginResultaat = await checkUser(email, wachtwoord);
 
-  if (logginResultaat) {
+  if (
+    logginResultaat &&
+    !logginResultaat.verkeerdWachtwoord &&
+    !logginResultaat.geenAccount
+  ) {
     req.session.user = logginResultaat;
     res.redirect("/profiel");
-  } else {
+  } else if (logginResultaat && logginResultaat.verkeerdWachtwoord) {
     res.render("pages/inloggen", {
       error: "Email of wachtwoord is onjuist",
-      email: email,
+    });
+  } else if (logginResultaat && logginResultaat.geenAccount) {
+    res.render("pages/inloggen", {
+      error: "Nog geen account",
     });
   }
 });
@@ -135,6 +181,12 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
     };
 
     await db.collection("users").insertOne(userData);
+    sendEmail({
+      toEmail: userData.email,
+      subject: "Welkom bij PurrfectMatch " + userData.voornaam + "!",
+      content:
+        "Welkom bij PurrfectMatch! We hopen dat je een geweldige ervaring gaat hebben op ons platform. Heb je vragen? Neem contact met ons op!",
+    });
     req.session.user = {
       email: userData.email,
       wachtwoord: req.body.repassword,
@@ -179,7 +231,7 @@ app.post(
     } else {
       res.redirect("/profiel");
     }
-  },
+  }
 );
 
 /* registratie van dier */
@@ -238,6 +290,13 @@ app.post("/verzoek", checkSession, async (req, res) => {
           animalId: req.body.dierId,
         },
       },
+    });
+    sendEmail({
+      toEmail: req.session.user.email,
+      subject: "Je adoptie verzoek is verstuurd!",
+      content:
+        "Je adoptie verzoek is verstuurd naar het baasje van " +
+        dierCollection.naam,
     });
   } catch (error) {
     console.log(error);
@@ -312,12 +371,12 @@ app.post("/matchenVragenlijst", async (req, res) => {
 
   if (matchedDier.length > 0) {
     let besteMatch = matchedDier.filter(
-      (dier) => dier.matchedCount === matchedDier[0].matchedCount,
+      (dier) => dier.matchedCount === matchedDier[0].matchedCount
     );
 
     let randomNummer = Math.floor(Math.random() * besteMatch.length);
     res.redirect(
-      `/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`,
+      `/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`
     );
   } else {
     res.send("er is iets fout gegaan");
@@ -325,8 +384,19 @@ app.post("/matchenVragenlijst", async (req, res) => {
 });
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("pages/index", { account: req?.session?.user });
+app.get("/", async (req, res) => {
+  const dieren = await db.collection("dieren").find().toArray();
+  let likedIds;
+  if (req.session.user) {
+    const userId = { _id: new ObjectId(req.session.user.id) };
+    userFromDb = await db.collection("users").findOne(userId);
+    likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
+  }
+  res.render("pages/index", {
+    account: req?.session?.user,
+    dieren: dieren,
+    likedIds: likedIds,
+  });
 });
 
 // Route for the adoption page// Route for the adoption page
@@ -358,14 +428,14 @@ app.get("/adoptie", async (req, res) => {
     // Filtering based on selected species
     if (selectedSpecies.length > 0) {
       dieren = dieren.filter((dier) =>
-        selectedSpecies.includes(dier.soort.toLowerCase()),
+        selectedSpecies.includes(dier.soort.toLowerCase())
       );
     }
 
     // Filtering based on selected genders
     if (selectedGenders.length > 0) {
       dieren = dieren.filter((dier) =>
-        selectedGenders.includes(dier.geslacht.toLowerCase()),
+        selectedGenders.includes(dier.geslacht.toLowerCase())
       );
     }
 
@@ -374,8 +444,14 @@ app.get("/adoptie", async (req, res) => {
       // Ophalen antwoorden matching voor soorteren
       const userId = { _id: new ObjectId(req.session.user.id) };
       userFromDb = await db.collection("users").findOne(userId);
-      let matchedDier = await match(userFromDb.antwoorden);
-      dieren = matchedDier;
+      // If the user, for whatever reaseon, does not have the answered question in it's profile, just load all the animals in default sorting
+      const doesAnswersExist = userFromDb?.antwoorden ? true : false;
+      if (doesAnswersExist) {
+        let matchedDier = await match(userFromDb.antwoorden);
+        dieren = matchedDier;
+      } else {
+        dieren = await db.collection("dieren").find().toArray();
+      }
     } else if (selectedSortingMethod === "jongOud") {
       dieren.sort((a, b) => a.leeftijd - b.leeftijd);
     } else if (selectedSortingMethod === "oudJong") {
@@ -450,10 +526,16 @@ app.get("/adoptie/:name", async function (req, res) {
   const id = req.query.id;
   let dier;
   let adoptionRequestAlreadySent = false;
+  let likedIds;
+
   if (req?.session.user) {
     try {
       // Find the animale
       dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
+      // Checking if the user has liked the animal
+      const userId = { _id: new ObjectId(req.session.user.id) };
+      userFromDb = await db.collection("users").findOne(userId);
+      likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
     } finally {
       // Set the id of the animal in a const
       const dierId = dier._id;
@@ -472,6 +554,7 @@ app.get("/adoptie/:name", async function (req, res) {
         dier: dier,
         adoptionRequestAlreadySent: adoptionRequestAlreadySent,
         user: req?.session?.user,
+        likedIds: likedIds,
       });
     }
   } else {
@@ -490,7 +573,7 @@ app.get("/profiel", checkSession, async (req, res) => {
       likedAnimalsId?.map(async (element) => {
         const dier = await getAnimal(element);
         return dier;
-      }),
+      })
     );
 
     let verzoeken = await db
@@ -554,7 +637,21 @@ app.get("/registreren", (req, res) => {
 app.get("/vragenlijst", (req, res) => {
   res.render("pages/vragenlijst", { account: req?.session?.user });
 });
-
+app.post("/contactformulier", async (req, res) => {
+  await db.collection("contactformulieren").insertOne(req.body);
+  sendEmail({
+    toEmail: "mail@eviwammes.nl",
+    subject: "Contactformulier ingevuld door " + req.body.voornaam,
+    content: req.body.bericht,
+  });
+  sendEmail({
+    toEmail: req.body.email,
+    subject: "Bedankt voor je e-mail " + req.body.voornaam + "!",
+    content:
+      "We hebben je bericht ontvangen. We zullen je e-mail zo snel mogelijk proberen te beantwoorden.",
+  });
+  res.redirect("/");
+});
 // Liken van een dier
 app.post("/like", async (req, res) => {
   const id = { _id: new ObjectId(req.body.dier) };

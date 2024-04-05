@@ -43,7 +43,18 @@
     <section class="infosec">
       <div class="naam">
         <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
-        <i class="fa-solid fa-heart"></i>
+        <div class="likecontainer">
+
+          <% if (user) { %>
+          <form action="like" method="post" id="likeForm">
+            <input type="hidden" name="dier" value="<%= dier._id %>" />
+            <input type="hidden" name="user" value="<%= user.id %>" />
+            <button aria-label="like dier" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+              <%= dier.likes %> ❤️
+            </button>
+          </form>
+          <% } %>
+        </div>
       </div>
       <p><%= dier.omschrijving %></p>
       <h4>Kenmerken</h4>
