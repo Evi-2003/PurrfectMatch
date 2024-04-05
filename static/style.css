@@ -1397,6 +1397,10 @@ textarea {
   height: 100%;
 }
 
+#popup{
+  z-index: 2;
+}
+
 .popup .overlay {
   position: absolute;
   top: 0;
@@ -1457,7 +1461,7 @@ textarea {
   color: #3284ed;
 }
 
-.popup .popup-content .controls .submit-btn {
+.popup .popup-content .controls form button {
   background: #3284ed;
   color: #fff;
 }

@@ -66,15 +66,16 @@
         <div class="popup" id="popup">
           <div class="overlay"></div>
           <div class="popup-content">
-              <h2>hallo</h2>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, illum nihil. Unde labore, ad dolore nesciunt quasi sapiente mollitia totam at minima maiores voluptas, placeat nam aliquid illum, culpa optio?</p>
+              <h2>Weet je het zeker?</h2>
+              <p>We zijn super blij met het nieuws dat onze liefe <%= dier.naam %>  een nieuw plekje kan vinden bij jou <%= account.voornaam %>.
+              Dus als jet het echt wil doen druk dan op adopteren en er zal een bericht gestuurd worden naar de eigenaar van het dier en hoor later meer, anders druk op close.</p>
               <div class="controls">
                   <button class="close-btn">Close</button>
-                  <button class="submit-btn">Submit</button>
+                  <form action="/verzoek" method="post">
+                    <button type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
+                  </form>
                         <div class="container">
-        <form action="/verzoek" method="post">
-          <button type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
-        </form>
+       
 
       </div>
               </div>

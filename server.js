@@ -408,7 +408,7 @@ app.post("/sorteren", async (req, res) => {
 });
 
 // Dynamic route for the animals
-app.get("/adoptie/:name", async function (req, res) {
+app.get("/adoptie/:name",checkSession, async function (req, res) {
   const id = req.query.id;
   let dier;
   try {
