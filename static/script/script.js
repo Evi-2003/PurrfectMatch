@@ -27,20 +27,23 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ---------------FILTER-----------------
-let filterBtn = document.getElementById("filterBtn")
-if(filterBtn) {
-  filterBtn.addEventListener("click", function() {
-    let filterSection = document.querySelector(".filter");
+const filterBtn = document.getElementById("filterBtn");
+
+if (filterBtn) {
+  filterBtn.addEventListener("click", () => {
+    const filterSection = document.querySelector(".filter");
+    
     // Controleer of de filtersectie verborgen is
     if (filterSection.style.display === "none") {
       // Als het verborgen is, maak het zichtbaar
       filterSection.style.display = "block";
-  } else {
-    // Als het zichtbaar is, verberg het
-    filterSection.style.display = "none";
-  }
+    } else {
+      // Als het zichtbaar is, verberg het
+      filterSection.style.display = "none";
+    }
   });
 }
+
 // -------------PROFIEL VERZOEKEN-------------
 function laadVerzoeken(verzoeken) {
   // Controleren of het element met het id "verzoekenList" aanwezig is op de pagina
@@ -256,7 +259,7 @@ if (swiperElement) {
 
 
 // ---------------POPUP-----------------
-function createPopup(id) {
+const createPopup = (id) => {
   const popupNode = document.querySelector(id);
 
   if (!popupNode) {
@@ -267,26 +270,27 @@ function createPopup(id) {
   const overlay = popupNode.querySelector(".overlay");
   const closeBtn = popupNode.querySelector(".close-btn");
 
-  function openPopup() {
+  const openPopup = () => {
     popupNode.classList.add("active");
-  }
+  };
 
-  function closePopup() {
+  const closePopup = () => {
     popupNode.classList.remove("active");
-  }
+  };
 
   overlay.addEventListener("click", closePopup);
   closeBtn.addEventListener("click", closePopup);
 
   return openPopup;
-}
+};
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
   const popupOpener = createPopup("#popup");
   if (popupOpener) {
     document.querySelector("#open-popup").addEventListener("click", popupOpener);
   }
 });
+
 
 
 

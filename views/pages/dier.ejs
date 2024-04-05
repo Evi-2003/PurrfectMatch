@@ -79,7 +79,7 @@
             <div class="controls">
               <button class="close-btn">Close</button>
               <form action="/verzoek" method="post">
-                <button type="submit" name="dierId" value="<%= dier._id %>">Adopteren</button>
+                <button type="submit" name="dierId" value="<%= dier._id %>" aria-label="Adopteren">Adopteren</button>
               </form>
               <div class="container">
 
@@ -97,7 +97,7 @@
                     <div class="container">
                       <form action="/verzoek" method="post">
                         <input type="hidden" name="user" value="<%= user.id %>" />
-                        <button type="submit" name="dierId" value="<%= dier._id %>" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
+                        <button type="submit" name="dierId" aria-label="Adopteren" value="<%= dier._id %>" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
                           Verzoek gestuurd
                           <% } else { %>
                           Adopteren
