@@ -78,7 +78,7 @@ async function checkUser(email, wachtwoord) {
         verstuurdeVerzoeken: user.verstuurdeVerzoeken,
       };
     } else {
-      return {verkeerdWachtwoord: true};
+      return { verkeerdWachtwoord: true };
     }
   } else {
     return { geenAccount: true };
@@ -92,7 +92,11 @@ app.post("/inloggen", async (req, res) => {
 
   logginResultaat = await checkUser(email, wachtwoord);
 
-  if (logginResultaat && !logginResultaat.verkeerdWachtwoord && !logginResultaat.geenAccount) {
+  if (
+    logginResultaat &&
+    !logginResultaat.verkeerdWachtwoord &&
+    !logginResultaat.geenAccount
+  ) {
     req.session.user = logginResultaat;
     res.redirect("/profiel");
   } else if (logginResultaat && logginResultaat.verkeerdWachtwoord) {
@@ -338,7 +342,17 @@ app.post("/matchenVragenlijst", async (req, res) => {
 // Routes
 app.get("/", async (req, res) => {
   const dieren = await db.collection("dieren").find().toArray();
-  res.render("pages/index", { account: req?.session?.user, dieren: dieren });
+  let likedIds;
+  if (req.session.user) {
+    const userId = { _id: new ObjectId(req.session.user.id) };
+    userFromDb = await db.collection("users").findOne(userId);
+    likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
+  }
+  res.render("pages/index", {
+    account: req?.session?.user,
+    dieren: dieren,
+    likedIds: likedIds,
+  });
 });
 
 // Route for the adoption page// Route for the adoption page
