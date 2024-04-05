@@ -6,6 +6,7 @@ const port = 3000;
 const bcrypt = require("bcrypt");
 const multer = require("multer");
 const session = require("express-session");
+const nodemailer = require("nodemailer");
 const minify = require("@node-minify/core");
 const uglifyES = require("@node-minify/uglify-es");
 
@@ -13,6 +14,35 @@ require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(express.urlencoded({ extended: true }));
+
+// Settings smtp
+const smtpServer = nodemailer.createTransport({
+  host: "smtp.mailersend.net",
+  port: 587,
+  secure: false,
+  auth: {
+    user: "MS_dbCI4o@trial-ynrw7gyqe2k42k8e.mlsender.net",
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
+
+// E-mail versturen functie
+function sendEmail({ toEmail, content, subject }) {
+  const mailOptions = {
+    from: "PurrfectMatch <purrfect@trial-ynrw7gyqe2k42k8e.mlsender.net>",
+    to: toEmail, // Geadresseerde e-mailadres
+    subject: subject, // Onderwerp van het e-mailbericht
+    text: content, // Tekst van het e-mailbericht
+  };
+  smtpServer.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log("Fout bij het versturen van het e-mailbericht:", error);
+    } else {
+      console.log("E-mailbericht succesvol verstuurd:", info.response);
+    }
+  });
+}
+// Example use of sending a e-mail: sendEmail({ toEmail: "mail@eviwammes.nl", subject: "test", content: "This is a test!" });
 
 // minify({
 //   compressor: uglifyES,
@@ -76,6 +106,7 @@ async function checkUser(email, wachtwoord) {
         voornaam: user.voornaam,
         profielfoto: user.profielfoto,
         verstuurdeVerzoeken: user.verstuurdeVerzoeken,
+        email: user.email,
       };
     } else {
       return { verkeerdWachtwoord: true };
@@ -150,6 +181,12 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
     };
 
     await db.collection("users").insertOne(userData);
+    sendEmail({
+      toEmail: userData.email,
+      subject: "Welkom bij PurrfectMatch " + userData.voornaam + "!",
+      content:
+        "Welkom bij PurrfectMatch! We hopen dat je een geweldige ervaring gaat hebben op ons platform. Heb je vragen? Neem contact met ons op!",
+    });
     req.session.user = {
       email: userData.email,
       wachtwoord: req.body.repassword,
@@ -253,6 +290,13 @@ app.post("/verzoek", checkSession, async (req, res) => {
           animalId: req.body.dierId,
         },
       },
+    });
+    sendEmail({
+      toEmail: req.session.user.email,
+      subject: "Je adoptie verzoek is verstuurd!",
+      content:
+        "Je adoptie verzoek is verstuurd naar het baasje van " +
+        dierCollection.naam,
     });
   } catch (error) {
     console.log(error);
@@ -595,6 +639,17 @@ app.get("/vragenlijst", (req, res) => {
 });
 app.post("/contactformulier", async (req, res) => {
   await db.collection("contactformulieren").insertOne(req.body);
+  sendEmail({
+    toEmail: "mail@eviwammes.nl",
+    subject: "Contactformulier ingevuld door " + req.body.voornaam,
+    content: req.body.bericht,
+  });
+  sendEmail({
+    toEmail: req.body.email,
+    subject: "Bedankt voor je e-mail " + req.body.voornaam + "!",
+    content:
+      "We hebben je bericht ontvangen. We zullen je e-mail zo snel mogelijk proberen te beantwoorden.",
+  });
   res.redirect("/");
 });
 // Liken van een dier
