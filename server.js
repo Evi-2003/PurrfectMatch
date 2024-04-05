@@ -67,6 +67,7 @@ async function checkUser(email, wachtwoord) {
         id: user._id,
         voornaam: user.voornaam,
         profielfoto: user.profielfoto,
+        verstuurdeVerzoeken: user.verstuurdeVerzoeken,
       };
     } else {
       return false;
@@ -214,18 +215,44 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
 // Verzoeken sturen
 app.post("/verzoek", checkSession, async (req, res) => {
   //Ophalen aanbiederId via de dierId
-  let dierId = { _id: new ObjectId(req.body.dierId) };
-  let dierCollection = await db.collection("dieren").findOne(dierId);
-
-  let verzoekData = {
+  const dierId = { _id: new ObjectId(req.body.dierId) };
+  const dierCollection = await db.collection("dieren").findOne(dierId);
+  const verzoekData = {
     zoekerId: req.session.user.id,
     dierId: req.body.dierId,
     aanbiederId: dierCollection.aanbieder,
     status: "Nog niet beoordeeld",
   };
 
-  await db.collection("verzoeken").insertOne(verzoekData);
-  res.redirect("/profiel");
+  const data = await db.collection("verzoeken").insertOne(verzoekData);
+
+  // Koppel het verzoek dat je stuurt aan de gebruiker die het stuurt
+  const idNieuwVerzoek = data.insertedId;
+  const profielId = { _id: new ObjectId(req.session.user.id) };
+
+  try {
+    await db.collection("users").updateOne(profielId, {
+      $push: {
+        verstuurdeVerzoeken: {
+          verzoekId: idNieuwVerzoek,
+          animalId: req.body.dierId,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    // Fetch the user again after modifying it. So the session doesnt have old data of the user
+    let userRefetched;
+    try {
+      userRefetched = await db.collection("users").findOne(profielId);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      req.session.user = userRefetched;
+      res.redirect("/adoptie");
+    }
+  }
 });
 
 // Accepteren of Weigeren
@@ -416,14 +443,33 @@ app.post("/sorteren", async (req, res) => {
 app.get("/adoptie/:name", async function (req, res) {
   const id = req.query.id;
   let dier;
-  try {
-    // Zoek de bijhorende dier erbij
-    dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
-  } finally {
-    return res.render("pages/dier", {
-      dier: dier,
-      account: req?.session?.user,
-    });
+  let adoptionRequestAlreadySent = false;
+  if (req?.session.user) {
+    try {
+      // Find the animale
+      dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
+    } finally {
+      // Set the id of the animal in a const
+      const dierId = dier._id;
+      // Loop over every sent
+      if (req.session.user.verstuurdeVerzoeken) {
+        req.session.user.verstuurdeVerzoeken.forEach((element) => {
+          Object.keys(element).forEach(function (key) {
+            if (element[key] == dierId) {
+              adoptionRequestAlreadySent = true;
+            }
+          });
+        });
+      }
+
+      return res.render("pages/dier", {
+        dier: dier,
+        adoptionRequestAlreadySent: adoptionRequestAlreadySent,
+        user: req?.session?.user,
+      });
+    }
+  } else {
+    res.redirect("/profiel");
   }
 });
 
@@ -463,7 +509,7 @@ app.get("/profiel", checkSession, async (req, res) => {
         verzoeken[i].zoekerNaam = zoeker.voornaam;
       }
     }
-    console.log(userFromDb);
+
     res.render("pages/profiel", {
       account: userFromDb,
       dieren: likedAnimals,
@@ -507,20 +553,18 @@ app.get("/vragenlijst", (req, res) => {
 
 // Liken van een dier
 app.post("/like", async (req, res) => {
-  console.log("a");
-  console.log(req.body);
   const id = { _id: new ObjectId(req.body.dier) };
   const user = { _id: new ObjectId(req.body.user) };
-  console.log("b");
+  console.log(req.body.user);
   let userFromDb;
-  let likeCount; // Voor het bijhouden van de likes
+  let likeCount; // Keep count of the likes
   let dier;
   let likedIds;
   let dieren;
   try {
-    // Zoek de bijhorende dier erbij
+    // Find the animal
     dier = await db.collection("dieren").findOne(id);
-    // Zoek user erbij
+    // Find the user
     userFromDb = await db.collection("users").findOne(user);
   } finally {
     // Updating the likes on the dier, after checking if the user already liked it
