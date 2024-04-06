@@ -23,7 +23,7 @@
           <h1 class="loginh1">Login</h1>
           <form class="loginform" action="/inloggen" method="post">
             <div>
-              <input aria-label="email" class="texinput" type="email" id="email" name="email" required>
+              <input aria-label="email" class="texinput" type="email" id="email" name="email" value="<%= typeof failedEmail !== 'undefined' ? failedEmail : '' %>" required>
               <label class="textlabel" for="email"><i class="fa-solid fa-user"></i> Email - <span>verplicht</span></label>
             </div>
             <div>

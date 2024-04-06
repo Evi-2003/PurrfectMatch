@@ -131,8 +131,10 @@ app.post("/inloggen", async (req, res) => {
     req.session.user = logginResultaat;
     res.redirect("/profiel");
   } else if (logginResultaat && logginResultaat.verkeerdWachtwoord) {
+    req.session.failedEmail = email;
     res.render("pages/inloggen", {
-      error: "Email of wachtwoord is onjuist",
+      error: "Wachtwoord is onjuist",
+      failedEmail: req.session.failedEmail,
     });
   } else if (logginResultaat && logginResultaat.geenAccount) {
     res.render("pages/inloggen", {
@@ -440,7 +442,7 @@ app.get("/adoptie", async (req, res) => {
     }
 
     // Sorting based on selected method
-    if (req.session.user) {
+    if (req.session.user && selectedSortingMethod === "relevant") {
       // Ophalen antwoorden matching voor soorteren
       const userId = { _id: new ObjectId(req.session.user.id) };
       userFromDb = await db.collection("users").findOne(userId);
