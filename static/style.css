@@ -12,7 +12,8 @@
   --color-geel: #ffd910;
   --color-oranje: #ff8a00;
   --color-text: #fff;
-  --color-text2: black;
+  --color-text2: #000000;
+  --color-red: #ff0000;
 
   --color-header-background: #fff;
 
@@ -140,7 +141,7 @@ nav > i {
 
 nav > a {
   text-decoration: none;
-  color: black;
+  color: var(--color-text2);
   font-size: 1.5rem;
   display: flex;
   align-items: center;
@@ -189,9 +190,7 @@ nav > a {
   color: var(--color-text);
   border: 1px solid var(--color-darkgreen);
   border-radius: 10px;
-  box-shadow:
-    0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow:var(--form-box-shadow);
   display: none;
 }
 
@@ -221,7 +220,6 @@ nav > a {
 .overzicht li {
   list-style-type: none;
   display: flex;
-  /* border: 1px #b5c055 solid; */
   background-color: white;
   width: 100%;
   max-width: 30em;
@@ -272,7 +270,7 @@ nav > a {
   margin: 0;
 }
 .overzicht li a div div:nth-child(2) {
-  border: solid 1px black;
+  border: solid 1px var(--color-text2);
   width: fit-content;
   height: fit-content;
   border-radius: 1em;
@@ -281,7 +279,7 @@ nav > a {
 .overzicht li a {
   display: flex;
   flex-direction: column;
-  color: black;
+  color: var(--color-text2);
   text-decoration: none;
   width: 100%;
 }
@@ -345,7 +343,7 @@ nav > a {
   font-size: 1.5rem;
   font-weight: var(--font-bold);
 }
-.kiessection > div a {
+.kiessection a {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -363,11 +361,11 @@ nav > a {
   font-size: 1rem;
 }
 
-.kiessection > div a > div {
+.kiessection a > div {
   background-color: var(--color-text);
   color: var(--color-darkgreen);
   display: flex;
-  color: black;
+  color: var(--color-text2);
   gap: 1rem;
   align-items: center;
   padding: 0.8rem;
@@ -433,7 +431,7 @@ nav > a {
   text-transform: capitalize;
   font-weight: var(--font-bold-btn);
   z-index: 2;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: var(--form-box-shadow)
 }
 
 .afstand {
@@ -471,11 +469,11 @@ nav > a {
 .afstand div div a {
   text-align: center;
   text-decoration: none;
-  border: solid 1px black;
+  border: solid 1px var(--color-text2);
   color: black;
   padding: 1rem;
   border-radius: 5rem;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  box-shadow: var(--form-box-shadow)
 }
 
 .afstand > div::before {
@@ -541,11 +539,11 @@ nav > a {
   width: 300px;
   height: 500px;
   border-radius: 10px;
-  border: solid 1px black;
+  border: solid 1px var(--color-text2);
 }
 
 .swiper hr {
-  color: white;
+  color: var(--color-text);
 }
 
 .swiper-slide {
@@ -561,7 +559,7 @@ nav > a {
 .swipercontainertext > div:first-of-type {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--color-text);
   padding-bottom: 1rem;
 }
 
@@ -572,7 +570,7 @@ nav > a {
 
 .swiper-slide ul li{
   list-style: none;
-  border: solid black 1px;
+  border: solid var(--color-text2) 1px;
   padding: 0.3rem;
   border-radius: 10px;
 
@@ -591,7 +589,7 @@ nav > a {
   text-decoration: none;
   color: var(--color-text2);
   padding: .5rem;
-  border: solid 1px black;
+  border: solid 1px var(--color-text2);
 }
 
 .swiper-button-next, .swiper-button-prev {
@@ -834,7 +832,7 @@ input[type="number"] {
 }
 
 #pass {
-  color: red;
+  color: var(--color-red);
   font-size: 0.9rem;
 }
 
@@ -885,7 +883,7 @@ input[type="number"] {
 
 .vragenlijstlabel {
   position: relative;
-  background: black;
+  background: var(--color-text2);
   color: white;
   padding: 1rem;
   border-radius: 5px;
@@ -919,7 +917,7 @@ input[type="number"] {
 }
 
 .item span {
-  background: black;
+  background: var(--color-text2);
   padding: 0.45rem;
   border-radius: 5rem;
 }
@@ -934,7 +932,7 @@ input[type="number"] {
 
 /* ---------KAART-SLIDER------------ */
 .selected {
-  background: #005b09;
+  background: var(--color-darkgreen);
 }
 
 .hidden {
@@ -952,7 +950,7 @@ input[type="number"] {
   position: absolute;
   width: 274px;
   height: 341px;
-  background-color: #fff;
+  background-color: var(--color-text);
   border-radius: 10px;
   padding: 2rem;
   transition: 0.5s;
@@ -998,7 +996,7 @@ input[type="number"] {
     display: flex;
     height: auto;
     background: transparent;
-    color: black;
+    color: var(--color-text2);
     position: inherit;
     width: auto;
     padding: 0;
@@ -1053,15 +1051,15 @@ input[type="number"] {
   position: absolute;
   top: 0;
   background-color: transparent;
-  color: white;
+  color: var(--color-text);
 }
 
 #likeButton:hover {
   transform: scale(0.95);
 }
 #likeButton.liked {
-  background-color: #ff0000;
-  color: #ffffff;
+  background-color: var(--color-red);
+  color: var(--color-text);
   border-radius: 0.5em;
   padding: 0.5em 1em;
 }
@@ -1073,14 +1071,14 @@ input[type="number"] {
   border-radius: 100%;
   object-fit: cover;
   place-self: center;
-  border: solid black;
+  border: solid var(--color-text2);
   max-height: 10em;
 }
 #profielFotoNav {
   border-radius: 100%;
   object-fit: cover;
   place-self: center;
-  border: solid 1px black;
+  border: solid 1px var(--color-text2);
 }
 
 .profielmain{
@@ -1125,13 +1123,13 @@ input[type="number"] {
   padding: 0.5rem;
   text-decoration: none;
   text-transform: uppercase;
-  background: black;
+  background: var(--color-text2);
 }
 
 .profielheadtxt {
   background: white;
   padding: 10px;
-  border: dashed black 2px;
+  border: dashed var(--color-text2) 2px;
   text-transform: capitalize;
 }
 
@@ -1139,14 +1137,14 @@ input[type="number"] {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  background: white;
+  background: var(--color-text);
   position: relative;
 }
 
 .profieldropdowncontainer::before {
   content: "";
   position: absolute;
-  border-bottom: 10px black;
+  border-bottom: 10px var(--color-text2);
 }
 
 .profieldropdown {
@@ -1170,7 +1168,7 @@ input[type="number"] {
 }
 
 .profieldropdown ul li:first-of-type i {
-  color: red;
+  color: var(--color-red);
 }
 
 .profieldropdown ul li:nth-of-type(2) i {
@@ -1178,12 +1176,12 @@ input[type="number"] {
 }
 
 .profieldropdown ul li:last-of-type i {
-  color: black;
+  color: var(--color-text2);
 }
 
 .profielactive {
   background: var(--color-background);
-  border: dashed 2px black;
+  border: dashed 2px var(--color-text2);
   border-bottom: none;
 }
 
@@ -1210,7 +1208,7 @@ input[type="number"] {
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  background: white;
+  background: var(--color-text);
   border-radius: 10px;
   color: black;
   text-decoration: none;
@@ -1220,7 +1218,7 @@ input[type="number"] {
 .katprofielcontainer img {
   width: 100%;
   border-radius: 5px;
-  border: black solid 1px;
+  border: var(--color-text2) solid 1px;
 }
 
 .katprofieltext {
@@ -1241,7 +1239,7 @@ input[type="number"] {
 
 .katprofieltext ul li {
   list-style: none;
-  border: solid black 1px;
+  border: solid var(--color-text2) 1px;
   padding: 0.3rem;
   border-radius: 10px;
 }
@@ -1252,14 +1250,14 @@ input[type="number"] {
   font-size: 2rem;
   justify-content: center;
   align-items: center;
-  color: red;
+  color: var(--color-red);
 }
 
 .katprofieltext div p > i i {
   position: absolute;
   font-size: 0.5rem;
   bottom: 14px;
-  color: white;
+  color: var(--color-text);
   display: flex;
   flex-direction: row;
   gap: 0.2rem;
@@ -1275,7 +1273,7 @@ input[type="number"] {
   font-size: 2rem;
   justify-content: center;
   align-items: center;
-  color: red;
+  color: var(--color-red);
 }
 
 .likecontainer{
@@ -1301,7 +1299,7 @@ input[type="number"] {
 .textvak2 ul li {
   display: flex;
   flex-direction: row;
-  background-color: white;
+  background-color: var(--color-text);
   justify-content: space-around;
   padding: 1em;
   border-radius: 10px;
@@ -1333,7 +1331,7 @@ input[type="number"] {
 }
 
 .profielaanpassen {
-  background: white;
+  background: var(--color-text);
   padding: 1rem;
   max-width: 35rem;
   border-radius: 10px;
@@ -1355,7 +1353,7 @@ input[type="number"] {
   gap: 1rem;
   padding: 2rem 10%;
   margin-bottom: 1rem;
-  color: white;
+  color: var(--color-text);
 }
 
 .toevoegentext h1 {
@@ -1430,7 +1428,7 @@ textarea {
   justify-content: space-around;
 }
 
-#detail-dier .infosec .container button {
+#detail-dier .infosec .container #open-popup {
   background-color: var(--color-oranje);
   border-radius: 25px;
   align-self: center;
@@ -1473,7 +1471,7 @@ textarea {
   transform: translate(-50%, -50%) scale(1.15);
   width: 95%;
   max-width: 350px;
-  background: #fff;
+  background: var(--color-text);
   padding: 25px;
   border-radius: 20px;
   opacity: 0;
@@ -1484,14 +1482,14 @@ textarea {
 .popup .popup-content h2 {
   margin: 10px 0px;
   font-size: 25px;
-  columns: #222;
+  columns:var(--color-background);
   text-align: center;
 }
 
 .popup .popup-content p {
   margin: 15px 0px;
   font-size: 16px;
-  columns: #222;
+  columns: var(--color-text2);
   text-align: center;
 }
 
@@ -1512,12 +1510,12 @@ textarea {
 
 .popup .popup-content .controls .close-btn {
   background: transparent;
-  color: #3284ed;
+  color: var(--color-background);
 }
 
 .popup .popup-content .controls form button {
-  background: #3284ed;
-  color: #fff;
+  background: var(--color-oranje);
+  color: var(--color-text);
 }
 
 .popup.active {
