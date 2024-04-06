@@ -400,32 +400,27 @@ app.get("/", async (req, res) => {
     likedIds: likedIds,
   });
 });
-
-// Route for the adoption page// Route for the adoption page
-app.get("/adoptie", async (req, res) => {
-  let likedIds;
-  let dieren;
+// fetching the animals
+async function fetchingAnimals(
+  user,
+  selectedSortingMethod,
+  selectedSpecies = [],
+  selectedGenders = []
+) {
+  let likedIds = [];
+  let dieren = [];
   let userFromDb;
-  let selectedSortingMethod = "";
-  let selectedSpecies = [];
-  let selectedGenders = [];
-
-  // Check if there's a selected sorting method in session
-  if (req.session.selectedSortingMethod) {
-    selectedSortingMethod = req.session.selectedSortingMethod;
-  }
-
-  // Check if there are selected species and genders from previous filtering
-  if (req.session.selectedSpecies) {
-    selectedSpecies = req.session.selectedSpecies;
-  }
-  if (req.session.selectedGenders) {
-    selectedGenders = req.session.selectedGenders;
-  }
 
   try {
     // Getting the animals
     dieren = await db.collection("dieren").find().toArray();
+
+    // Getting the user, for the liked animals
+    if (user) {
+      const userId = { _id: new ObjectId(user.id) };
+      userFromDb = await db.collection("users").findOne(userId);
+      likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
+    }
 
     // Filtering based on selected species
     if (selectedSpecies.length > 0) {
@@ -442,11 +437,11 @@ app.get("/adoptie", async (req, res) => {
     }
 
     // Sorting based on selected method
-    if (req.session.user && selectedSortingMethod === "relevant") {
+    if (user && selectedSortingMethod === "relevant") {
       // Ophalen antwoorden matching voor soorteren
-      const userId = { _id: new ObjectId(req.session.user.id) };
+      const userId = { _id: new ObjectId(user.id) };
       userFromDb = await db.collection("users").findOne(userId);
-      // If the user, for whatever reaseon, does not have the answered question in it's profile, just load all the animals in default sorting
+      // If the user, for whatever reaseon, does not have the answered question in its profile, just load all the animals in default sorting
       const doesAnswersExist = userFromDb?.antwoorden ? true : false;
       if (doesAnswersExist) {
         let matchedDier = await match(userFromDb.antwoorden);
@@ -464,32 +459,105 @@ app.get("/adoptie", async (req, res) => {
       dieren.sort((a, b) => b.gewicht - a.gewicht);
     }
 
-    // Getting the user, for the liked animals
-    if (req.session.user) {
-      const userId = { _id: new ObjectId(req.session.user.id) };
-      userFromDb = await db.collection("users").findOne(userId);
-      likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
-    }
-
-    res.render("pages/adoptie", {
-      dieren: dieren,
-      user: req.session.user,
-      likedIds: likedIds,
-      account: req?.session?.user,
-      selectedSortingMethod: selectedSortingMethod,
-      selectedSpecies: selectedSpecies,
-      selectedGenders: selectedGenders,
-    });
+    return { dieren, userFromDb, likedIds };
   } catch (error) {
     console.error("Error fetching, sorting, and filtering animals:", error);
+    return { dieren: [], userFromDb: null, likedIds: [] };
+  }
+}
+
+// adoption page rout
+app.get("/adoptie", async (req, res) => {
+  const { user, selectedSortingMethod, selectedSpecies, selectedGenders } =
+    req.session;
+
+  const { dieren, userFromDb, likedIds } = await fetchingAnimals(
+    user,
+    selectedSortingMethod,
+    selectedSpecies,
+    selectedGenders
+  );
+
+  res.render("pages/adoptie", {
+    dieren: dieren,
+    user: user,
+    likedIds: likedIds,
+    account: user,
+    selectedSortingMethod: selectedSortingMethod || "",
+    selectedSpecies: selectedSpecies || [],
+    selectedGenders: selectedGenders || [],
+  });
+});
+
+// liking route
+app.post("/like", async (req, res) => {
+  const { user } = req.session;
+  const id = { _id: new ObjectId(req.body.dier) };
+  const userId = { _id: new ObjectId(user.id) };
+
+  let likeCount; // Keep count of the likes
+  let dier;
+  let dieren;
+  let likedIds;
+
+  try {
+    // Find the animal
+    dier = await db.collection("dieren").findOne(id);
+    // Find the user
+    let userFromDb = await db.collection("users").findOne(userId);
+
+    // Updating the likes on the dier, after checking if the user already liked it
+    likedIds = userFromDb.liked
+      ? userFromDb.liked.map((item) => item.id._id.toString())
+      : [];
+    if (!likedIds.includes(req.body.dier.toString())) {
+      // If there is no likes, make it 1.
+      if (dier) {
+        likeCount = dier.likes ? (dier.likes += 1) : 1;
+      }
+      await db
+        .collection("dieren")
+        .updateOne(id, { $set: { likes: likeCount } });
+      await db
+        .collection("users")
+        .updateOne(userId, { $push: { liked: { id } } });
+    } else {
+      likeCount = dier.likes ? (dier.likes -= 1) : 1;
+      await db
+        .collection("dieren")
+        .updateOne(id, { $set: { likes: likeCount } });
+      await db
+        .collection("users")
+        .updateOne(userId, { $pull: { liked: { id } } });
+    }
+
+    // Getting the updated dieren array
+    dieren = await db.collection("dieren").find().toArray();
+    userFromDb = await db.collection("users").findOne(userId);
+    likedIds = userFromDb.liked
+      ? userFromDb.liked.map((item) => item.id._id.toString())
+      : [];
+
+    // Re-rendering the page with the new dieren
+    res.render("pages/adoptie", {
+      dieren: dieren,
+      user: user,
+      likedIds: likedIds,
+      account: user,
+      selectedSortingMethod: "",
+      selectedSpecies: "",
+      selectedGenders: "",
+    });
+  } catch (error) {
+    console.error("Error liking a pet:", error);
     res.render("pages/adoptie", {
       dieren: [],
       user: null,
-      likedIds: null,
-      account: req?.session?.user,
-      selectedSortingMethod: selectedSortingMethod,
-      selectedSpecies: selectedSpecies,
-      selectedGenders: selectedGenders,
+      likedIds: [],
+      account: user,
+      selectedSortingMethod: "",
+      selectedSpecies: "",
+      selectedGenders: "",
     });
   }
 });
@@ -653,76 +721,6 @@ app.post("/contactformulier", async (req, res) => {
       "We hebben je bericht ontvangen. We zullen je e-mail zo snel mogelijk proberen te beantwoorden.",
   });
   res.redirect("/");
-});
-// Liken van een dier
-app.post("/like", async (req, res) => {
-  const id = { _id: new ObjectId(req.body.dier) };
-  const user = { _id: new ObjectId(req.body.user) };
-  console.log(req.body.user);
-  let userFromDb;
-  let likeCount; // Keep count of the likes
-  let dier;
-  let likedIds;
-  let dieren;
-  try {
-    // Find the animal
-    dier = await db.collection("dieren").findOne(id);
-    // Find the user
-    userFromDb = await db.collection("users").findOne(user);
-  } finally {
-    // Updating the likes on the dier, after checking if the user already liked it
-    likedIds = userFromDb.liked
-      ? userFromDb.liked.map((item) => item.id._id.toString())
-      : [];
-    if (!likedIds.includes(req.body.dier.toString())) {
-      // If there is no likes, make it 1.
-      if (dier) {
-        likeCount = dier.likes ? (dier.likes += 1) : 1;
-      }
-      await db
-        .collection("dieren")
-        .updateOne(id, { $set: { likes: likeCount } });
-      await db
-        .collection("users")
-        .updateOne(user, { $push: { liked: { id } } });
-    } else {
-      likeCount = dier.likes ? (dier.likes -= 1) : 1;
-      await db
-        .collection("dieren")
-        .updateOne(id, { $set: { likes: likeCount } });
-      await db
-        .collection("users")
-        .updateOne(user, { $pull: { liked: { id } } });
-    }
-    // Getting the updated dieren array
-    dieren = await db.collection("dieren").find().toArray();
-    userFromDb = await db.collection("users").findOne(user);
-    likedIds = userFromDb.liked
-      ? userFromDb.liked.map((item) => item.id._id.toString())
-      : [];
-    // Re-rendering the page with the new dieren
-    if (req.session.user) {
-      res.render("pages/adoptie", {
-        dieren: dieren,
-        user: req.session.user,
-        likedIds: likedIds,
-        account: req?.session?.user,
-        selectedSortingMethod: "",
-        selectedSpecies: "",
-        selectedGenders: "",
-      });
-    } else {
-      res.render("pages/adoptie", {
-        dieren: dieren,
-        user: null,
-        likedIds: [],
-        account: req?.session?.user,
-        selectedSortingMethod: "",
-        selectedSpecies: "",
-        selectedGenders: "",
-      });
-    }
-  }
 });
 app.listen(port, () => {
   console.log(`Ik luister naar poort: ${port}`);
