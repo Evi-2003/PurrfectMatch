@@ -6,8 +6,6 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const session = require("express-session");
 const nodemailer = require("nodemailer");
-const minify = require("@node-minify/core");
-const uglifyES = require("@node-minify/uglify-es");
 const { Promise } = require("es6-promise");
 const compression = require("compression");
 
