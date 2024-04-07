@@ -15,7 +15,7 @@
 
   <div class="profielheadbg">
     <div class="profielheadcontainer">
-      <img src="/uploads/<%= account.profielfoto %>" alt="Profielfoto van <%= account.voornaam %>" id="profilePhoto">
+      <img src="/uploads/<%= account.profielfoto %>" loading="lazy" alt="Profielfoto van <%= account.voornaam %>" id="profilePhoto">
       <div class="profielheadtxt">
         <p>Mijn account</p>
         <h1>Welkom <%= account.voornaam %></h1>
@@ -47,7 +47,7 @@
       <li>
         <div class="katprofielbg">
           <a aria-label="ga naar dier" href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" class="katprofielcontainer">
-            <img src="/uploads/<%= dier.foto[0] %>" alt="profiel foto" />
+            <img src="/uploads/<%= dier.foto[0] %>" loading="lazy" alt="profiel foto" />
 
             <div class="katprofieltext">
               <div>
