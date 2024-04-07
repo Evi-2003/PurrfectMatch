@@ -22,7 +22,7 @@
       <div class="swiper-wrapper">
         <!-- Slides -->
         <% dier.foto.forEach(function(dier) { %>
-        <div class="swiper-slide"><img src="/uploads/<%= dier %>" alt="Foto van <%= dier.naam %>"></div>
+        <div class="swiper-slide"><img loading="lazy" src="/uploads/<%= dier %>" alt="Foto van <%= dier.naam %>"></div>
         <% }); %>
         ...
       </div>
