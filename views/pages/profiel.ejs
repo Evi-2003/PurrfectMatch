@@ -37,7 +37,12 @@
 
 
     <div class="textvak1">
-      <% if(dieren.length === 0) { %> <h3>Geen dieren geliked</h3><% } %>
+      <% if(dieren.length === 0) { %> 
+        <div class="geendieren">
+          <h3>Geen dieren geliked?</h3>
+        <a aria-label="ga naar dier" href="dier"> Like nu gelijk een dier! ></a>
+        </div>
+        <% } %>
       <% dieren.forEach(function(dier) { %>
       <li>
         <div class="katprofielbg">
@@ -51,18 +56,11 @@
                 <form action="like" method="post" id="likeForm">
                   <input type="hidden" name="dier" value="<%= dier._id %>" />
                   <input type="hidden" name="user" value="<%= account._id %>" />
-
-                  <i class="fa-solid fa-message">
-                    <button id="likeButton" class="pflikebutton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                    <button id="likeButton" class="liked" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
                       <i class="fa-solid fa-heart"></i><%= dier.likes %>
-
-                      <button aria-label="like button" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
-                        <%= dier.likes %> ❤️
-
-                      </button>
                 </form>
+                
                 <% } %>
-                </i>
               </div>
               <ul>
                 <li>
