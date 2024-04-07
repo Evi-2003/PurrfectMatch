@@ -149,7 +149,7 @@ app.post("/inloggen", async (req, res) => {
     });
   } else if (logginResultaat && logginResultaat.geenAccount) {
     res.render("pages/inloggen", {
-      error: "Nog geen account",
+      error: "Email onbekend, nog geen account",
     });
   }
 });
@@ -172,43 +172,52 @@ app.get("/uitloggen", function (req, res) {
 
 /* registratie van gebruiker */
 app.post("/", upload.single("profielfoto"), async (req, res) => {
-  const filename = req.file.filename;
+  const user = await db.collection("users").findOne({ email: req.body.email });
+  if (user) {
+    req.session.failedEmail = req.body.email;
+    res.render("pages/inloggen", {
+      error: "Email heeft al een account, log hier in",
+      failedEmail: req.session.failedEmail,
+    })
+  } else {
+    const filename = req.file.filename;
 
-  bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
-    if (err) {
-      console.log(err);
-    }
-    const userData = {
-      profielfoto: filename,
-      voornaam: req.body.voornaam,
-      tussenvoegsel: req.body.tussenvoegsel,
-      achternaam: req.body.achternaam,
-      geslacht: req.body.geslacht,
-      postcode: req.body.postcode,
-      straatnaam: req.body.straatnaam,
-      huisnummer: parseInt(req.body.huisnummer),
-      toevoeging: req.body.toevoeging,
-      woonplaats: req.body.woonplaats,
-      geboortedatum: req.body.geboortedatum,
-      telefoonnummer: req.body.telefoonnummer,
-      email: req.body.email,
-      wachtwoord: hashedWachtwoord,
-      liked: [],
-    };
-
-    await db.collection("users").insertOne(userData);
-    sendEmail({
-      toEmail: userData.email,
-      subject: "Welkom bij PurrfectMatch " + userData.voornaam + "!",
-      content:
-        "Welkom bij PurrfectMatch! We hopen dat je een geweldige ervaring gaat hebben op ons platform. Heb je vragen? Neem contact met ons op!",
+    bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
+      if (err) {
+        console.log(err);
+      }
+      const userData = {
+        profielfoto: filename,
+        voornaam: req.body.voornaam,
+        tussenvoegsel: req.body.tussenvoegsel,
+        achternaam: req.body.achternaam,
+        geslacht: req.body.geslacht,
+        postcode: req.body.postcode,
+        straatnaam: req.body.straatnaam,
+        huisnummer: parseInt(req.body.huisnummer),
+        toevoeging: req.body.toevoeging,
+        woonplaats: req.body.woonplaats,
+        geboortedatum: req.body.geboortedatum,
+        telefoonnummer: req.body.telefoonnummer,
+        email: req.body.email,
+        wachtwoord: hashedWachtwoord,
+        liked: [],
+      };
+      
+      await db.collection("users").insertOne(userData);
+      sendEmail({
+        toEmail: userData.email,
+        subject: "Welkom bij PurrfectMatch " + userData.voornaam + "!",
+        content:
+          "Welkom bij PurrfectMatch! We hopen dat je een geweldige ervaring gaat hebben op ons platform. Heb je vragen? Neem contact met ons op!",
+      });
+      req.session.user = {
+        email: userData.email,
+        wachtwoord: req.body.repassword,
+      };
+      res.redirect("/vragenlijst");
     });
-    req.session.user = {
-      email: userData.email,
-      wachtwoord: req.body.repassword,
-    };
-    res.redirect("/vragenlijst");
-  });
+  }
 });
 
 /* Profiel aanpassen */
