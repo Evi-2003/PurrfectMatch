@@ -37,16 +37,16 @@
 
 
     <div class="textvak1">
-      <% if(dieren.length === 0) { %> 
-        <div class="geendieren">
-          <h3>Geen dieren geliked?</h3>
-        <a aria-label="ga naar dier" href="dier"> Like nu gelijk een dier! ></a>
-        </div>
-        <% } %>
+      <% if(dieren.length === 0) { %>
+      <div class="geendieren">
+        <h3>Geen dieren geliked?</h3>
+        <a aria-label="ga naar dier" href="/adoptie"> Like nu gelijk een dier! ></a>
+      </div>
+      <% } %>
       <% dieren.forEach(function(dier) { %>
       <li>
         <div class="katprofielbg">
-          <a aria-label="ga naar dier" href="dier" class="katprofielcontainer">
+          <a aria-label="ga naar dier" href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" class="katprofielcontainer">
             <img src="/uploads/<%= dier.foto[0] %>" alt="profiel foto" />
 
             <div class="katprofieltext">
@@ -56,10 +56,10 @@
                 <form action="like" method="post" id="likeForm">
                   <input type="hidden" name="dier" value="<%= dier._id %>" />
                   <input type="hidden" name="user" value="<%= account._id %>" />
-                    <button id="likeButton" class="liked" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
-                      <i class="fa-solid fa-heart"></i><%= dier.likes %>
+                  <button id="likeButton" class="liked" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                    <i class="fa-solid fa-heart"></i><%= dier.likes %>
                 </form>
-                
+
                 <% } %>
               </div>
               <ul>
