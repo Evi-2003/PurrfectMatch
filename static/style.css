@@ -1285,12 +1285,22 @@ input[type="number"] {
   position: relative;
   background-color: transparent;
   margin: 2rem;
+  width: auto;
+  max-width: none;
+  display: block;
+  padding: 0;
+}
+
+.textvak2 .katprofielcontainer img {
+  max-width: 8rem;
+  height: auto;
+  object-fit: cover;
 }
 
 .textvak2 ul {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  position: relative;
   width: 100%;
   top: 0;
   gap: 1rem;
@@ -1303,6 +1313,8 @@ input[type="number"] {
   justify-content: space-around;
   padding: 1em;
   border-radius: 10px;
+  width: 100%;
+  gap: 1rem;
 }
 
 .textvak2 ul li div {
@@ -1312,6 +1324,23 @@ input[type="number"] {
 
 .textvak2 ul li form {
   width: 2em;
+}
+
+.textvak2  button {
+  height: 2rem;
+  width: 2rem;
+  border: none;
+  border-radius: 0.5em;
+  color: var(--color-text);
+  margin-bottom: 0.5em;
+}
+
+.textvak2  button:first-of-type {
+  background-color: var(--color-oranje);
+}
+
+.textvak2  button:last-of-type {
+  background-color: var(--color-red);
 }
 
 /* ----------------PROFIEL-TEXTVAK3---------------- */

@@ -297,7 +297,8 @@ app.post("/verzoek", checkSession, async (req, res) => {
   const verzoekData = {
     zoekerId: req.session.user.id,
     dierId: req.body.dierId,
-    aanbiederId: dierCollection.aanbieder,
+    // aanbiederId: dierCollection.aanbieder,
+    aanbiederId: req.session.user.id,
     status: "Nog niet beoordeeld",
   };
 
@@ -672,15 +673,16 @@ app.get("/profiel", checkSession, async (req, res) => {
 
     const verzoeken = await db
       .collection("verzoeken")
-      .find({ aanbiederId: req.session.user.id })
+      .find({ aanbiederId: req.session.user.id, status: "Nog niet beoordeeld" })
       .toArray();
     for (let i = 0; i < verzoeken.length; i++) {
-      // Ophalen dier naam
+      // Ophalen dier naam en img
       const dier = await db
         .collection("dieren")
         .findOne({ _id: new ObjectId(verzoeken[i].dierId) });
       if (dier) {
         verzoeken[i].dierNaam = dier.naam;
+        verzoeken[i].dierFoto = dier.foto[0];
       }
       // Ophalen zoeker naam
       const zoeker = await db
@@ -696,7 +698,7 @@ app.get("/profiel", checkSession, async (req, res) => {
       dieren: likedAnimals,
       data: req.session.user,
       selectedSortingMethod: "",
-      verzoeken,
+      verzoeken: verzoeken,
       likedIds: likedAnimalsId,
     });
   } catch (error) {
