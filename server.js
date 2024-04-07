@@ -283,35 +283,52 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
 
 // Verzoeken sturen
 app.post("/verzoek", checkSession, async (req, res) => {
-  //Ophalen aanbiederId via de dierId
-  let dierId = { _id: new ObjectId(req.body.dierId) };
-  let dierCollection = await db.collection("dieren").findOne(dierId);
-
-  let verzoekData = {
+  // Ophalen aanbiederId via de dierId
+  const dierId = { _id: new ObjectId(req.body.dierId) };
+  const dierCollection = await db.collection("dieren").findOne(dierId);
+  const verzoekData = {
     zoekerId: req.session.user.id,
     dierId: req.body.dierId,
     aanbiederId: dierCollection.aanbieder,
     status: "Nog niet beoordeeld",
   };
 
-  await db.collection("verzoeken").insertOne(verzoekData);
-  res.redirect("/profiel");
-});
+  const data = await db.collection("verzoeken").insertOne(verzoekData);
 
-// Accepteren of Weigeren
-app.post("/accepteren", async (req, res) => {
-  let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
+  // Koppel het verzoek dat je stuurt aan de gebruiker die het stuurt
+  const idNieuwVerzoek = data.insertedId;
+  const profielId = { _id: new ObjectId(req.session.user.id) };
 
-  if (req.body.accepteren === "accepteren") {
-    await db
-      .collection("verzoeken")
-      .updateOne(verzoekId, { $set: { status: "Geaccepteerd" } });
-  } else if (req.body.accepteren === "weigeren") {
-    await db
-      .collection("verzoeken")
-      .updateOne(verzoekId, { $set: { status: "Geweigerd" } });
+  try {
+    await db.collection("users").updateOne(profielId, {
+      $push: {
+        verstuurdeVerzoeken: {
+          verzoekId: idNieuwVerzoek,
+          animalId: req.body.dierId,
+        },
+      },
+    });
+    sendEmail({
+      toEmail: req.session.user.email,
+      subject: "Je adoptie verzoek is verstuurd!",
+      content:
+        "Je adoptie verzoek is verstuurd naar het baasje van " +
+        dierCollection.naam,
+    });
+  } catch (error) {
+    console.log(error);
+  } finally {
+    // Fetch the user again after modifying it. So the session doesnt have old data of the user
+    let userRefetched;
+    try {
+      userRefetched = await db.collection("users").findOne(profielId);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      req.session.user = userRefetched;
+      res.redirect("/adoptie");
+    }
   }
-  res.redirect("/profiel");
 });
 
 // Accepteren of Weigeren
@@ -485,24 +502,23 @@ app.get("/adoptie", async (req, res) => {
   });
 });
 
-// Liken van een dier
+// liking route
 app.post("/like", async (req, res) => {
-  console.log("a");
-  console.log(req.body);
+  const { user } = req.session;
   const id = { _id: new ObjectId(req.body.dier) };
-  const user = { _id: new ObjectId(req.body.user) };
-  console.log("b");
-  let userFromDb;
-  let likeCount; // Voor het bijhouden van de likes
+  const userId = { _id: new ObjectId(user.id) };
+
+  let likeCount; // Keep count of the likes
   let dier;
-  let likedIds;
   let dieren;
+  let likedIds;
+
   try {
-    // Zoek de bijhorende dier erbij
+    // Find the animal
     dier = await db.collection("dieren").findOne(id);
-    // Zoek user erbij
-    userFromDb = await db.collection("users").findOne(user);
-  } finally {
+    // Find the user
+    let userFromDb = await db.collection("users").findOne(userId);
+
     // Updating the likes on the dier, after checking if the user already liked it
     likedIds = userFromDb.liked
       ? userFromDb.liked.map((item) => item.id._id.toString())
@@ -517,7 +533,7 @@ app.post("/like", async (req, res) => {
         .updateOne(id, { $set: { likes: likeCount } });
       await db
         .collection("users")
-        .updateOne(user, { $push: { liked: { id } } });
+        .updateOne(userId, { $push: { liked: { id } } });
     } else {
       likeCount = dier.likes ? (dier.likes -= 1) : 1;
       await db
@@ -525,36 +541,37 @@ app.post("/like", async (req, res) => {
         .updateOne(id, { $set: { likes: likeCount } });
       await db
         .collection("users")
-        .updateOne(user, { $pull: { liked: { id } } });
+        .updateOne(userId, { $pull: { liked: { id } } });
     }
+
     // Getting the updated dieren array
     dieren = await db.collection("dieren").find().toArray();
-    userFromDb = await db.collection("users").findOne(user);
+    userFromDb = await db.collection("users").findOne(userId);
     likedIds = userFromDb.liked
       ? userFromDb.liked.map((item) => item.id._id.toString())
       : [];
+
     // Re-rendering the page with the new dieren
-    if (req.session.user) {
-      res.render("pages/adoptie", {
-        dieren: dieren,
-        user: req.session.user,
-        likedIds: likedIds,
-        account: req?.session?.user,
-        selectedSortingMethod: "",
-        selectedSpecies: "",
-        selectedGenders: "",
-      });
-    } else {
-      res.render("pages/adoptie", {
-        dieren: dieren,
-        user: null,
-        likedIds: [],
-        account: req?.session?.user,
-        selectedSortingMethod: "",
-        selectedSpecies: "",
-        selectedGenders: "",
-      });
-    }
+    res.render("pages/adoptie", {
+      dieren,
+      user,
+      likedIds,
+      account: user,
+      selectedSortingMethod: "",
+      selectedSpecies: "",
+      selectedGenders: "",
+    });
+  } catch (error) {
+    console.error("Error liking a pet:", error);
+    res.render("pages/adoptie", {
+      dieren: [],
+      user: null,
+      likedIds: [],
+      account: user,
+      selectedSortingMethod: "",
+      selectedSpecies: "",
+      selectedGenders: "",
+    });
   }
 });
 
@@ -635,43 +652,45 @@ app.get("/adoptie/:name", async function (req, res) {
 app.get("/profiel", checkSession, async (req, res) => {
   const userId = { _id: new ObjectId(req.session.user.id) };
   const userFromDb = await db.collection("users").findOne(userId);
-  let likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id);
-
+  const likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id);
+  let likedAnimals;
   try {
-    const likedAnimals = await Promise.all(
-      likedAnimalsId?.map(async (element) => {
-        const dier = await getAnimal(element);
-        return dier;
-      })
-    );
-
-    let verzoeken = await db
+    if (Array.isArray(likedAnimalsId)) {
+      likedAnimals = await Promise.all(
+        likedAnimalsId.map(async (element) => {
+          const dier = await getAnimal(element);
+          return dier;
+        })
+      );
+      // Use likedAnimals as needed
+    }
+    const verzoeken = await db
       .collection("verzoeken")
       .find({ aanbiederId: req.session.user.id })
       .toArray();
     for (let i = 0; i < verzoeken.length; i++) {
       // Ophalen dier naam
-      let dier = await db
+      const dier = await db
         .collection("dieren")
         .findOne({ _id: new ObjectId(verzoeken[i].dierId) });
       if (dier) {
         verzoeken[i].dierNaam = dier.naam;
       }
       // Ophalen zoeker naam
-      let zoeker = await db
+      const zoeker = await db
         .collection("users")
         .findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
       if (zoeker) {
         verzoeken[i].zoekerNaam = zoeker.voornaam;
       }
     }
-    console.log(userFromDb);
+
     res.render("pages/profiel", {
       account: userFromDb,
       dieren: likedAnimals,
       data: req.session.user,
       selectedSortingMethod: "",
-      verzoeken: verzoeken,
+      verzoeken,
       likedIds: likedAnimalsId,
     });
   } catch (error) {
