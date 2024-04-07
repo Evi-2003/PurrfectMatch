@@ -1,5 +1,5 @@
 # Blok Tech 2324
-
+## De website live: https://purrfectmatch-scmn.onrender.com/
 #### Welkom bij de ReadMe van team4 (Evi, Senna, Elton en Joni)
 
 ## Ons Idee
@@ -47,7 +47,6 @@ laptop bekijken door met de rechtermuisknop te klikken en vervolgens
 - Uglify JS
 - Eslint
 - Dotenv
-- Helmet
 - Compression
 - Smtp service MailSend
 - Hosting Render.com

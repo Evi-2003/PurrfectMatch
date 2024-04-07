@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Home - PurrfectMatch</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
 </head>
@@ -19,14 +19,14 @@
           <h2>Ik zoek een match</h2>
           <h2>Ben jij mijn PURRFECT MATCH</h2>
         </div>
-        <img src="img/homefoto.png" alt="foto van kat met gele achtergrond">
+        <img loading="lazy" src="img/homefoto.png" alt="foto van kat met gele achtergrond">
       </div>
     </section>
     <section class="kiessection">
       <p>Neem een kijkje bij onze opvangdieren</p>
       <a aria-label="katten adopteren" href="/adoptie">
         <div>
-          <img src="img/katpoot.png" alt="klein katten poot">
+          <img loading="lazy" src="img/katpoot.png" alt="klein katten poot">
           <div class="kiessectiontext">
             <h3>Katten</h3>
             <p><%= dieren.length %></p>
@@ -45,7 +45,7 @@
           <!-- Slides -->
           <% dieren.forEach(function(dier) { %>
           <div class="swiper-slide">
-            <img src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>">
+            <img loading="lazy" src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>">
             <div class="swipercontainertext">
               <div>
                 <h4><%= dier.naam %> (<%= dier.leeftijd %>)</h4>
@@ -77,7 +77,7 @@
             <!-- If we need navigation buttons -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
-      
+
             <!-- If we need scrollbar -->
             <div class="swiper-scrollbar"></div>
           </div>
@@ -128,7 +128,7 @@
   <%- include('../partials/footer') %>
 
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-  <script src="script/script.js"></script>
+  <script src="/script/output.min.js"></script>
 
 </body>
 

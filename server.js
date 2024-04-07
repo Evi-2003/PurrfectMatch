@@ -6,8 +6,7 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const session = require("express-session");
 const nodemailer = require("nodemailer");
-const minify = require("@node-minify/core");
-const uglifyES = require("@node-minify/uglify-es");
+const { Promise } = require("es6-promise");
 const compression = require("compression");
 
 const RateLimit = require("express-rate-limit");
@@ -662,15 +661,17 @@ app.get("/profiel", checkSession, async (req, res) => {
   const userId = { _id: new ObjectId(req.session.user.id) };
   const userFromDb = await db.collection("users").findOne(userId);
   const likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id);
-
+  let likedAnimals;
   try {
-    const likedAnimals = await Promise.all(
-      likedAnimalsId?.map(async (element) => {
-        const dier = await getAnimal(element);
-        return dier;
-      })
-    );
-
+    if (Array.isArray(likedAnimalsId)) {
+      likedAnimals = await Promise.all(
+        likedAnimalsId.map(async (element) => {
+          const dier = await getAnimal(element);
+          return dier;
+        })
+      );
+      // Use likedAnimals as needed
+    }
     const verzoeken = await db
       .collection("verzoeken")
       .find({ aanbiederId: req.session.user.id, status: "Nog niet beoordeeld" })

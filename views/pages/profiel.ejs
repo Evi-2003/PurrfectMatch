@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Profiel - PurrfectMatch</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.min.css" />
   <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
 </head>
 
@@ -15,7 +15,7 @@
 
   <div class="profielheadbg">
     <div class="profielheadcontainer">
-      <img src="/uploads/<%= account.profielfoto %>" alt="Profielfoto van <%= account.voornaam %>" id="profilePhoto">
+      <img src="/uploads/<%= account.profielfoto %>" loading="lazy" alt="Profielfoto van <%= account.voornaam %>" id="profilePhoto">
       <div class="profielheadtxt">
         <p>Mijn account</p>
         <h1>Welkom <%= account.voornaam %></h1>
@@ -37,17 +37,17 @@
 
 
     <div class="textvak1">
-      <% if(dieren.length === 0) { %> 
-        <div class="geendieren">
-          <h3>Geen dieren geliked?</h3>
-        <a aria-label="ga naar dier" href="dier"> Like nu gelijk een dier! ></a>
-        </div>
-        <% } %>
+      <% if(dieren.length === 0) { %>
+      <div class="geendieren">
+        <h3>Geen dieren geliked?</h3>
+        <a aria-label="ga naar dier" href="/adoptie"> Like nu gelijk een dier! ></a>
+      </div>
+      <% } %>
       <% dieren.forEach(function(dier) { %>
       <li>
         <div class="katprofielbg">
-          <a aria-label="ga naar dier" href="dier" class="katprofielcontainer">
-            <img src="/uploads/<%= dier.foto[0] %>" alt="profiel foto" />
+          <a aria-label="ga naar dier" href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" class="katprofielcontainer">
+            <img src="/uploads/<%= dier.foto[0] %>" loading="lazy" alt="profiel foto" />
 
             <div class="katprofieltext">
               <div>
@@ -56,10 +56,10 @@
                 <form action="like" method="post" id="likeForm">
                   <input type="hidden" name="dier" value="<%= dier._id %>" />
                   <input type="hidden" name="user" value="<%= account._id %>" />
-                    <button id="likeButton" class="liked" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
-                      <i class="fa-solid fa-heart"></i><%= dier.likes %>
+                  <button id="likeButton" class="liked" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                    <i class="fa-solid fa-heart"></i><%= dier.likes %>
                 </form>
-                
+
                 <% } %>
               </div>
               <ul>
