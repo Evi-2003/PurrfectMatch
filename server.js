@@ -9,14 +9,14 @@ const nodemailer = require("nodemailer");
 const minify = require("@node-minify/core");
 const uglifyES = require("@node-minify/uglify-es");
 const compression = require("compression");
-const helmet = require("helmet");
+
 const RateLimit = require("express-rate-limit");
 
 require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(compression());
-app.use(helmet());
+
 app.use(express.urlencoded({ extended: true }));
 
 // Limit api requests, (preventing DDOS)
