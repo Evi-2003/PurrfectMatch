@@ -177,7 +177,7 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
     res.render("pages/inloggen", {
       error: "Email heeft al een account, log hier in",
       failedEmail: req.session.failedEmail,
-    })
+    });
   } else {
     const filename = req.file.filename;
 
@@ -202,7 +202,7 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
         wachtwoord: hashedWachtwoord,
         liked: [],
       };
-      
+
       await db.collection("users").insertOne(userData);
       sendEmail({
         toEmail: userData.email,
@@ -332,7 +332,14 @@ app.post("/verzoek", checkSession, async (req, res) => {
     } catch (error) {
       console.log(error);
     } finally {
-      req.session.user = userRefetched;
+      const user = {
+        id: userRefetched._id,
+        voornaam: userRefetched.voornaam,
+        profielfoto: userRefetched.profielfoto,
+        verstuurdeVerzoeken: userRefetched.verstuurdeVerzoeken,
+        email: userRefetched.email,
+      };
+      req.session.user = user;
       res.redirect("/adoptie");
     }
   }
