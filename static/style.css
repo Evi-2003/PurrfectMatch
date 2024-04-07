@@ -741,6 +741,10 @@ form div > i {
   margin-top: 0.45rem;
 }
 
+.error-message p {
+  color: var(--color-red);
+}
+
 /* ---------REGISTREER---------- */
 
 .registreerp {
