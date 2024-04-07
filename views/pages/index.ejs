@@ -50,7 +50,7 @@
               <div>
                 <h4><%= dier.naam %> (<%= dier.leeftijd %>)</h4>
                 <% if (account) { %>
-                <form action="like" method="post" id="likeForm">
+                <form action="/like" method="post" id="likeForm">
                   <input type="hidden" name="dier" value="<%= dier._id %>" />
                   <input type="hidden" name="user" value="<%= account.id %>" />
                   <button aria-label="like dier" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
