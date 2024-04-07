@@ -48,7 +48,7 @@
             <img src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>">
             <div class="swipercontainertext">
               <div>
-                <h4><%= dier.naam %></h4>
+                <h4><%= dier.naam %> (<%= dier.leeftijd %>)</h4>
                 <% if (account) { %>
                 <form action="like" method="post" id="likeForm">
                   <input type="hidden" name="dier" value="<%= dier._id %>" />
@@ -72,34 +72,19 @@
               </ul>
               <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Bekijk het profiel van <%= dier.naam %>">Bekijk het profiel-></a>
             </div>
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+      
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
           </div>
           <% }); %>
+          
 
-
-
-          <div class="swiper-slide">Slide 2</div>
-          <div class="swiper-slide">Slide 3</div>
-
-          <hr>
-          <h4>Danny</h4>
-          <p>Hallo! ik ben Danny de krachtige katachtige. Rawrr</p>
-          <a aria-label="bekijk profiel" href="#">bekijk het profiel-></a>
-        </div>
-        <% dieren.forEach(function(dier) { %>
-        <div class="swiper-slide">
-          <img src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>">
-          <div>
-            <p><%= dier.geslacht %></p>
-            <p><%= dier.leeftijd %></p>
-          </div>
-          <hr>
-          <h4><%= dier.naam %></h4>
-          <p>Hallo! ik ben Danny de krachtige katachtige. Rawrr</p>
-          <a aria-label="bekijk dier" href="#">Bekijk het profiel-></a>
-        </div>
-        <% }); %>
-
-      </div></a>
+     
     </section>
     <section class="doneren">
       <h4>STEUN ONS EN DE DIEREN MET EEN GIFT</h4>

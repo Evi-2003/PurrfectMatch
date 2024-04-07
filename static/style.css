@@ -616,13 +616,16 @@ nav > a {
 .form {
   color: var(--color-text2);
   background: var(--color-background);
-  /* background-image: url(img/backgroundforms.png);
-  background-size: cover;
-  background-repeat: repeat; */
   display: flex;
   flex-direction: column;
   overflow: hidden;
   align-items: center;
+}
+
+.formback {
+  background-image: url(img/backgroundforms.png);
+  background-size: cover;
+  background-repeat: repeat;
 }
 
 .formcontainer {
@@ -1109,7 +1112,6 @@ input[type="number"] {
 
 .profielheadcontainer {
   padding: 2rem;
-  background: var(--color-geel);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -1123,13 +1125,15 @@ input[type="number"] {
   padding: 0.5rem;
   text-decoration: none;
   text-transform: uppercase;
-  background: var(--color-text2);
+  background: var(--color-oranje);
+  border-radius: 25px;
 }
 
 .profielheadtxt {
   background: white;
   padding: 10px;
-  border: dashed var(--color-text2) 2px;
+  border: dashed var(--color-background) 2px;
+  border-radius: 10px;
   text-transform: capitalize;
 }
 
