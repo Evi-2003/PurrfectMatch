@@ -148,7 +148,7 @@ app.post("/inloggen", async (req, res) => {
     });
   } else if (logginResultaat && logginResultaat.geenAccount) {
     res.render("pages/inloggen", {
-      error: "Nog geen account",
+      error: "Email onbekend, nog geen account",
     });
   }
 });
@@ -171,43 +171,52 @@ app.get("/uitloggen", function (req, res) {
 
 /* registratie van gebruiker */
 app.post("/", upload.single("profielfoto"), async (req, res) => {
-  const filename = req.file.filename;
+  const user = await db.collection("users").findOne({ email: req.body.email });
+  if (user) {
+    req.session.failedEmail = req.body.email;
+    res.render("pages/inloggen", {
+      error: "Email heeft al een account, log hier in",
+      failedEmail: req.session.failedEmail,
+    })
+  } else {
+    const filename = req.file.filename;
 
-  bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
-    if (err) {
-      console.log(err);
-    }
-    const userData = {
-      profielfoto: filename,
-      voornaam: req.body.voornaam,
-      tussenvoegsel: req.body.tussenvoegsel,
-      achternaam: req.body.achternaam,
-      geslacht: req.body.geslacht,
-      postcode: req.body.postcode,
-      straatnaam: req.body.straatnaam,
-      huisnummer: parseInt(req.body.huisnummer),
-      toevoeging: req.body.toevoeging,
-      woonplaats: req.body.woonplaats,
-      geboortedatum: req.body.geboortedatum,
-      telefoonnummer: req.body.telefoonnummer,
-      email: req.body.email,
-      wachtwoord: hashedWachtwoord,
-      liked: [],
-    };
-
-    await db.collection("users").insertOne(userData);
-    sendEmail({
-      toEmail: userData.email,
-      subject: "Welkom bij PurrfectMatch " + userData.voornaam + "!",
-      content:
-        "Welkom bij PurrfectMatch! We hopen dat je een geweldige ervaring gaat hebben op ons platform. Heb je vragen? Neem contact met ons op!",
+    bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
+      if (err) {
+        console.log(err);
+      }
+      const userData = {
+        profielfoto: filename,
+        voornaam: req.body.voornaam,
+        tussenvoegsel: req.body.tussenvoegsel,
+        achternaam: req.body.achternaam,
+        geslacht: req.body.geslacht,
+        postcode: req.body.postcode,
+        straatnaam: req.body.straatnaam,
+        huisnummer: parseInt(req.body.huisnummer),
+        toevoeging: req.body.toevoeging,
+        woonplaats: req.body.woonplaats,
+        geboortedatum: req.body.geboortedatum,
+        telefoonnummer: req.body.telefoonnummer,
+        email: req.body.email,
+        wachtwoord: hashedWachtwoord,
+        liked: [],
+      };
+      
+      await db.collection("users").insertOne(userData);
+      sendEmail({
+        toEmail: userData.email,
+        subject: "Welkom bij PurrfectMatch " + userData.voornaam + "!",
+        content:
+          "Welkom bij PurrfectMatch! We hopen dat je een geweldige ervaring gaat hebben op ons platform. Heb je vragen? Neem contact met ons op!",
+      });
+      req.session.user = {
+        email: userData.email,
+        wachtwoord: req.body.repassword,
+      };
+      res.redirect("/vragenlijst");
     });
-    req.session.user = {
-      email: userData.email,
-      wachtwoord: req.body.repassword,
-    };
-    res.redirect("/vragenlijst");
-  });
+  }
 });
 
 /* Profiel aanpassen */
@@ -287,7 +296,8 @@ app.post("/verzoek", checkSession, async (req, res) => {
   const verzoekData = {
     zoekerId: req.session.user.id,
     dierId: req.body.dierId,
-    aanbiederId: dierCollection.aanbieder,
+    // aanbiederId: dierCollection.aanbieder,
+    aanbiederId: req.session.user.id,
     status: "Nog niet beoordeeld",
   };
 
@@ -664,15 +674,16 @@ app.get("/profiel", checkSession, async (req, res) => {
     }
     const verzoeken = await db
       .collection("verzoeken")
-      .find({ aanbiederId: req.session.user.id })
+      .find({ aanbiederId: req.session.user.id, status: "Nog niet beoordeeld" })
       .toArray();
     for (let i = 0; i < verzoeken.length; i++) {
-      // Ophalen dier naam
+      // Ophalen dier naam en img
       const dier = await db
         .collection("dieren")
         .findOne({ _id: new ObjectId(verzoeken[i].dierId) });
       if (dier) {
         verzoeken[i].dierNaam = dier.naam;
+        verzoeken[i].dierFoto = dier.foto[0];
       }
       // Ophalen zoeker naam
       const zoeker = await db
@@ -688,7 +699,7 @@ app.get("/profiel", checkSession, async (req, res) => {
       dieren: likedAnimals,
       data: req.session.user,
       selectedSortingMethod: "",
-      verzoeken,
+      verzoeken: verzoeken,
       likedIds: likedAnimalsId,
     });
   } catch (error) {

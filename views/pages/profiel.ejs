@@ -149,8 +149,12 @@
   </main>
   <%- include('../partials/footer') %>
 
-  <script src="/script/output.min.js">
+
+  <script>
     let verzoeken = <%- JSON.stringify(verzoeken) %>
+  </script>
+  <script src="/script/script.js"></script>
+  <script>
     laadVerzoeken(verzoeken);
   </script>
 </body>

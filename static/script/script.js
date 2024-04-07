@@ -57,7 +57,7 @@ function laadVerzoeken (verzoeken) {
   verzoeken.forEach((verzoek) => {
     const verzoekItem = document.createElement('li')
     verzoekItem.innerHTML =
-      ` <img src="img/bedreigde-sneeuwluipaard-die-in-de-aardhabitat-rust-wilde-dieren-in-gevangenschap-mooie-aziatische-katachtige-en-carnivoor-uncia-uncia kopie.jpg" alt="">
+      ` <img src="/uploads/${verzoek.dierFoto}" alt=""> 
       <div>
         <h2>${verzoek.dierNaam}</h2>
         <p>${verzoek.zoekerNaam}</p>
