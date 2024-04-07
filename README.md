@@ -35,20 +35,22 @@ laptop bekijken door met de rechtermuisknop te klikken en vervolgens
 
 ### Gebouwd met
 
--   HTML/CSS
--   Javascript
--   Ejs
--   Express
--   Express Sessions
--   Bcrypt
--   MongoDB
--   Multer
--   Node Mailer
--   Uglify JS
--   Eslint
--   Dotenv
--   Smtp service MailSend
--   Hosting Render.com
+- HTML/CSS
+- Javascript
+- Ejs
+- Express
+- Express Sessions
+- Bcrypt
+- MongoDB
+- Multer
+- Node Mailer
+- Uglify JS
+- Eslint
+- Dotenv
+- Helmet
+- Compression
+- Smtp service MailSend
+- Hosting Render.com
 
 ## Installeren
 
@@ -75,10 +77,10 @@ hebt ingevuld de website lokaal bezoeken. Op `localhost:port`.
 
 Onze database is gebouwd met MongoDB. Deze heeft 4 collecties:
 
--   Dieren
--   Users
--   Verzoeken
--   Contactformulieren
+- Dieren
+- Users
+- Verzoeken
+- Contactformulieren
 
 ## License
 
