@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl-NL">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= dier.naam %> - PurrfectMatch</title>
+  <link rel="stylesheet" href="style.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main id="detail-dier">
+    <div class="breadcrumb">
+      <i class="fa-solid fa-arrow-left-long"></i>
+      <a href="/adoptie">Terug naar adoptie</a>
+    </div>
+    <div class="swiper">
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <% dier.foto.forEach(function(dier) { %>
+        <div class="swiper-slide"><img loading="lazy" src="/uploads/<%= dier %>" alt="Foto van <%= dier.naam %>"></div>
+        <% }); %>
+        ...
+      </div>
+      <!-- If we need pagination -->
+      <div class="swiper-pagination"></div>
+
+      <!-- If we need navigation buttons -->
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+
+      <!-- If we need scrollbar -->
+      <div class="swiper-scrollbar"></div>
+    </div>
+    <!-- <section>
+        <h1><%= dier.naam %></h1>
+        <h2><%= dier.gewicht %>kg</h2>
+      </section> -->
+    <section class="infosec">
+      <div class="naam">
+        <h1><%= dier.naam %> (<%= dier.leeftijd %>)</h1>
+        <div class="likecontainer">
+
+          <% if (user) { %>
+          <form action="/like" method="post" id="likeForm">
+            <input type="hidden" name="dier" value="<%= dier._id %>" />
+            <input type="hidden" name="user" value="<%= user.id %>" />
+            <button aria-label="like dier" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+              <%= dier.likes %> ❤️
+            </button>
+          </form>
+          <% } %>
+        </div>
+      </div>
+      <p><%= dier.omschrijving %></p>
+      <h4>Kenmerken</h4>
+      <div class="kenmerken">
+        <div>
+          <p>Soort:</p>
+          <p>Geslacht:</p>
+          <p>Gewicht:</p>
+        </div>
+        <div>
+          <p><%= dier.soort %></p>
+          <p><%= dier.geslacht %></p>
+          <p><%= dier.gewicht %></p>
+        </div>
+      </div>
+
+
+      <div class="container">
+        <button id="open-popup" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
+          Verzoek gestuurd
+          <% } else { %>
+          Adopteren
+          <% } %>
+        </button>
+
+
+        <div class="popup" id="popup">
+          <div class="overlay"></div>
+          <div class="popup-content">
+            <h2>Weet je het zeker?</h2>
+            <p>We zijn super blij met het nieuws dat onze liefe <%= dier.naam %> een nieuw plekje kan vinden bij jou <%= user.voornaam %>.
+              Dus als jet het echt wil doen druk dan op adopteren en er zal een bericht gestuurd worden naar de eigenaar van het dier en hoor later meer, anders druk op close.</p>
+            <div class="controls">
+              <button class="close-btn">Close</button>
+              <form action="/verzoek" method="post">
+                <button type="submit" name="dierId" aria-label="Adopteren" value="<%= dier._id %>" <% if(adoptionRequestAlreadySent) { %> disabled="true" <% } %>><% if(adoptionRequestAlreadySent) { %>
+                  Verzoek gestuurd
+                  <% } else { %>
+                  Adopteren
+                  <% } %>
+              </form>
+    </section>
+
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/script/output.min.js"></script>
+</body>
+
+</html>

@@ -1,18 +1,30 @@
 <header>
+  <div class="container">
+    <nav>
+      <a href="/">
+        <img src="/img/PM-logo.png" alt="logo" />
+        <p class="logo">PURRFECT MATCH</p>
+      </a>
+      <ul id="sidemenu">
+        <li><a aria-label="home" href="/">Home</a></li>
+        <li><a aria-label="adpotie" href="/adoptie">Adoptie</a></li>
+        <li><a aria-label="toevoegen" href="/toevoegen">Toevoegen</a></li>
+        <li><a aria-label="profiel" href="/profiel">Profiel</a></li>
+        <i class="fas fa-times" onclick="sidemenu()"></i>
+      </ul>
 
-    <div class="container">     
-        <nav>
-            <p class="logo">PURRFECT MATCH</p>
-            <ul id="dropdown">
-                <li><a href="/">Home</a></li>
-                <li><a href="/adoptie">Adoptie</a></li>
-                <li><a href="/toevoegen">Toevoegen</a></li>
-                <li><a href="/favorieten">Favorieten</a></li>
-                <li><a href="/mail">Mail</a></li>
-                <li><a href="/profiel">Profiel</a></li>
-                <i class="fas fa-times" onclick="closemenu()"></i>
-            </ul>
-            <i class="fas fa-bars" onclick="openmenu()"></i>
-        </nav>
-    
+    <div>
+      <a aria-label="profiel" href="/profiel">
+        <% if (typeof account !== 'undefined' && account.profielfoto) { %>
+        
+        <img src="/uploads/<%= account.profielfoto %>" alt="Profielfoto" id="profielFotoNav" />
+        <% } else { %>
+          <i class="fa-solid fa-user fa-flip-horizontal"></i>
+        <% } %>
+      </a>
+    </div>
+      <i class="fas fa-bars" onclick="sidemenu()"></i>
+    </nav>
+  </div>
 </header>
+

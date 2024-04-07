@@ -1,55 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Toevoegen - PurrfectMatch</title>
-    <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/fee5056558.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <!-- LET OP, DIT WAS NOG HETZELFDE ALS DE ADOPTIE PAGINA TIJDENS OVERZETTEN -->
-    <main>
-      <section>
-        <ul class="overzicht">
-          <li>
-            <a href="detail.html">
-              <img
-                src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg"
-                alt=""
-              />
-              <div>
-                <h2>Simba</h2>
-                <h3>Leeuw</h3>
-                <h4>Man</h4>
-                <h5>3 jaar</h5>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Toevoegen - PurrfectMatch</title>
+  <link rel="stylesheet" href="style.min.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main>
+    <section class="form toevoegen">
+      <div class="breadcrumb">
+        <i class="fa-solid fa-arrow-left-long"></i>
+        <a aria-label="terug naar home pagina" href="/">Terug naar Home</a>
+      </div>
+      <div class="toevoegentext">
+        <h1>Afstand doen van je dier?</h1>
+        <p>Het afstand doen van een huisdier is een hartverscheurende beslissing die vaak gepaard gaat met een diep gevoel van verdriet en verlies. Voor velen vormt een huisdier een integraal onderdeel van het gezin, een bron van onvoorwaardelijke liefde en vreugde. Echter, om verschillende redenen kunnen mensen zich genoodzaakt voelen om afstand te doen van hun geliefde metgezel.</p>
+        <p>Een van de meest voorkomende redenen voor het afstand doen van een dier is ziekte, zowel van de eigenaar als van het dier zelf. Een ernstige ziekte of handicap kan het moeilijk of zelfs onmogelijk maken voor een persoon om de zorg en aandacht te bieden die een huisdier nodig heeft. Evenzo kunnen financiële problemen een grote rol spelen. De kosten van veterinaire zorg, voeding en andere benodigdheden kunnen overweldigend zijn, vooral in tijden van economische onzekerheid.Z</p>
+      </div>
+      <div class="formcontainer">
+        <div class="formcontainer-container registreergap">
+          <h2>Afstandformulier</h1>
+            <form action="/registreer-dier" method="post" class="toevoegenform" enctype="multipart/form-data">
+              <label for="foto">Foto*</label>
+              <input type="file" name="foto" id="imageupload" required accept=".jpg, .jpeg, .png, .gif" multiple />
+              <div class="registreerinput">
+                <label for="diernaam">Naam - <span>verplicht</span></label>
+                <input type="text" id="diernaam" name="diernaam" placeholder="naam" required>
               </div>
-              <i class="fa-solid fa-pen"></i>
-            </a>
-          </li>
-          <li>
-            <a href="detail.html">
-              <img
-                src="img/verticale-close-up-shot-van-een-prachtige-afrikaanse-luipaard-die-op-de-weg-loopt kopie.jpg"
-                alt=""
-              />
-              <div>
-                <h2>Samba</h2>
-                <h3>Leeuw</h3>
-                <h4>Vrouw</h4>
-                <h5>3 jaar</h5>
+
+              <div class="registreerinput">
+                <label for="diersoort">Soort - <span>verplicht</span></label>
+                <select name="diersoort" id="diersoort" required>
+                  <option value="" disabled selected>Selecteer een optie</option>
+                  <option value="leeuw">leeuw</option>
+                  <option value="tijger">tijger</option>
+                  <option value="cheetah">cheetah</option>
+                  <option value="jaguar">jaguar</option>
+                  <option value="lynx">lynx</option>
+                  <option value="poema">poema</option>
+                  <option value="serval">serval</option>
+                  <option value="kat">kat</option>
+                </select>
               </div>
-              <i class="fa-solid fa-pen"></i>
-            </a>
-          </li>
-        </ul>
-      </section>
-    </main>
-    <script src="script.js"></script>
-  </body>
+
+              <div class="registreerinput">
+                <label for="dierleeftijd">Leeftijd - <span>verplicht</span></label>
+                <input type="number" id="dierleeftijd" name="dierleeftijd" placeholder="leeftijd" required>
+              </div>
+
+              <div class="registreerinput">
+                <label for="diergewicht">Gewicht - <span>verplicht</span></label>
+                <input type="number" id="diergewicht" name="diergewicht" placeholder="gewicht" required>
+              </div>
+
+              <div class="registreerinput">
+                <label for="diergeslacht">Geslacht - <span>verplicht</span></label>
+                <select id="diergeslacht" name="diergeslacht" required>
+                  <option value="man">Mannetje</option>
+                  <option value="vrouw">Vrouwtje</option>
+                </select>
+              </div>
+
+              <div class="registreervraag">
+                <label for="dierkenmerken">Kenmerken dier - <span>verplicht</span></label>
+
+                <label for="vraag1">
+                  Veel ruimte nodig
+                  <div>
+                    <input type="radio" id="vraag1" name="vraag1" value="ja" required>
+                    <label for="vraag1">Ja</label>
+                    <input type="radio" id="vraag1" name="vraag1" value="nee" required>
+                    <label for="vraag1">nee</label>
+                  </div>
+                </label>
+
+                <label for="vraag2">
+                  Graag samen
+                  <div>
+                    <input type="radio" id="vraag2" name="vraag2" value="ja" required>
+                    <label for="vraag2">Ja</label>
+                    <input type="radio" id="vraag2" name="vraag2" value="nee" required>
+                    <label for="vraag2">nee</label>
+                  </div>
+                </label>
+
+                <label for="vraag3">
+                  Ervaring voor nodig
+                  <div>
+                    <input type="radio" id="vraag3" name="vraag3" value="ja" required>
+                    <label for="vraag3">Veel</label>
+                    <input type="radio" id="vraag3" name="vraag3" value="nee" required>
+                    <label for="vraag3">Weinig</label>
+                  </div>
+                </label>
+
+                <label for="vraag4">
+                  Graag buiten
+                  <div>
+                    <input type="radio" id="vraag4" name="vraag4" value="ja" required>
+                    <label for="vraag4">Ja</label>
+                    <input type="radio" id="vraag4" name="vraag4" value="nee" required>
+                    <label for="vraag4">nee</label>
+                  </div>
+                </label>
+
+                <label for="vraag5">
+                  Gaat lastig met kinderen
+                  <div>
+                    <input type="radio" id="vraag5" name="vraag5" value="ja" required>
+                    <label for="vraag5">Ja</label>
+                    <input type="radio" id="vraag5" name="vraag5" value="nee" required>
+                    <label for="vraag5">nee</label>
+                  </div>
+                </label>
+
+                <label for="vraag6">
+                  Gaat lastige met andere dieren
+                  <div>
+                    <input type="radio" id="vraag6" name="vraag6" value="ja" required>
+                    <label for="vraag6">Ja</label>
+                    <input type="radio" id="vraag6" name="vraag6" value="nee" required>
+                    <label for="vraag6">nee</label>
+                  </div>
+                </label>
+              </div>
+
+              <div class="registreerinput">
+                <label for="dieromschrijving">Omschrijving</label>
+                <textarea class="textareawrapper" name="dieromschrijving" id="dieromschrijving" cols="30" rows="10"></textarea>
+              </div>
+              <button aria-label="afstand doen knop" class="btn" type="submit">Afstand doen</button>
+            </form>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</body>
+
+</section>
+
+</main>
+<%- include('../partials/footer') %>
+<script src="/script/output.min.js"></script>
+</body>
+
 </html>

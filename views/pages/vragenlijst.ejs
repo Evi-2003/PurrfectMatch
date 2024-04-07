@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vragenlijst - PurrfectMatch</title>
+  <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+  <link rel="stylesheet" href="style.min.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main class="vragenlijstmain">
+    <div class="breadcrumbvragenlijst">
+      <a aria-label="stap overslaan" href="/kiezen">Stap overslaan</a>
+      <i class="fa-solid fa-arrow-right-long"></i>
+    </div>
+    <div class="vragenlijstgapcontainer">
+      <div class="vragenlijsth1p">
+        <h1>Om te beginnen</h1>
+        <p>Om het zoeken gemakkelijker te maken kunnen we beginnen bij de volgende vragen</p>
+      </div>
+      <div class="slider">
+        <form action="/matchenVragenlijst" method="post">
+          <div class="item">
+            <div class="dots">
+              <span class="activespan"></span><span></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="vragenp">1. Heeft u veel ruimte thuis</p>
+            <div class="radiocontainer">
+              <div>
+                <input class="vragenlijstradio" type="radio" id="ja" value="ja" name="vraag1">
+                <label class="vragenlijstlabel" for="ja">Ja</label>
+              </div>
+              <div>
+                <input class="vragenlijstradio" type="radio" id="nee" value="nee" name="vraag1">
+                <label class="vragenlijstlabel" for="nee">Nee</label>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dots">
+              <span></span><span class="activespan"></span><span></span><span></span><span></span><span></span>
+            </div>
+            <p class="vragenp">2. Moet het dier regelmatig alleen kunnen zijn?</p>
+            <div class="radiocontainer">
+              <div>
+                <input class="vragenlijstradio" type="radio" id="ja2" value="ja" name="vraag2">
+                <label class="vragenlijstlabel" for="ja2">Ja</label>
+              </div>
+              <div>
+                <input class="vragenlijstradio" type="radio" id="nee2" value="nee" name="vraag2">
+                <label class="vragenlijstlabel" for="nee2">Nee</label>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dots">
+              <span></span><span></span><span class="activespan"></span><span></span><span></span><span></span>
+            </div>
+            <p class="vragenp">3. Heeft u enige ervaringen met wilde katachtigen?</p>
+            <div class="radiocontainer">
+              <div>
+                <input class="vragenlijstradio" type="radio" id="weinig" value="nee" name="vraag3">
+                <label class="vragenlijstlabel" for="weinig">Weinig</label>
+              </div>
+              <div>
+                <input class="vragenlijstradio" type="radio" id="veel" value="ja" name="vraag3">
+                <label class="vragenlijstlabel" for="veel">Veel</label>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dots">
+              <span></span><span></span><span></span><span class="activespan"></span><span></span><span></span>
+            </div>
+            <p class="vragenp">4. Heeft u een tuin?</p>
+            <div class="radiocontainer">
+              <div>
+                <input class="vragenlijstradio" type="radio" id="ja4" value="ja" name="vraag4">
+                <label class="vragenlijstlabel" for="ja4">Ja</label>
+              </div>
+              <div>
+                <input class="vragenlijstradio" type="radio" id="nee4" value="nee" name="vraag4">
+                <label class="vragenlijstlabel" for="nee4">Nee</label>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dots">
+              <span></span><span></span><span></span><span></span><span class="activespan"></span><span></span>
+            </div>
+            <p class="vragenp">5. Heeft u jonge kinderen?</p>
+            <div class="radiocontainer">
+              <div>
+                <input class="vragenlijstradio" type="radio" id="ja5" value="ja" name="vraag5">
+                <label class="vragenlijstlabel" for="ja5">Ja</label>
+              </div>
+              <div>
+                <input class="vragenlijstradio" type="radio" id="nee5" value="nee" name="vraag5">
+                <label class="vragenlijstlabel" for="nee5">Nee</label>
+              </div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="dots">
+              <span></span><span></span><span></span><span></span><span></span><span class="activespan"></span>
+            </div>
+            <p class="vragenp">6. Heeft u andere huisdieren?</p>
+            <div class="radiocontainer">
+              <div>
+                <input class="vragenlijstradio" type="radio" id="ja6" value="ja" name="vraag6">
+                <label class="vragenlijstlabel" for="ja6">Ja</label>
+              </div>
+              <div>
+                <input class="vragenlijstradio" type="radio" id="nee6" value="nee" name="vraag6">
+                <label class="vragenlijstlabel" for="nee6">Nee</label>
+              </div>
+            </div>
+          </div>
+          <input type="submit" class="vragenlijstbtn" name="Beginnen_met_zoeken" value="Beginnen met zoeken">
+        </form>
+
+        <button aria-label="volgende knop" id="next">></button>
+        <button aria-label="terug knop" id="prev">
+          << /button>
+      </div>
+    </div>
+  </main>
+  <%- include('../partials/footer') %>
+  <script src="/script/output.min.js"></script>
+
+  </script>
+</body>
+
+</html>

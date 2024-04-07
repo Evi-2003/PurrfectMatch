@@ -1,23 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home - PurrfectMatch</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <h1>Registreren</h1>
-    <form action="/" method="post">
-      <input type="text" name="name" id="name" placeholder="Gebruikersnaam" />
-      <input
-        type="text"
-        name="password"
-        id="password"
-        placeholder="Wachtwoord"
-      />
-      <input type="submit" value="Registreren" />
-    </form>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home - PurrfectMatch</title>
+  <link rel="stylesheet" href="style.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+  <main>
+    <section class="homefoto">
+      <div class="homefotocontainer">
+        <div>
+          <h2>Ik zoek een match</h2>
+          <h2>Ben jij mijn PURRFECT MATCH</h2>
+        </div>
+        <img loading="lazy" src="img/homefoto.png" alt="foto van kat met gele achtergrond">
+      </div>
+    </section>
+    <section class="kiessection">
+      <p>Neem een kijkje bij onze opvangdieren</p>
+      <a aria-label="katten adopteren" href="/adoptie">
+        <div>
+          <img loading="lazy" src="img/katpoot.png" alt="klein katten poot">
+          <div class="kiessectiontext">
+            <h3>Katten</h3>
+            <p><%= dieren.length %></p>
+          </div>
+          <i class="fa-solid fa-arrow-right"></i>
+        </div>
+      </a>
+    </section>
+    <section class="dieren">
+      <h3>ONTDEK ONZE STRALENDE DIEREN</h3>
+      <p>Elk dier verdient een liefdevol thuis, maar sommigen hebben wat extra ondersteuning nodig om dat te vinden. Maak kennis met onze asielbewoners die wat extra aandacht verdienen! We stellen graag deze bijzondere dieren aan je voor die op zoek zijn naar een warme plek in de schijnwerpers van jouw hart.</p>
+      <!-- Slider main container -->
+      <div class="swiper">
+        <!-- Additional required wrapper -->
+        <div class="swiper-wrapper">
+          <!-- Slides -->
+          <% dieren.forEach(function(dier) { %>
+          <div class="swiper-slide">
+            <img loading="lazy" src="/uploads/<%= dier.foto[0] %>" alt="Foto van <%= dier.naam %>">
+            <div class="swipercontainertext">
+              <div>
+                <h4><%= dier.naam %> (<%= dier.leeftijd %>)</h4>
+                <% if (account) { %>
+                <form action="like" method="post" id="likeForm">
+                  <input type="hidden" name="dier" value="<%= dier._id %>" />
+                  <input type="hidden" name="user" value="<%= account.id %>" />
+                  <button aria-label="like dier" id="likeButton" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                    <%= dier.likes %> <i class="fa-solid fa-heart"></i>
+                  </button>
+                </form>
+                <% } %>
+              </div>
+              <ul>
+                <li>
+                  <p><%= dier.soort %></p>
+                </li>
+                <li>
+                  <p><%= dier.geslacht %></p>
+                </li>
+                <li>
+                  <p><%= dier.gewicht %></p>
+                </li>
+              </ul>
+              <a href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" aria-label="Bekijk het profiel van <%= dier.naam %>">Bekijk het profiel-></a>
+            </div>
+            <div class="swiper-pagination"></div>
+
+            <!-- If we need navigation buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+
+            <!-- If we need scrollbar -->
+            <div class="swiper-scrollbar"></div>
+          </div>
+          <% }); %>
+    </section>
+    <section class="doneren">
+      <h4>STEUN ONS EN DE DIEREN MET EEN GIFT</h4>
+      <a aria-label="steun ons" href="#">€ Steun ons</a>
+    </section>
+    <section class="afstand">
+      <div>
+        <h4>Afstand doen van een dier?</h4>
+        <p>Mensen doen afstand van hun huisdieren om verschillende redenen, zoals ziekte, financiële problemen, ruimtegebrek, allergieën, of veranderingen in levensomstandigheden. Hoe moeilijk het ook is, we respecteren altijd hun beslissing. Gelukkig zijn er nieuwe eigenaren die met liefde deze dieren een nieuw thuis bieden.</p>
+        <div>
+          <a aria-label="toevoegen van kat" href="/toevoegen">Afstand doen van je kat <i class="fa-solid fa-arrow-right-long"></i></a>
+        </div>
+      </div>
+    </section>
+    <section class="contact">
+      <h3>NEEM CONTACT MET ONS OP</h3>
+      <p>Stuur een bericht naar ons toe, we reageren zo snel mogelijk!</p>
+
+      <form class="contactform" action="">
+        <div class="contactnaam">
+          <div>
+            <label for="voornaam">Voornaam</label>
+            <input aria-label="voornaam" type="text" id="voornaam" name="voornaam" placeholder="voornaam">
+          </div>
+          <div>
+            <label for="achternaam">Achternaam</label>
+            <input aria-label="achternaam" type="text" id="achternaam" name="achternaam" placeholder="achternaam">
+          </div>
+        </div>
+        <div>
+          <label for="email">Email</label>
+          <input aria-label="email" type="email" id="email" name="email" placeholder="email">
+        </div>
+        <div>
+          <label for="bericht">Bericht</label>
+          <textarea aria-label="text informatie" class="textareawrapper" name="bericht" id="bericht" cols="30" rows="10"></textarea>
+        </div>
+
+        <button aria-label="verzend knop" class="btn" type="submit">Verzenden</button>
+
+      </form>
+    </section>
+  </main>
+  <%- include('../partials/footer') %>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="/script/output.min.js"></script>
+
+</body>
+
 </html>

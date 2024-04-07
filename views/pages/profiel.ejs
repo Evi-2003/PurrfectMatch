@@ -1,18 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Profiel - PurrfectMatch</title>
-    <link rel="stylesheet" href="style.css" />
-    <script
-      src="https://kit.fontawesome.com/fee5056558.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-    <%- include('../partials/nav') %>
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Profiel - PurrfectMatch</title>
+  <link rel="stylesheet" href="style.min.css" />
+  <script src="https://kit.fontawesome.com/fee5056558.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <%- include('../partials/nav') %>
+
+  <div class="profielheadbg">
+    <div class="profielheadcontainer">
+      <img src="/uploads/<%= account.profielfoto %>" loading="lazy" alt="Profielfoto van <%= account.voornaam %>" id="profilePhoto">
+      <div class="profielheadtxt">
+        <p>Mijn account</p>
+        <h1>Welkom <%= account.voornaam %></h1>
+      </div>
+      <a aria-label="uitloggen" href="/uitloggen">Uitloggen</a>
+    </div>
+  </div>
+  <section class="profieldropdowncontainer">
+    <div class="profieldropdown">
+      <ul>
+        <li class="profielactive"><i class="fa-solid fa-heart"></i></li>
+        <li><i class="fa-solid fa-envelope"></i></li>
+        <li><i class="fa-solid fa-gear"></i></li>
+      </ul>
+    </div>
+  </section>
+  <main class="profielmain">
+
+
+
+    <div class="textvak1">
+      <% if(dieren.length === 0) { %>
+      <div class="geendieren">
+        <h3>Geen dieren geliked?</h3>
+        <a aria-label="ga naar dier" href="/adoptie"> Like nu gelijk een dier! ></a>
+      </div>
+      <% } %>
+      <% dieren.forEach(function(dier) { %>
+      <li>
+        <div class="katprofielbg">
+          <a aria-label="ga naar dier" href="/adoptie/<%= dier.naam %>?id=<%= dier._id %>" class="katprofielcontainer">
+            <img src="/uploads/<%= dier.foto[0] %>" loading="lazy" alt="profiel foto" />
+
+            <div class="katprofieltext">
+              <div>
+                <h2><%= dier.naam %> (<%= dier.leeftijd %>)</h2>
+                <% if (account) { %>
+                <form action="like" method="post" id="likeForm">
+                  <input type="hidden" name="dier" value="<%= dier._id %>" />
+                  <input type="hidden" name="user" value="<%= account._id %>" />
+                  <button id="likeButton" class="liked" type="submit" class="<% if (likedIds.includes(dier._id.toString())) { %>liked<% } %>">
+                    <i class="fa-solid fa-heart"></i><%= dier.likes %>
+                </form>
+
+                <% } %>
+              </div>
+              <ul>
+                <li>
+                  <p><%= dier.soort %></p>
+                </li>
+                <li>
+                  <p><%= dier.geslacht %></p>
+                </li>
+                <li>
+                  <p><%= dier.gewicht %>kg</p>
+                </li>
+              </ul>
+              <p><%= dier.omschrijving %></p>
+            </div>
+          </a>
+        </div>
+      </li>
+      <% }); %>
+    </div>
+
+    <div class="textvak2">
+      <div class="katprofielcontainer">
+        <ul id="verzoekenList"></ul>
+      </div>
+    </div>
+
+    <div class="textvak3">
+      <div class="profielaanpassen">
+        <form class="registreerform" action="/profielAanpassen" method="post" enctype="multipart/form-data">
+          <label for="profielfoto">Profielfoto*</label>
+          <input type="file" name="profielfoto" id="imageupload" accept=".jpg, .jpeg, .png, .gif" />
+          <div class="registreerinput">
+            <label for="naam">Naam</label>
+            <div class="naam">
+              <input type="text" id="voornaam" name="voornaam" value="<%= account.voornaam %>" />
+              <input type="text" id="tussenvoegsel" name="tussenvoegsel" value="<%= account.tussenvoegsel %>" />
+              <input type="text" id="achternaam" name="achternaam" value="<%= account.achternaam %>" />
+            </div>
+          </div>
+
+          <div class="registreerinput">
+            <label for="geslacht">Geslacht</label>
+            <select id="geslacht" name="geslacht" value="<%= account.geslacht %>">
+              <option value="niet van toepassing">Niet van toepassing</option>
+              <option value="man">Man</option>
+              <option value="vrouw">Vrouw</option>
+            </select>
+          </div>
+
+          <div class="registreerinput">
+            <label for="adres">Adres</label>
+            <input type="text" id="postcode" name="postcode" value="<%= account.postcode %>" pattern="^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)" title="Je postcode bestaat uit vier cijfers gevolgd door twee hoofdletters." />
+            <div class="huisadres">
+              <input type="text" id="straatnaam" name="straatnaam" value="<%= account.straatnaam %>" />
+              <input type="number" id="huisnummer" name="huisnummer" value="<%= account.huisnummer %>" />
+              <input type="text" id="toevoeging" name="toevoeging" value="<%= account.toevoeging %>" />
+            </div>
+            <input type="text" id="woonplaats" name="woonplaats" value="<%= account.woonplaats %>" />
+          </div>
+
+          <div class="registreerinput">
+            <label for="geboortedatum">Geboortedatum</label>
+            <input type="date" id="geboortedatum" name="geboortedatum" value="<%= account.geboortedatum %>" />
+          </div>
+
+          <div class="registreerinput">
+            <label for="telefoon">Telefoon</label>
+            <input type="tel" id="telefoonnummer" name="telefoonnummer" value="<%= account.telefoonnummer %>" pattern="(\+31|0)(6|)[1-9][0-9]{8}" title="Voer een geldig Nederlands telefoonnummer in" />
+          </div>
+
+          <div class="registreerinput">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" value="<%= account.email %>" />
+          </div>
+
+          <div class="registreerinput">
+            <label for="wachtwoord">Wachtwoord - <span>verplicht</span></label>
+            <input type="password" id="wachtwoord" name="wachtwoord" required />
+          </div>
+
+          <span id="pass"></span>
+          <button aria-label="pas account aan knop" class="btn" type="submit">Pass account aan</button>
+        </form>
+      </div>
+    </div>
+  </main>
+  <%- include('../partials/footer') %>
+
+  <script src="/script/output.min.js">
+    let verzoeken = <%- JSON.stringify(verzoeken) %>
+    laadVerzoeken(verzoeken);
+  </script>
+</body>
+
 </html>
