@@ -17,13 +17,12 @@ app.set("view engine", "ejs");
 app.use(express.static("static"));
 app.use(compression());
 app.use(helmet());
-
 app.use(express.urlencoded({ extended: true }));
 
 // Limit api requests, (preventing DDOS)
 const limiter = RateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 20,
+  max: 100,
 });
 
 app.use(limiter);
