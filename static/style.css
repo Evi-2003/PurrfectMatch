@@ -370,7 +370,7 @@ nav > a {
   align-items: center;
   padding: 0.8rem;
   position: relative;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 10px 10px 2px 1px var(--color-darkgreen);
 }
 
@@ -1045,27 +1045,28 @@ input[type="number"] {
 
 #likeButton {
   font-size: 16px;
-  border: none;
+  border: solid 1px black;
   cursor: pointer;
-  width: fit-content;
   border-radius: 0.5em;
   display: flex;
   align-items: center;
-  position: absolute;
-  top: 0;
   background-color: transparent;
-  color: var(--color-text);
+  color: var(--color-text2);
+  padding: .2rem .5rem;
+  gap: 3px;
 }
 
 #likeButton:hover {
   transform: scale(0.95);
 }
+
 #likeButton.liked {
   background-color: var(--color-red);
   color: var(--color-text);
   border-radius: 0.5em;
-  padding: 0.5em 1em;
+  border: none;
 }
+
 .fa-solid.fa-pen {
   align-self: center;
 }
@@ -1207,6 +1208,24 @@ input[type="number"] {
   padding: 2rem 10%;
 }
 
+.geendieren{
+  text-align: center;
+  padding: 2rem;
+  display: grid;
+  gap: 2rem;
+}
+
+.geendieren a{
+  text-decoration: none;
+  padding: .5rem 1rem;
+  color: white;
+  background: var(--color-oranje);
+  border-radius: 2rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  box-shadow: var(--form-box-shadow);
+}
+
 .katprofielcontainer {
   display: flex;
   flex-direction: column;
@@ -1248,36 +1267,9 @@ input[type="number"] {
   border-radius: 10px;
 }
 
-.katprofieltext div p > i {
-  display: flex;
-  position: relative;
-  font-size: 2rem;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-red);
-}
-
-.katprofieltext div p > i i {
-  position: absolute;
-  font-size: 0.5rem;
-  bottom: 14px;
-  color: var(--color-text);
-  display: flex;
-  flex-direction: row;
-  gap: 0.2rem;
-}
 .textvak1 h3 {
   padding: 1em;
   text-align: center;
-}
-
-#likeForm > i{
-  display: flex;
-  position: relative;
-  font-size: 2rem;
-  justify-content: center;
-  align-items: center;
-  color: var(--color-red);
 }
 
 .likecontainer{

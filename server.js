@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const dotenv = require("dotenv");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const port = 3000;
 const bcrypt = require("bcrypt");
@@ -9,11 +8,24 @@ const session = require("express-session");
 const nodemailer = require("nodemailer");
 const minify = require("@node-minify/core");
 const uglifyES = require("@node-minify/uglify-es");
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
 
 require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static("static"));
+app.use(compression());
+app.use(helmet());
 app.use(express.urlencoded({ extended: true }));
+
+// Limit api requests, (preventing DDOS)
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 100,
+});
+
+app.use(limiter);
 
 // Settings smtp
 const smtpServer = nodemailer.createTransport({
@@ -31,7 +43,7 @@ function sendEmail({ toEmail, content, subject }) {
   const mailOptions = {
     from: "PurrfectMatch <purrfect@trial-ynrw7gyqe2k42k8e.mlsender.net>",
     to: toEmail, // Geadresseerde e-mailadres
-    subject: subject, // Onderwerp van het e-mailbericht
+    subject, // Onderwerp van het e-mailbericht
     text: content, // Tekst van het e-mailbericht
   };
   smtpServer.sendMail(mailOptions, (error, info) => {
@@ -47,8 +59,8 @@ function sendEmail({ toEmail, content, subject }) {
 // minify({
 //   compressor: uglifyES,
 //   input: 'static/script/script.js',
-//   output: 'static/script/output.min.js',
-// });
+//   output: 'static/script/output.min.js'
+// })
 
 // Setting up the storage
 const storage = multer.diskStorage({
@@ -60,7 +72,7 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // Verbinden met database
 let db;
@@ -78,9 +90,8 @@ const client = new MongoClient(connectionString, {
 client
   .connect()
   .then((database) => {
-    console.log("Er is verbinding!");
+    console.log("\x1b[42;30mEr is verbinding!\x1b[0m");
     db = database.db(process.env.DB_NAME);
-    dbStatus = true;
   })
   .catch((err) => {
     console.log(`Er is wat mis gegaan - ${err}`);
@@ -96,9 +107,9 @@ app.use(
 
 /* check wachtwoord */
 async function checkUser(email, wachtwoord) {
-  const user = await db.collection("users").findOne({ email: email });
+  const user = await db.collection("users").findOne({ email });
   if (user) {
-    let checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord);
+    const checkWachtwoord = await bcrypt.compare(wachtwoord, user.wachtwoord);
 
     if (checkWachtwoord) {
       return {
@@ -118,10 +129,10 @@ async function checkUser(email, wachtwoord) {
 
 /* login */
 app.post("/inloggen", async (req, res) => {
-  let email = req.body.email;
-  let wachtwoord = req.body.wachtwoord;
+  const email = req.body.email;
+  const wachtwoord = req.body.wachtwoord;
 
-  logginResultaat = await checkUser(email, wachtwoord);
+  const logginResultaat = await checkUser(email, wachtwoord);
 
   if (
     logginResultaat &&
@@ -164,7 +175,10 @@ app.post("/", upload.single("profielfoto"), async (req, res) => {
   const filename = req.file.filename;
 
   bcrypt.hash(req.body.repassword, 10, async (err, hashedWachtwoord) => {
-    let userData = {
+    if (err) {
+      console.log(err);
+    }
+    const userData = {
       profielfoto: filename,
       voornaam: req.body.voornaam,
       tussenvoegsel: req.body.tussenvoegsel,
@@ -202,14 +216,14 @@ app.post(
   "/profielAanpassen",
   upload.single("profielfoto"),
   async (req, res) => {
-    let userId = { _id: new ObjectId(req.session.user.id) };
-    let userGegv = await db.collection("users").findOne(userId);
-    let email = userGegv.email;
-    let wachtwoord = req.body.wachtwoord;
+    const userId = { _id: new ObjectId(req.session.user.id) };
+    const userGegv = await db.collection("users").findOne(userId);
+    const email = userGegv.email;
+    const wachtwoord = req.body.wachtwoord;
 
-    profielAanpassen = await checkUser(email, wachtwoord);
+    const profielAanpassen = await checkUser(email, wachtwoord);
     if (profielAanpassen) {
-      let userData = {
+      const userData = {
         voornaam: req.body.voornaam,
         tussenvoegsel: req.body.tussenvoegsel,
         achternaam: req.body.achternaam,
@@ -239,13 +253,13 @@ app.post(
 /* registratie van dier */
 app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
   const images = req.files;
-  let filenames = [];
+  const filenames = [];
   images.forEach((element) => {
     filenames.push(element.filename);
   });
   console.log(filenames);
 
-  let dierData = {
+  const dierData = {
     foto: filenames,
     naam: req.body.diernaam,
     soort: req.body.diersoort,
@@ -268,7 +282,7 @@ app.post("/registreer-dier", upload.array("foto"), async (req, res) => {
 
 // Verzoeken sturen
 app.post("/verzoek", checkSession, async (req, res) => {
-  //Ophalen aanbiederId via de dierId
+  // Ophalen aanbiederId via de dierId
   const dierId = { _id: new ObjectId(req.body.dierId) };
   const dierCollection = await db.collection("dieren").findOne(dierId);
   const verzoekData = {
@@ -318,7 +332,7 @@ app.post("/verzoek", checkSession, async (req, res) => {
 
 // Accepteren of Weigeren
 app.post("/accepteren", async (req, res) => {
-  let verzoekId = { _id: new ObjectId(req.body.verzoekId) };
+  const verzoekId = { _id: new ObjectId(req.body.verzoekId) };
 
   if (req.body.accepteren === "accepteren") {
     await db
@@ -334,11 +348,11 @@ app.post("/accepteren", async (req, res) => {
 
 /* Matchen Vragenlijst */
 async function match(antwoorden) {
-  let dieren = await db.collection("dieren").find().toArray();
+  const dieren = await db.collection("dieren").find().toArray();
 
-  let matchedDieren = dieren.map((dier) => {
+  const matchedDieren = dieren.map((dier) => {
     let matchedCount = 0;
-    for (let vraag in antwoorden) {
+    for (const vraag in antwoorden) {
       if (antwoorden[vraag] === dier[vraag]) {
         matchedCount++;
       }
@@ -352,7 +366,7 @@ async function match(antwoorden) {
 }
 
 app.post("/matchenVragenlijst", async (req, res) => {
-  let antwoorden = {
+  const antwoorden = {
     vraag1: req.body.vraag1,
     vraag2: req.body.vraag2,
     vraag3: req.body.vraag3,
@@ -361,22 +375,20 @@ app.post("/matchenVragenlijst", async (req, res) => {
     vraag6: req.body.vraag6,
   };
 
-  let email = req.session.user.email;
-  let wachtwoord = req.session.user.wachtwoord;
-  logginResultaat = await checkUser(email, wachtwoord);
-  let id = logginResultaat.id;
-  await db
-    .collection("users")
-    .updateOne({ _id: id }, { $set: { antwoorden: antwoorden } });
+  const email = req.session.user.email;
+  const wachtwoord = req.session.user.wachtwoord;
+  const logginResultaat = await checkUser(email, wachtwoord);
+  const id = logginResultaat.id;
+  await db.collection("users").updateOne({ _id: id }, { $set: { antwoorden } });
 
-  let matchedDier = await match(antwoorden);
+  const matchedDier = await match(antwoorden);
 
   if (matchedDier.length > 0) {
-    let besteMatch = matchedDier.filter(
+    const besteMatch = matchedDier.filter(
       (dier) => dier.matchedCount === matchedDier[0].matchedCount
     );
 
-    let randomNummer = Math.floor(Math.random() * besteMatch.length);
+    const randomNummer = Math.floor(Math.random() * besteMatch.length);
     res.redirect(
       `/adoptie/${besteMatch[randomNummer].naam}?id=${besteMatch[randomNummer]._id}`
     );
@@ -391,13 +403,13 @@ app.get("/", async (req, res) => {
   let likedIds;
   if (req.session.user) {
     const userId = { _id: new ObjectId(req.session.user.id) };
-    userFromDb = await db.collection("users").findOne(userId);
+    const userFromDb = await db.collection("users").findOne(userId);
     likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
   }
   res.render("pages/index", {
     account: req?.session?.user,
-    dieren: dieren,
-    likedIds: likedIds,
+    dieren,
+    likedIds,
   });
 });
 // fetching the animals
@@ -442,9 +454,9 @@ async function fetchingAnimals(
       const userId = { _id: new ObjectId(user.id) };
       userFromDb = await db.collection("users").findOne(userId);
       // If the user, for whatever reaseon, does not have the answered question in its profile, just load all the animals in default sorting
-      const doesAnswersExist = userFromDb?.antwoorden ? true : false;
+      const doesAnswersExist = !!userFromDb?.antwoorden;
       if (doesAnswersExist) {
-        let matchedDier = await match(userFromDb.antwoorden);
+        const matchedDier = await match(userFromDb.antwoorden);
         dieren = matchedDier;
       } else {
         dieren = await db.collection("dieren").find().toArray();
@@ -471,7 +483,7 @@ app.get("/adoptie", async (req, res) => {
   const { user, selectedSortingMethod, selectedSpecies, selectedGenders } =
     req.session;
 
-  const { dieren, userFromDb, likedIds } = await fetchingAnimals(
+  const { dieren, likedIds } = await fetchingAnimals(
     user,
     selectedSortingMethod,
     selectedSpecies,
@@ -479,9 +491,9 @@ app.get("/adoptie", async (req, res) => {
   );
 
   res.render("pages/adoptie", {
-    dieren: dieren,
-    user: user,
-    likedIds: likedIds,
+    dieren,
+    user,
+    likedIds,
     account: user,
     selectedSortingMethod: selectedSortingMethod || "",
     selectedSpecies: selectedSpecies || [],
@@ -540,9 +552,9 @@ app.post("/like", async (req, res) => {
 
     // Re-rendering the page with the new dieren
     res.render("pages/adoptie", {
-      dieren: dieren,
-      user: user,
-      likedIds: likedIds,
+      dieren,
+      user,
+      likedIds,
       account: user,
       selectedSortingMethod: "",
       selectedSpecies: "",
@@ -591,44 +603,47 @@ app.post("/sorteren", async (req, res) => {
   res.redirect("/adoptie");
 });
 
-// Dynamic route for the animals
 app.get("/adoptie/:name", async function (req, res) {
-  const id = req.query.id;
-  let dier;
-  let adoptionRequestAlreadySent = false;
   let likedIds;
+  let dier;
+  try {
+    if (!req.session.user) {
+      return res.redirect("/profiel");
+    }
 
-  if (req?.session.user) {
-    try {
-      // Find the animale
-      dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
-      // Checking if the user has liked the animal
-      const userId = { _id: new ObjectId(req.session.user.id) };
-      userFromDb = await db.collection("users").findOne(userId);
-      likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
-    } finally {
-      // Set the id of the animal in a const
-      const dierId = dier._id;
-      // Loop over every sent
-      if (req.session.user.verstuurdeVerzoeken) {
-        req.session.user.verstuurdeVerzoeken.forEach((element) => {
-          Object.keys(element).forEach(function (key) {
-            if (element[key] == dierId) {
-              adoptionRequestAlreadySent = true;
-            }
-          });
-        });
-      }
+    const id = req.query.id;
 
-      return res.render("pages/dier", {
-        dier: dier,
-        adoptionRequestAlreadySent: adoptionRequestAlreadySent,
-        user: req?.session?.user,
-        likedIds: likedIds,
+    let adoptionRequestAlreadySent = false;
+
+    // Find the animal
+    dier = await db.collection("dieren").findOne({ _id: new ObjectId(id) });
+
+    // Checking if the user has liked the animal
+    const userId = { _id: new ObjectId(req.session.user.id) };
+    const userFromDb = await db.collection("users").findOne(userId);
+    likedIds = userFromDb?.liked?.map((item) => item.id._id.toString()) || [];
+
+    // Set the id of the animal in a const
+    const dierId = dier._id;
+
+    // Loop over every sent adoption request
+    if (req.session.user.verstuurdeVerzoeken) {
+      req.session.user.verstuurdeVerzoeken.forEach((element) => {
+        if (Object.values(element).includes(dierId.toString())) {
+          adoptionRequestAlreadySent = true;
+        }
       });
     }
-  } else {
-    res.redirect("/profiel");
+
+    res.render("pages/dier", {
+      dier,
+      adoptionRequestAlreadySent,
+      user: req.session.user,
+      likedIds,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -636,7 +651,7 @@ app.get("/adoptie/:name", async function (req, res) {
 app.get("/profiel", checkSession, async (req, res) => {
   const userId = { _id: new ObjectId(req.session.user.id) };
   const userFromDb = await db.collection("users").findOne(userId);
-  let likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id);
+  const likedAnimalsId = userFromDb?.liked?.map((element) => element.id._id);
 
   try {
     const likedAnimals = await Promise.all(
@@ -646,20 +661,20 @@ app.get("/profiel", checkSession, async (req, res) => {
       })
     );
 
-    let verzoeken = await db
+    const verzoeken = await db
       .collection("verzoeken")
       .find({ aanbiederId: req.session.user.id })
       .toArray();
     for (let i = 0; i < verzoeken.length; i++) {
       // Ophalen dier naam
-      let dier = await db
+      const dier = await db
         .collection("dieren")
         .findOne({ _id: new ObjectId(verzoeken[i].dierId) });
       if (dier) {
         verzoeken[i].dierNaam = dier.naam;
       }
       // Ophalen zoeker naam
-      let zoeker = await db
+      const zoeker = await db
         .collection("users")
         .findOne({ _id: new ObjectId(verzoeken[i].zoekerId) });
       if (zoeker) {
@@ -672,7 +687,7 @@ app.get("/profiel", checkSession, async (req, res) => {
       dieren: likedAnimals,
       data: req.session.user,
       selectedSortingMethod: "",
-      verzoeken: verzoeken,
+      verzoeken,
       likedIds: likedAnimalsId,
     });
   } catch (error) {
@@ -723,5 +738,8 @@ app.post("/contactformulier", async (req, res) => {
   res.redirect("/");
 });
 app.listen(port, () => {
-  console.log(`Ik luister naar poort: ${port}`);
+  console.log(
+    `\x1b[44mDe website kan worden bezocht op localhost:${process.env.PORT}\x1b[0m`
+  );
+  console.log("\x1b[41mVeel plezier met PurrfectMatch!\x1b[0m");
 });
