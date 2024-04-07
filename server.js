@@ -296,8 +296,7 @@ app.post("/verzoek", checkSession, async (req, res) => {
   const verzoekData = {
     zoekerId: req.session.user.id,
     dierId: req.body.dierId,
-    // aanbiederId: dierCollection.aanbieder,
-    aanbiederId: req.session.user.id,
+    aanbiederId: dierCollection.aanbieder,
     status: "Nog niet beoordeeld",
   };
 
